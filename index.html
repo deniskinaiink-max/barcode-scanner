@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1">
 
   <title>Сканер штрихкода</title>
 
   <script src="https://unpkg.com/html5-qrcode"></script>
 
   <style>
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -25,6 +31,7 @@
     h1 {
       text-align: center;
       font-size: 26px;
+      margin: 15px 0 25px;
     }
 
     button {
@@ -32,6 +39,7 @@
       padding: 18px;
       margin-top: 15px;
       font-size: 20px;
+      font-weight: bold;
       border: 0;
       border-radius: 12px;
       background: white;
@@ -52,8 +60,11 @@
       text-align: center;
       font-size: 20px;
     }
+
   </style>
+
 </head>
+
 
 <body>
 
@@ -61,41 +72,57 @@
 
   <h1>📷 Сканер штрихкода</h1>
 
-  <button id="start" type="button">
+  <button
+    id="start"
+    type="button">
+
     СКАНИРОВАТЬ ШТРИХКОД
+
   </button>
+
 
   <div id="reader"></div>
 
+
   <div id="result">
-    Нажмите кнопку и наведите камеру на штрихкод
+
+    Наведите камеру на штрихкод
+
   </div>
 
 </div>
+
 
 <script>
 
 let scanner = null;
 
+
 const APPS_SCRIPT_URL =
   'https://script.google.com/macros/s/AKfycbwLJNTns2VnOebnan30cDWpad1tZaTtjI2g8B44HP6oj0M806NbzsZLcgn_9XkO-pwL/exec';
 
 
-document.getElementById('start').onclick = function () {
+function startScanner() {
 
   if (scanner) {
     return;
   }
 
-  scanner = new Html5Qrcode('reader');
+
+  document.getElementById('result').innerHTML =
+    '📷 Наведите камеру на штрихкод';
+
+
+  scanner =
+    new Html5Qrcode('reader');
+
 
   scanner.start(
 
-    {
-      facingMode: 'environment'
-    },
+    { facingMode: 'environment' },
 
     {
+
       fps: 10,
 
       qrbox: {
@@ -104,29 +131,41 @@ document.getElementById('start').onclick = function () {
       },
 
       formatsToSupport: [
+
         Html5QrcodeSupportedFormats.EAN_13,
+
         Html5QrcodeSupportedFormats.EAN_8,
+
         Html5QrcodeSupportedFormats.CODE_128,
+
         Html5QrcodeSupportedFormats.CODE_39
+
       ]
+
     },
 
-    function (decodedText) {
+
+    function(decodedText) {
+
 
       document.getElementById('result').innerHTML =
-        'Найден штрихкод: <b>' +
+        '✅ Штрихкод: <b>' +
         decodedText +
         '</b><br><br>Ищем товар...';
 
-      scanner.stop().then(function () {
+
+      scanner.stop().then(function() {
 
         scanner.clear();
+
         scanner = null;
+
 
         const url =
           APPS_SCRIPT_URL +
           '?barcode=' +
           encodeURIComponent(decodedText);
+
 
         window.location.href = url;
 
@@ -134,20 +173,51 @@ document.getElementById('start').onclick = function () {
 
     },
 
-    function () {
-      // Штрихкод пока не найден
+
+    function(errorMessage) {
+
+      // Игнорируем ошибки поиска штрихкода
+
     }
 
-  ).catch(function (error) {
+  )
+
+
+  .catch(function(error) {
 
     document.getElementById('result').innerHTML =
-      'Ошибка камеры: ' + error;
+      '❌ Не удалось включить камеру.<br><br>' +
+      error;
 
   });
 
-};
+}
+
+
+document.getElementById('start').onclick =
+  startScanner;
+
+
+// Если пришли со страницы товара
+// по кнопке "Сканировать следующий",
+// запускаем камеру автоматически.
+
+const params =
+  new URLSearchParams(window.location.search);
+
+
+if (params.get('scan') === '1') {
+
+  setTimeout(function() {
+
+    startScanner();
+
+  }, 300);
+
+}
 
 </script>
 
 </body>
+
 </html>
