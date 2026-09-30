@@ -15,6 +15,11 @@
 
   <style>
 
+    * {
+      box-sizing: border-box;
+    }
+
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -23,16 +28,19 @@
       color: #fff;
     }
 
+
     .container {
       max-width: 600px;
       margin: auto;
     }
 
+
     h1 {
       text-align: center;
-      font-size: 26px;
-      margin: 15px 0 25px;
+      font-size: 27px;
+      margin: 10px 0 25px;
     }
+
 
     button {
       width: 100%;
@@ -46,18 +54,29 @@
       color: #000;
     }
 
+
     #reader {
       margin-top: 20px;
       border-radius: 15px;
       overflow: hidden;
     }
 
+
+    #message {
+      margin-top: 20px;
+      text-align: center;
+      color: #aaa;
+      font-size: 17px;
+    }
+
+
     .card {
       margin-top: 25px;
       padding: 22px;
-      border-radius: 18px;
+      border-radius: 20px;
       background: #181818;
     }
+
 
     .name {
       font-size: 25px;
@@ -66,17 +85,20 @@
       margin-bottom: 25px;
     }
 
+
     .row {
       font-size: 18px;
       margin: 18px 0;
     }
 
-    .stock {
+
+    .value {
       display: block;
-      font-size: 34px;
+      font-size: 30px;
       font-weight: bold;
       margin-top: 5px;
     }
+
 
     .price {
       display: block;
@@ -85,11 +107,30 @@
       margin-top: 5px;
     }
 
-    .barcode {
-      color: #888;
-      font-size: 14px;
+
+    .updated {
       margin-top: 25px;
+      padding-top: 15px;
+      border-top: 1px solid #333;
+      color: #999;
+      font-size: 14px;
+      text-align: center;
     }
+
+
+    .barcode {
+      color: #666;
+      font-size: 13px;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+
+    .next {
+      margin-top: 15px;
+      font-size: 21px;
+    }
+
 
     .error {
       margin-top: 25px;
@@ -98,17 +139,19 @@
       background: #222;
       color: #ff6b6b;
       font-size: 18px;
+      text-align: center;
     }
 
-    .loading {
-      margin-top: 25px;
-      padding: 20px;
-      text-align: center;
-      font-size: 18px;
-    }
 
     .hidden {
       display: none;
+    }
+
+
+    .loading {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 18px;
     }
 
   </style>
@@ -120,10 +163,9 @@
 
 <div class="container">
 
+
   <h1>📦 Сканер товара</h1>
 
-
-  <!-- СКАНЕР -->
 
   <button
     id="start"
@@ -137,30 +179,26 @@
   <div id="reader"></div>
 
 
-  <!-- СООБЩЕНИЕ -->
-
   <div id="message">
 
-    Нажмите кнопку и наведите камеру на штрихкод
+    Нажмите кнопку и наведите камеру
+    на штрихкод
 
   </div>
 
 
-  <!-- РЕЗУЛЬТАТ -->
-
   <div id="product"></div>
 
 
-  <!-- СКАНИРОВАТЬ ЕЩЁ -->
-
   <button
     id="next"
-    class="hidden"
+    class="next hidden"
     type="button">
 
     📷 СКАНИРОВАТЬ СЛЕДУЮЩИЙ
 
   </button>
+
 
 </div>
 
@@ -178,14 +216,18 @@ let scanner = null;
 const startButton =
   document.getElementById('start');
 
+
 const nextButton =
   document.getElementById('next');
+
 
 const reader =
   document.getElementById('reader');
 
+
 const message =
   document.getElementById('message');
+
 
 const product =
   document.getElementById('product');
@@ -204,6 +246,7 @@ function startScanner() {
   nextButton.classList.add('hidden');
 
   startButton.classList.add('hidden');
+
 
   message.innerHTML =
     '📷 Наведите камеру на штрихкод';
@@ -263,10 +306,17 @@ function startScanner() {
 
     startButton.classList.remove('hidden');
 
+
     message.innerHTML =
+
       '<div class="error">' +
-      'Не удалось включить камеру.<br><br>' +
+
+      'Не удалось включить камеру.' +
+
+      '<br><br>' +
+
       error +
+
       '</div>';
 
   });
@@ -307,9 +357,13 @@ function stopScanner() {
 
 async function loadProduct(barcode) {
 
+
   message.innerHTML =
+
     '<div class="loading">' +
+
     '🔄 Ищем товар...' +
+
     '</div>';
 
 
@@ -321,7 +375,9 @@ async function loadProduct(barcode) {
       await fetch(
 
         API_URL +
+
         '?barcode=' +
+
         encodeURIComponent(barcode)
 
       );
@@ -343,6 +399,7 @@ async function loadProduct(barcode) {
 
     if (!data.success) {
 
+
       product.innerHTML =
 
         '<div class="error">' +
@@ -352,9 +409,11 @@ async function loadProduct(barcode) {
         '<br><br>' +
 
         'Штрихкод: ' +
-        barcode +
+
+        escapeHtml(barcode) +
 
         '</div>';
+
 
     }
 
@@ -364,6 +423,7 @@ async function loadProduct(barcode) {
       product.innerHTML =
 
         '<div class="card">' +
+
 
           '<div class="name">' +
 
@@ -376,7 +436,7 @@ async function loadProduct(barcode) {
 
             '<b>Доступный остаток:</b>' +
 
-            '<span class="stock">' +
+            '<span class="value">' +
 
               escapeHtml(data.available) +
 
@@ -389,7 +449,7 @@ async function loadProduct(barcode) {
 
             '<b>Остаток:</b>' +
 
-            '<span class="stock">' +
+            '<span class="value">' +
 
               escapeHtml(data.stock) +
 
@@ -413,6 +473,15 @@ async function loadProduct(barcode) {
           '</div>' +
 
 
+          '<div class="updated">' +
+
+            '🕐 Данные обновлены: ' +
+
+            escapeHtml(data.updatedAt) +
+
+          '</div>' +
+
+
           '<div class="barcode">' +
 
             'Штрихкод: ' +
@@ -421,6 +490,7 @@ async function loadProduct(barcode) {
 
           '</div>' +
 
+
         '</div>';
 
     }
@@ -428,7 +498,10 @@ async function loadProduct(barcode) {
 
     message.innerHTML = '';
 
-    nextButton.classList.remove('hidden');
+
+    nextButton.classList.remove(
+      'hidden'
+    );
 
 
   }
@@ -441,14 +514,18 @@ async function loadProduct(barcode) {
 
       '<div class="error">' +
 
-      'Не удалось получить данные.<br><br>' +
+      'Не удалось получить данные.' +
+
+      '<br><br>' +
 
       error.message +
 
       '</div>';
 
 
-    nextButton.classList.remove('hidden');
+    nextButton.classList.remove(
+      'hidden'
+    );
 
   }
 
@@ -483,9 +560,6 @@ nextButton.onclick =
 
 
 
-// Запускаем камеру сразу,
-// если пришли с параметром ?scan=1
-
 const params =
   new URLSearchParams(
     window.location.search
@@ -495,8 +569,11 @@ const params =
 if (params.get('scan') === '1') {
 
   setTimeout(
+
     startScanner,
+
     300
+
   );
 
 }
