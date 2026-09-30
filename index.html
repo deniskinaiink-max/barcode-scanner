@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Сканер штрихкода</title>
+
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #111;
+      color: white;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 26px;
+    }
+
+    button {
+      width: 100%;
+      padding: 18px;
+      margin-top: 15px;
+      font-size: 20px;
+      border: 0;
+      border-radius: 12px;
+      background: white;
+      color: black;
+    }
+
+    #reader {
+      margin-top: 20px;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #222;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>📷 Сканер штрихкода</h1>
+
+  <button id="start">
+    СКАНИРОВАТЬ ШТРИХКОД
+  </button>
+
+  <div id="reader"></div>
+
+  <div id="result">
+    Нажмите кнопку и разрешите доступ к камере
+  </div>
+
+</div>
+
+<script>
+
+let scanner = null;
+
+document.getElementById('start').onclick = function () {
+
+  if (scanner) {
+    return;
+  }
+
+  scanner = new Html5Qrcode("reader");
+
+  scanner.start(
+
+    {
+      facingMode: "environment"
+    },
+
+    {
+      fps: 10,
+
+      qrbox: {
+        width: 300,
+        height: 150
+      },
+
+      formatsToSupport: [
+        Html5QrcodeSupportedFormats.EAN_13,
+        Html5QrcodeSupportedFormats.EAN_8,
+        Html5QrcodeSupportedFormats.CODE_128,
+        Html5QrcodeSupportedFormats.CODE_39
+      ]
+    },
+
+    function (decodedText) {
+
+      document.getElementById('result').innerHTML =
+        "Штрихкод: <b>" + decodedText + "</b>";
+
+      scanner.stop().then(function () {
+        scanner.clear();
+        scanner = null;
+      });
+
+    },
+
+    function (errorMessage) {
+      // Пока штрихкод не найден — ничего не делаем
+    }
+
+  ).catch(function (error) {
+
+    document.getElementById('result').innerHTML =
+      "Ошибка камеры: " + error;
+
+  });
+
+};
+
+</script>
+
+</body>
+</html>
