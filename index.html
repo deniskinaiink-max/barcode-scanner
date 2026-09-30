@@ -61,14 +61,14 @@
 
   <h1>📷 Сканер штрихкода</h1>
 
-  <button id="start">
+  <button id="start" type="button">
     СКАНИРОВАТЬ ШТРИХКОД
   </button>
 
   <div id="reader"></div>
 
   <div id="result">
-    Нажмите кнопку и разрешите доступ к камере
+    Нажмите кнопку и наведите камеру на штрихкод
   </div>
 
 </div>
@@ -77,18 +77,22 @@
 
 let scanner = null;
 
+const APPS_SCRIPT_URL =
+  'https://script.google.com/macros/s/AKfycbwLJNTns2VnOebnan30cDWpad1tZaTtjI2g8B44HP6oj0M806NbzsZLcgn_9XkO-pwL/exec';
+
+
 document.getElementById('start').onclick = function () {
 
   if (scanner) {
     return;
   }
 
-  scanner = new Html5Qrcode("reader");
+  scanner = new Html5Qrcode('reader');
 
   scanner.start(
 
     {
-      facingMode: "environment"
+      facingMode: 'environment'
     },
 
     {
@@ -110,23 +114,34 @@ document.getElementById('start').onclick = function () {
     function (decodedText) {
 
       document.getElementById('result').innerHTML =
-        "Штрихкод: <b>" + decodedText + "</b>";
+        'Найден штрихкод: <b>' +
+        decodedText +
+        '</b><br><br>Ищем товар...';
 
       scanner.stop().then(function () {
+
         scanner.clear();
         scanner = null;
+
+        const url =
+          APPS_SCRIPT_URL +
+          '?barcode=' +
+          encodeURIComponent(decodedText);
+
+        window.location.href = url;
+
       });
 
     },
 
-    function (errorMessage) {
-      // Пока штрихкод не найден — ничего не делаем
+    function () {
+      // Штрихкод пока не найден
     }
 
   ).catch(function (error) {
 
     document.getElementById('result').innerHTML =
-      "Ошибка камеры: " + error;
+      'Ошибка камеры: ' + error;
 
   });
 
