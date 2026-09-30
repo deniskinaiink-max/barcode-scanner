@@ -13,6 +13,7 @@
 
   <script src="https://unpkg.com/html5-qrcode"></script>
 
+
   <style>
 
     * {
@@ -161,6 +162,7 @@
 
 <body>
 
+
 <div class="container">
 
 
@@ -236,6 +238,7 @@ const product =
 
 function startScanner() {
 
+
   if (scanner) {
     return;
   }
@@ -243,7 +246,9 @@ function startScanner() {
 
   product.innerHTML = '';
 
+
   nextButton.classList.add('hidden');
+
 
   startButton.classList.add('hidden');
 
@@ -302,7 +307,9 @@ function startScanner() {
 
   .catch(function(error) {
 
+
     scanner = null;
+
 
     startButton.classList.remove('hidden');
 
@@ -326,6 +333,7 @@ function startScanner() {
 
 
 function stopScanner() {
+
 
   if (!scanner) {
     return;
@@ -355,7 +363,7 @@ function stopScanner() {
 
 
 
-async function loadProduct(barcode) {
+function loadProduct(barcode) {
 
 
   message.innerHTML =
@@ -367,37 +375,31 @@ async function loadProduct(barcode) {
     '</div>';
 
 
-  try {
+  // Имя функции, которую вызовет Apps Script
+
+  const callbackName =
+    'receiveProduct';
 
 
-    const response =
+  // Если предыдущий запрос оставил callback
 
-      await fetch(
+  window[callbackName] = function(data) {
 
-        API_URL +
 
-        '?barcode=' +
+    // Удаляем временный script
 
-        encodeURIComponent(barcode)
-
+    const oldScript =
+      document.getElementById(
+        'apiScript'
       );
 
 
-    if (!response.ok) {
-
-      throw new Error(
-        'Ошибка сервера: ' +
-        response.status
-      );
-
+    if (oldScript) {
+      oldScript.remove();
     }
 
 
-    const data =
-      await response.json();
-
-
-    if (!data.success) {
+    if (!data || !data.success) {
 
 
       product.innerHTML =
@@ -414,8 +416,8 @@ async function loadProduct(barcode) {
 
         '</div>';
 
-
     }
+
 
     else {
 
@@ -503,11 +505,37 @@ async function loadProduct(barcode) {
       'hidden'
     );
 
+  };
 
-  }
+
+  // Создаём script-запрос.
+  // В отличие от fetch(), он не блокируется CORS.
+
+  const script =
+    document.createElement('script');
 
 
-  catch(error) {
+  script.id =
+    'apiScript';
+
+
+  script.src =
+
+    API_URL +
+
+    '?barcode=' +
+
+    encodeURIComponent(barcode) +
+
+    '&callback=' +
+
+    callbackName;
+
+
+  script.onerror = function() {
+
+
+    script.remove();
 
 
     message.innerHTML =
@@ -518,7 +546,7 @@ async function loadProduct(barcode) {
 
       '<br><br>' +
 
-      error.message +
+      'Ошибка соединения с сервером' +
 
       '</div>';
 
@@ -527,13 +555,17 @@ async function loadProduct(barcode) {
       'hidden'
     );
 
-  }
+  };
+
+
+  document.body.appendChild(script);
 
 }
 
 
 
 function escapeHtml(value) {
+
 
   return String(value ?? '')
 
@@ -559,7 +591,6 @@ nextButton.onclick =
   startScanner;
 
 
-
 const params =
   new URLSearchParams(
     window.location.search
@@ -567,6 +598,7 @@ const params =
 
 
 if (params.get('scan') === '1') {
+
 
   setTimeout(
 
@@ -579,6 +611,7 @@ if (params.get('scan') === '1') {
 }
 
 </script>
+
 
 </body>
 
