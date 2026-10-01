@@ -20,229 +20,121 @@
     }
 
     body {
-
       font-family: Arial, sans-serif;
-
       margin: 0;
-
       padding: 20px;
-
       background: #000;
-
       color: #fff;
-
     }
 
     .container {
-
       max-width: 600px;
-
       margin: auto;
-
     }
 
     h1 {
-
       text-align: center;
-
       font-size: 27px;
-
-      margin: 10px 0 15px;
-
+      margin: 10px 0 25px;
     }
 
     button {
-
       width: 100%;
-
       padding: 18px;
-
       margin-top: 15px;
-
       font-size: 20px;
-
       font-weight: bold;
-
       border: 0;
-
       border-radius: 12px;
-
       background: #fff;
-
       color: #000;
-
     }
 
     #reader {
-
       margin-top: 20px;
-
       border-radius: 15px;
-
       overflow: hidden;
-
     }
 
     #message {
-
       margin-top: 20px;
-
       text-align: center;
-
       color: #aaa;
-
       font-size: 17px;
-
-    }
-
-    .status {
-
-      text-align: center;
-
-      color: #999;
-
-      font-size: 14px;
-
-      margin-bottom: 15px;
-
     }
 
     .card {
-
       margin-top: 25px;
-
       padding: 22px;
-
       border-radius: 20px;
-
       background: #181818;
-
     }
 
     .name {
-
       font-size: 25px;
-
       font-weight: bold;
-
       line-height: 1.2;
-
       margin-bottom: 25px;
-
     }
 
     .row {
-
       font-size: 18px;
-
       margin: 18px 0;
-
     }
 
     .value {
-
       display: block;
-
       font-size: 30px;
-
       font-weight: bold;
-
       margin-top: 5px;
-
     }
 
     .price {
-
       display: block;
-
       font-size: 30px;
-
       font-weight: bold;
-
       margin-top: 5px;
-
     }
 
     .updated {
-
       margin-top: 25px;
-
       padding-top: 15px;
-
       border-top: 1px solid #333;
-
       color: #999;
-
       font-size: 14px;
-
       text-align: center;
-
     }
 
     .barcode {
-
       color: #666;
-
       font-size: 13px;
-
       text-align: center;
-
       margin-top: 8px;
-
     }
 
     .next {
-
       margin-top: 15px;
-
       font-size: 21px;
-
-    }
-
-    .refresh {
-
-      background: #222;
-
-      color: #fff;
-
-      font-size: 16px;
-
-      padding: 13px;
-
     }
 
     .error {
-
       margin-top: 25px;
-
       padding: 20px;
-
       border-radius: 15px;
-
       background: #222;
-
       color: #ff6b6b;
-
       font-size: 18px;
-
       text-align: center;
-
     }
 
     .hidden {
-
       display: none;
-
     }
 
     .loading {
-
       margin-top: 25px;
-
       text-align: center;
-
       font-size: 18px;
-
     }
 
   </style>
@@ -256,26 +148,25 @@
 
   <h1>📦 Сканер товара</h1>
 
-  <div
-    id="databaseStatus"
-    class="status">
-    🔄 Проверяем базу...
-  </div>
-
   <button
     id="start"
-    type="button"
-    class="hidden">
+    type="button">
 
     📷 СКАНИРОВАТЬ ШТРИХКОД
 
   </button>
 
+
   <div id="reader"></div>
 
-  <div id="message"></div>
+
+  <div id="message">
+    Нажмите кнопку и наведите камеру на штрихкод
+  </div>
+
 
   <div id="product"></div>
+
 
   <button
     id="next"
@@ -286,19 +177,11 @@
 
   </button>
 
-  <button
-    id="refresh"
-    class="refresh hidden"
-    type="button">
-
-    🔄 ОБНОВИТЬ БАЗУ
-
-  </button>
-
 </div>
 
 
 <script>
+
 
 const API_URL =
   'https://script.google.com/macros/s/AKfycbwLJNTns2VnOebnan30cDWpad1tZaTtjI2g8B44HP6oj0M806NbzsZLcgn_9XkO-pwL/exec';
@@ -306,21 +189,12 @@ const API_URL =
 
 let scanner = null;
 
-let products = new Map();
-
-let databaseUpdatedAt = '';
-
-let databaseLoaded = false;
-
 
 const startButton =
   document.getElementById('start');
 
 const nextButton =
   document.getElementById('next');
-
-const refreshButton =
-  document.getElementById('refresh');
 
 const reader =
   document.getElementById('reader');
@@ -331,476 +205,17 @@ const message =
 const product =
   document.getElementById('product');
 
-const databaseStatus =
-  document.getElementById('databaseStatus');
 
-
-// ==========================================
-// INDEXED DB
-// ==========================================
-
-const DB_NAME =
-  'ScanInkDatabase';
-
-const DB_VERSION =
-  1;
-
-const STORE_NAME =
-  'products';
-
-
-function openDatabase() {
-
-  return new Promise(function(resolve, reject) {
-
-    const request =
-      indexedDB.open(
-        DB_NAME,
-        DB_VERSION
-      );
-
-    request.onupgradeneeded =
-      function(event) {
-
-        const db =
-          event.target.result;
-
-        if (
-          !db.objectStoreNames.contains(
-            STORE_NAME
-          )
-        ) {
-
-          db.createObjectStore(
-            STORE_NAME,
-            {
-              keyPath: 'barcode'
-            }
-          );
-
-        }
-
-      };
-
-    request.onsuccess =
-      function(event) {
-
-        resolve(
-          event.target.result
-        );
-
-      };
-
-    request.onerror =
-      function() {
-
-        reject(
-          request.error
-        );
-
-      };
-
-  });
-
-}
-
-
-// ==========================================
-// ЗАГРУЗИТЬ БАЗУ ИЗ INDEXED DB
-// ==========================================
-
-async function loadLocalDatabase() {
-
-  const db =
-    await openDatabase();
-
-  return new Promise(function(
-    resolve,
-    reject
-  ) {
-
-    const transaction =
-      db.transaction(
-        STORE_NAME,
-        'readonly'
-      );
-
-    const store =
-      transaction.objectStore(
-        STORE_NAME
-      );
-
-    const request =
-      store.getAll();
-
-    request.onsuccess =
-      function() {
-
-        resolve(
-          request.result || []
-        );
-
-      };
-
-    request.onerror =
-      function() {
-
-        reject(
-          request.error
-        );
-
-      };
-
-  });
-
-}
-
-
-// ==========================================
-// СОХРАНИТЬ БАЗУ В INDEXED DB
-// ==========================================
-
-async function saveDatabase(list) {
-
-  const db =
-    await openDatabase();
-
-  return new Promise(function(
-    resolve,
-    reject
-  ) {
-
-    const transaction =
-      db.transaction(
-        STORE_NAME,
-        'readwrite'
-      );
-
-    const store =
-      transaction.objectStore(
-        STORE_NAME
-      );
-
-    store.clear();
-
-    for (
-      let i = 0;
-      i < list.length;
-      i++
-    ) {
-
-      store.put(
-        list[i]
-      );
-
-    }
-
-    transaction.oncomplete =
-      function() {
-
-        resolve();
-
-      };
-
-    transaction.onerror =
-      function() {
-
-        reject(
-          transaction.error
-        );
-
-      };
-
-  });
-
-}
-
-
-// ==========================================
-// ПОЛУЧИТЬ БАЗУ С СЕРВЕРА
-// ==========================================
-
-function downloadDatabase() {
-
-  return new Promise(function(
-    resolve,
-    reject
-  ) {
-
-    const callbackName =
-      'receiveDatabase';
-
-    const oldScript =
-      document.getElementById(
-        'databaseScript'
-      );
-
-    if (oldScript) {
-      oldScript.remove();
-    }
-
-    window[callbackName] =
-      function(data) {
-
-        const script =
-          document.getElementById(
-            'databaseScript'
-          );
-
-        if (script) {
-          script.remove();
-        }
-
-        delete window[callbackName];
-
-        if (
-          !data ||
-          !data.success
-        ) {
-
-          reject(
-            new Error(
-              data && data.error
-                ? data.error
-                : 'Ошибка загрузки базы'
-            )
-          );
-
-          return;
-
-        }
-
-        resolve(data);
-
-      };
-
-
-    const script =
-      document.createElement('script');
-
-    script.id =
-      'databaseScript';
-
-    script.src =
-      API_URL +
-      '?mode=database' +
-      '&callback=' +
-      callbackName;
-
-    script.onerror =
-      function() {
-
-        script.remove();
-
-        delete window[callbackName];
-
-        reject(
-          new Error(
-            'Не удалось загрузить базу'
-          )
-        );
-
-      };
-
-    document.body.appendChild(
-      script
-    );
-
-  });
-
-}
-
-
-// ==========================================
-// ИНИЦИАЛИЗАЦИЯ БАЗЫ
-// ==========================================
-
-async function initializeDatabase() {
-
-  databaseStatus.innerHTML =
-    '🔄 Загружаем базу товаров...';
-
-  startButton.classList.add(
-    'hidden'
-  );
-
-  try {
-
-    const local =
-      await loadLocalDatabase();
-
-    if (
-      local &&
-      local.length > 0
-    ) {
-
-      products.clear();
-
-      for (
-        let i = 0;
-        i < local.length;
-        i++
-      ) {
-
-        products.set(
-          String(local[i].barcode),
-          local[i]
-        );
-
-      }
-
-      databaseLoaded = true;
-
-      databaseStatus.innerHTML =
-        '✅ База загружена: ' +
-        local.length +
-        ' товаров';
-
-      startButton.classList.remove(
-        'hidden'
-      );
-
-      // Проверяем свежесть базы
-      checkServerDatabase();
-
-      return;
-
-    }
-
-  } catch (error) {
-
-    console.log(
-      'Локальная база недоступна',
-      error
-    );
-
-  }
-
-
-  await refreshDatabase();
-
-}
-
-
-// ==========================================
-// ОБНОВИТЬ БАЗУ
-// ==========================================
-
-async function refreshDatabase() {
-
-  databaseStatus.innerHTML =
-    '🔄 Загружаем актуальную базу...';
-
-  startButton.classList.add(
-    'hidden'
-  );
-
-  refreshButton.classList.add(
-    'hidden'
-  );
-
-  try {
-
-    const data =
-      await downloadDatabase();
-
-    await saveDatabase(
-      data.products
-    );
-
-    products.clear();
-
-    for (
-      let i = 0;
-      i < data.products.length;
-      i++
-    ) {
-
-      products.set(
-        String(
-          data.products[i].barcode
-        ),
-        data.products[i]
-      );
-
-    }
-
-    databaseUpdatedAt =
-      data.updatedAt || '';
-
-    databaseLoaded = true;
-
-    databaseStatus.innerHTML =
-      '✅ База: ' +
-      data.products.length +
-      ' товаров' +
-      (
-        databaseUpdatedAt
-          ? ' • ' + databaseUpdatedAt
-          : ''
-      );
-
-    startButton.classList.remove(
-      'hidden'
-    );
-
-    message.innerHTML =
-      'Нажмите кнопку и наведите камеру на штрихкод';
-
-  } catch (error) {
-
-    console.error(error);
-
-    databaseStatus.innerHTML =
-      '❌ Не удалось загрузить базу';
-
-    message.innerHTML =
-      '<div class="error">' +
-      'Не удалось загрузить базу товаров.' +
-      '<br><br>' +
-      escapeHtml(
-        error.message
-      ) +
-      '</div>';
-
-  }
-
-}
-
-
-// ==========================================
-// ПРОВЕРКА АКТУАЛЬНОСТИ
-// ==========================================
-
-async function checkServerDatabase() {
-
-  // Пока не скачиваем базу повторно.
-  // Здесь просто оставляем локальную базу.
-  //
-  // Позже сюда можно добавить
-  // проверку версии базы.
-
-}
-
-
-// ==========================================
-// СКАНЕР
-// ==========================================
+// ======================================================
+// ЗАПУСК СКАНЕРА
+// ======================================================
 
 function startScanner() {
-
-  if (!databaseLoaded) {
-
-    message.innerHTML =
-      '🔄 База ещё загружается...';
-
-    return;
-
-  }
 
   if (scanner) {
     return;
   }
+
 
   product.innerHTML = '';
 
@@ -808,21 +223,20 @@ function startScanner() {
     'hidden'
   );
 
-  refreshButton.classList.add(
-    'hidden'
-  );
-
   startButton.classList.add(
     'hidden'
   );
 
+
   message.innerHTML =
     '📷 Наведите камеру на штрихкод';
+
 
   scanner =
     new Html5Qrcode(
       'reader'
     );
+
 
   scanner.start(
 
@@ -862,7 +276,7 @@ function startScanner() {
 
       stopScanner();
 
-      findLocalProduct(
+      loadProduct(
         decodedText
       );
 
@@ -871,6 +285,7 @@ function startScanner() {
     function() {}
 
   )
+
   .catch(function(error) {
 
     scanner = null;
@@ -880,10 +295,15 @@ function startScanner() {
     );
 
     message.innerHTML =
+
       '<div class="error">' +
+
       'Не удалось включить камеру.' +
+
       '<br><br>' +
+
       escapeHtml(error) +
+
       '</div>';
 
   });
@@ -891,15 +311,16 @@ function startScanner() {
 }
 
 
-// ==========================================
+// ======================================================
 // ОСТАНОВКА СКАНЕРА
-// ==========================================
+// ======================================================
 
 function stopScanner() {
 
   if (!scanner) {
     return;
   }
+
 
   scanner
     .stop()
@@ -916,124 +337,252 @@ function stopScanner() {
 
     });
 
+
   reader.innerHTML = '';
 
 }
 
 
-// ==========================================
-// ПОИСК В ТЕЛЕФОНЕ
-// ==========================================
+// ======================================================
+// ПОЛУЧЕНИЕ ТОВАРА
+// ======================================================
 
-function findLocalProduct(
+function loadProduct(
   barcode
 ) {
 
-  barcode =
-    String(barcode).trim();
+  message.innerHTML =
 
-  message.innerHTML = '';
+    '<div class="loading">' +
 
-  // ВАЖНО:
-  // здесь нет обращения к Google.
-  // Ищем непосредственно в памяти телефона.
+    '🔄 Ищем товар...' +
 
-  const data =
-    products.get(barcode);
+    '</div>';
 
-  if (!data) {
 
-    product.innerHTML =
-      '<div class="error">' +
-      'Товар не найден' +
-      '<br><br>' +
-      'Штрихкод: ' +
-      escapeHtml(barcode) +
-      '</div>';
+  const callbackName =
+    'receiveProduct';
 
-  } else {
 
-    product.innerHTML =
+  // Удаляем старый запрос
+  const oldScript =
+    document.getElementById(
+      'apiScript'
+    );
 
-      '<div class="card">' +
+  if (oldScript) {
+    oldScript.remove();
+  }
 
-        '<div class="name">' +
-          escapeHtml(data.name) +
-        '</div>' +
 
-        '<div class="row">' +
+  // ====================================================
+  // ОТВЕТ ОТ APPS SCRIPT
+  // ====================================================
 
-          '<b>Доступный остаток:</b>' +
+  window[callbackName] =
+    function(data) {
 
-          '<span class="value">' +
-            escapeHtml(
-              data.available
-            ) +
-          '</span>' +
+      const script =
+        document.getElementById(
+          'apiScript'
+        );
 
-        '</div>' +
+      if (script) {
+        script.remove();
+      }
 
-        '<div class="row">' +
 
-          '<b>Остаток:</b>' +
+      delete window[callbackName];
 
-          '<span class="value">' +
-            escapeHtml(
-              data.stock
-            ) +
-          '</span>' +
 
-        '</div>' +
+      if (
+        !data ||
+        !data.success
+      ) {
 
-        '<div class="row">' +
+        product.innerHTML =
 
-          '<b>Цена:</b>' +
+          '<div class="error">' +
 
-          '<span class="price">' +
-            escapeHtml(
-              data.price
-            ) +
-            ' ₽' +
-          '</span>' +
+          'Товар не найден' +
 
-        '</div>' +
-
-        '<div class="updated">' +
-
-          '🕐 Данные обновлены: ' +
-
-          escapeHtml(
-            data.updatedAt
-          ) +
-
-        '</div>' +
-
-        '<div class="barcode">' +
+          '<br><br>' +
 
           'Штрихкод: ' +
 
           escapeHtml(
-            data.barcode
+            barcode
           ) +
 
-        '</div>' +
+          '</div>';
 
-      '</div>';
+      } else {
 
-  }
+        product.innerHTML =
 
-  nextButton.classList.remove(
-    'hidden'
+          '<div class="card">' +
+
+            '<div class="name">' +
+
+              escapeHtml(
+                data.name
+              ) +
+
+            '</div>' +
+
+
+            '<div class="row">' +
+
+              '<b>Доступный остаток:</b>' +
+
+              '<span class="value">' +
+
+                escapeHtml(
+                  data.available
+                ) +
+
+              '</span>' +
+
+            '</div>' +
+
+
+            '<div class="row">' +
+
+              '<b>Остаток:</b>' +
+
+              '<span class="value">' +
+
+                escapeHtml(
+                  data.stock
+                ) +
+
+              '</span>' +
+
+            '</div>' +
+
+
+            '<div class="row">' +
+
+              '<b>Цена:</b>' +
+
+              '<span class="price">' +
+
+                escapeHtml(
+                  data.price
+                ) +
+
+                ' ₽' +
+
+              '</span>' +
+
+            '</div>' +
+
+
+            '<div class="updated">' +
+
+              '🕐 Данные обновлены: ' +
+
+              escapeHtml(
+                data.updatedAt
+              ) +
+
+            '</div>' +
+
+
+            '<div class="barcode">' +
+
+              'Штрихкод: ' +
+
+              escapeHtml(
+                data.barcode
+              ) +
+
+            '</div>' +
+
+          '</div>';
+
+      }
+
+
+      message.innerHTML = '';
+
+      nextButton.classList.remove(
+        'hidden'
+      );
+
+    };
+
+
+  // ====================================================
+  // ОТПРАВЛЯЕМ ТОЛЬКО ШТРИХКОД
+  // ====================================================
+
+  const script =
+    document.createElement(
+      'script'
+    );
+
+
+  script.id =
+    'apiScript';
+
+
+  script.src =
+    API_URL +
+
+    '?barcode=' +
+
+    encodeURIComponent(
+      barcode
+    ) +
+
+    '&callback=' +
+
+    callbackName;
+
+
+  script.onerror =
+    function() {
+
+      script.remove();
+
+      delete window[callbackName];
+
+
+      message.innerHTML =
+
+        '<div class="error">' +
+
+        'Не удалось получить данные.' +
+
+        '<br><br>' +
+
+        'Ошибка соединения с сервером' +
+
+        '</div>';
+
+
+      nextButton.classList.remove(
+        'hidden'
+      );
+
+    };
+
+
+  document.body.appendChild(
+    script
   );
 
 }
 
 
-// ==========================================
-// HTML ЭКРАНИРОВАНИЕ
-// ==========================================
+// ======================================================
+// ЭКРАНИРОВАНИЕ HTML
+// ======================================================
 
-function escapeHtml(value) {
+function escapeHtml(
+  value
+) {
 
   return String(
     value ?? ''
@@ -1067,25 +616,39 @@ function escapeHtml(value) {
 }
 
 
-// ==========================================
+// ======================================================
 // КНОПКИ
-// ==========================================
+// ======================================================
 
 startButton.onclick =
   startScanner;
 
+
 nextButton.onclick =
   startScanner;
 
-refreshButton.onclick =
-  refreshDatabase;
+
+// ======================================================
+// АВТОСКАНИРОВАНИЕ
+// ======================================================
+
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
 
 
-// ==========================================
-// ЗАПУСК
-// ==========================================
+if (
+  params.get('scan') === '1'
+) {
 
-initializeDatabase();
+  setTimeout(
+    startScanner,
+    300
+  );
+
+}
+
 
 </script>
 
