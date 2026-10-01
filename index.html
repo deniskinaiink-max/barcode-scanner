@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-
   <meta charset="UTF-8">
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1">
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+  >
 
-  <title>Сканер товара</title>
+  <title>Стройцентр Инком — Сканер</title>
 
   <script src="https://unpkg.com/html5-qrcode"></script>
 
@@ -20,216 +19,678 @@
     }
 
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
       padding: 20px;
       background: #000;
       color: #fff;
+      font-family: Arial, sans-serif;
     }
 
     .container {
-      max-width: 600px;
-      margin: auto;
+      max-width: 500px;
+      margin: 0 auto;
     }
 
     h1 {
-      text-align: center;
-      font-size: 27px;
-      margin: 10px 0 25px;
+      font-size: 22px;
+      margin: 0 0 8px;
+    }
+
+    .status {
+      color: #aaa;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    #reader {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 18px;
+      background: #151515;
+      border-radius: 12px;
+      display: none;
+    }
+
+    .name {
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 1.3;
+      margin-bottom: 15px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 9px 0;
+      border-bottom: 1px solid #292929;
+    }
+
+    .row:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      color: #999;
+    }
+
+    .value {
+      text-align: right;
+      font-weight: bold;
     }
 
     button {
       width: 100%;
-      padding: 18px;
-      margin-top: 15px;
-      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 12px;
+      font-size: 16px;
       font-weight: bold;
-      border: 0;
-      border-radius: 12px;
       background: #fff;
       color: #000;
+      cursor: pointer;
     }
 
-    #reader {
-      margin-top: 20px;
-      border-radius: 15px;
-      overflow: hidden;
+    button:active {
+      opacity: 0.7;
     }
 
-    #message {
-      margin-top: 20px;
-      text-align: center;
-      color: #aaa;
-      font-size: 17px;
+    .secondary {
+      background: #222;
+      color: #fff;
+      border: 1px solid #444;
     }
 
-    .card {
-      margin-top: 25px;
-      padding: 22px;
-      border-radius: 20px;
-      background: #181818;
-    }
-
-    .name {
-      font-size: 25px;
-      font-weight: bold;
-      line-height: 1.2;
-      margin-bottom: 25px;
-    }
-
-    .row {
-      font-size: 18px;
-      margin: 18px 0;
-    }
-
-    .value {
-      display: block;
-      font-size: 30px;
-      font-weight: bold;
-      margin-top: 5px;
-    }
-
-    .price {
-      display: block;
-      font-size: 30px;
-      font-weight: bold;
-      margin-top: 5px;
-    }
-
-    .updated {
-      margin-top: 25px;
-      padding-top: 15px;
-      border-top: 1px solid #333;
-      color: #999;
-      font-size: 14px;
-      text-align: center;
-    }
-
-    .barcode {
-      color: #666;
-      font-size: 13px;
-      text-align: center;
-      margin-top: 8px;
-    }
-
-    .next {
+    .database {
       margin-top: 15px;
-      font-size: 21px;
+      color: #777;
+      font-size: 12px;
+      text-align: center;
+      line-height: 1.5;
     }
 
     .error {
-      margin-top: 25px;
-      padding: 20px;
-      border-radius: 15px;
-      background: #222;
-      color: #ff6b6b;
-      font-size: 18px;
-      text-align: center;
-    }
-
-    .hidden {
+      margin-top: 15px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #1c1c1c;
+      color: #aaa;
       display: none;
     }
 
-    .loading {
-      margin-top: 25px;
-      text-align: center;
-      font-size: 18px;
-    }
-
   </style>
-
 </head>
-
 
 <body>
 
 <div class="container">
 
-  <h1>📦 Сканер товара</h1>
+  <h1>Сканер товара</h1>
 
-  <button
-    id="start"
-    type="button">
-
-    📷 СКАНИРОВАТЬ ШТРИХКОД
-
-  </button>
-
+  <div id="status" class="status">
+    Проверяем локальную базу...
+  </div>
 
   <div id="reader"></div>
 
+  <div id="error" class="error"></div>
 
-  <div id="message">
-    Нажмите кнопку и наведите камеру на штрихкод
+  <div id="result" class="result">
+
+    <div id="productName" class="name"></div>
+
+    <div class="row">
+      <div class="label">Штрихкод</div>
+      <div id="productBarcode" class="value"></div>
+    </div>
+
+    <div class="row">
+      <div class="label">Доступный остаток</div>
+      <div id="productAvailable" class="value"></div>
+    </div>
+
+    <div class="row">
+      <div class="label">Остаток</div>
+      <div id="productStock" class="value"></div>
+    </div>
+
+    <div class="row">
+      <div class="label">Цена</div>
+      <div id="productPrice" class="value"></div>
+    </div>
+
+    <button onclick="scanNext()">
+      Сканировать следующий
+    </button>
+
   </div>
 
-
-  <div id="product"></div>
-
-
   <button
-    id="next"
-    class="next hidden"
-    type="button">
-
-    📷 СКАНИРОВАТЬ СЛЕДУЮЩИЙ
-
+    id="refreshButton"
+    class="secondary"
+    onclick="updateDatabase()"
+    style="display:none;"
+  >
+    Обновить базу
   </button>
+
+  <div id="databaseInfo" class="database"></div>
 
 </div>
 
 
 <script>
 
+// =====================================================
+// НАСТРОЙКИ
+// =====================================================
 
 const API_URL =
   'https://script.google.com/macros/s/AKfycbwLJNTns2VnOebnan30cDWpad1tZaTtjI2g8B44HP6oj0M806NbzsZLcgn_9XkO-pwL/exec';
 
 
+// =====================================================
+// ЛОКАЛЬНАЯ БАЗА
+// =====================================================
+
+const DB_NAME = 'ScanInkDatabase';
+
+const DB_VERSION = 1;
+
+const STORE_NAME = 'database';
+
+let database = null;
+
+let products = {};
+
 let scanner = null;
 
-
-const startButton =
-  document.getElementById('start');
-
-const nextButton =
-  document.getElementById('next');
-
-const reader =
-  document.getElementById('reader');
-
-const message =
-  document.getElementById('message');
-
-const product =
-  document.getElementById('product');
+let scannerRunning = false;
 
 
-// ======================================================
-// ЗАПУСК СКАНЕРА
-// ======================================================
+// =====================================================
+// DOM
+// =====================================================
 
-function startScanner() {
+const statusElement =
+  document.getElementById('status');
 
-  if (scanner) {
-    return;
+const resultElement =
+  document.getElementById('result');
+
+const errorElement =
+  document.getElementById('error');
+
+const databaseInfoElement =
+  document.getElementById('databaseInfo');
+
+const refreshButton =
+  document.getElementById('refreshButton');
+
+
+// =====================================================
+// INDEXED DB
+// =====================================================
+
+function openDatabase() {
+
+  return new Promise((resolve, reject) => {
+
+    const request =
+      indexedDB.open(
+        DB_NAME,
+        DB_VERSION
+      );
+
+
+    request.onupgradeneeded =
+      function(event) {
+
+        const db =
+          event.target.result;
+
+        if (
+          !db.objectStoreNames.contains(
+            STORE_NAME
+          )
+        ) {
+
+          db.createObjectStore(
+            STORE_NAME
+          );
+
+        }
+
+      };
+
+
+    request.onsuccess =
+      function(event) {
+
+        resolve(
+          event.target.result
+        );
+
+      };
+
+
+    request.onerror =
+      function() {
+
+        reject(
+          request.error
+        );
+
+      };
+
+  });
+
+}
+
+
+// =====================================================
+// ПОЛУЧИТЬ ЛОКАЛЬНУЮ БАЗУ
+// =====================================================
+
+function getLocalDatabase(db) {
+
+  return new Promise((resolve, reject) => {
+
+    const transaction =
+      db.transaction(
+        STORE_NAME,
+        'readonly'
+      );
+
+    const store =
+      transaction.objectStore(
+        STORE_NAME
+      );
+
+    const request =
+      store.get('products');
+
+
+    request.onsuccess =
+      function() {
+
+        resolve(
+          request.result || null
+        );
+
+      };
+
+
+    request.onerror =
+      function() {
+
+        reject(
+          request.error
+        );
+
+      };
+
+  });
+
+}
+
+
+// =====================================================
+// СОХРАНИТЬ БАЗУ
+// =====================================================
+
+function saveLocalDatabase(
+  db,
+  data
+) {
+
+  return new Promise((resolve, reject) => {
+
+    const transaction =
+      db.transaction(
+        STORE_NAME,
+        'readwrite'
+      );
+
+    const store =
+      transaction.objectStore(
+        STORE_NAME
+      );
+
+
+    const request =
+      store.put(
+        data,
+        'products'
+      );
+
+
+    request.onsuccess =
+      function() {
+
+        resolve();
+
+      };
+
+
+    request.onerror =
+      function() {
+
+        reject(
+          request.error
+        );
+
+      };
+
+  });
+
+}
+
+
+// =====================================================
+// ЗАПУСК
+// =====================================================
+
+async function init() {
+
+  try {
+
+    database =
+      await openDatabase();
+
+
+    const localData =
+      await getLocalDatabase(
+        database
+      );
+
+
+    if (localData) {
+
+      console.log(
+        'Найдена локальная база:',
+        localData
+      );
+
+
+      products =
+        localData.products || {};
+
+
+      showDatabaseInfo(
+        localData
+      );
+
+
+      statusElement.textContent =
+        'База загружена. Можно сканировать.';
+
+
+      refreshButton.style.display =
+        'block';
+
+
+      startScanner();
+
+
+    } else {
+
+      statusElement.textContent =
+        'Локальной базы нет. Загружаем базу...';
+
+
+      await updateDatabase(
+        false
+      );
+
+    }
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    showError(
+      'Не удалось открыть локальную базу: ' +
+      error.message
+    );
+
+  }
+
+}
+
+
+// =====================================================
+// ЗАГРУЗКА JSON-БАЗЫ
+// =====================================================
+
+function loadDatabaseFromServer() {
+
+  return new Promise((resolve, reject) => {
+
+    const callbackName =
+      'receiveScanInkDatabase_' +
+      Date.now();
+
+
+    window[callbackName] =
+      function(data) {
+
+        try {
+
+          delete window[callbackName];
+
+          script.remove();
+
+          resolve(data);
+
+        } catch (error) {
+
+          reject(error);
+
+        }
+
+      };
+
+
+    const script =
+      document.createElement(
+        'script'
+      );
+
+
+    script.src =
+      API_URL +
+      '?mode=database' +
+      '&callback=' +
+      callbackName;
+
+
+    script.onerror =
+      function() {
+
+        delete window[callbackName];
+
+        script.remove();
+
+        reject(
+          new Error(
+            'Не удалось загрузить базу'
+          )
+        );
+
+      };
+
+
+    document.body.appendChild(
+      script
+    );
+
+  });
+
+}
+
+
+// =====================================================
+// ОБНОВИТЬ БАЗУ
+// =====================================================
+
+async function updateDatabase(
+  showMessage = true
+) {
+
+  try {
+
+    refreshButton.disabled =
+      true;
+
+
+    statusElement.textContent =
+      'Загружаем актуальную базу...';
+
+
+    if (showMessage) {
+
+      resultElement.style.display =
+        'none';
+
+    }
+
+
+    const data =
+      await loadDatabaseFromServer();
+
+
+    if (
+      !data ||
+      !data.products
+    ) {
+
+      throw new Error(
+        'Сервер вернул некорректную базу'
+      );
+
+    }
+
+
+    products =
+      data.products;
+
+
+    await saveLocalDatabase(
+      database,
+      data
+    );
+
+
+    showDatabaseInfo(
+      data
+    );
+
+
+    statusElement.textContent =
+      'База актуальна. Можно сканировать.';
+
+
+    refreshButton.style.display =
+      'block';
+
+
+    if (!scannerRunning) {
+
+      await startScanner();
+
+    }
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    showError(
+      'Ошибка обновления базы: ' +
+      error.message
+    );
+
+
+    statusElement.textContent =
+      'Не удалось обновить базу.';
+
+
+  } finally {
+
+    refreshButton.disabled =
+      false;
+
+  }
+
+}
+
+
+// =====================================================
+// ИНФОРМАЦИЯ О БАЗЕ
+// =====================================================
+
+function showDatabaseInfo(
+  data
+) {
+
+  const count =
+    data.count ||
+    Object.keys(
+      data.products || {}
+    ).length;
+
+
+  let dateText =
+    'неизвестно';
+
+
+  if (data.updatedAt) {
+
+    const date =
+      new Date(
+        data.updatedAt
+      );
+
+
+    if (!isNaN(date.getTime())) {
+
+      dateText =
+        date.toLocaleString(
+          'ru-RU'
+        );
+
+    }
+
   }
 
 
-  product.innerHTML = '';
+  databaseInfoElement.innerHTML =
+    'Товаров: ' +
+    count +
+    '<br>' +
+    'База обновлена: ' +
+    dateText;
 
-  nextButton.classList.add(
-    'hidden'
-  );
-
-  startButton.classList.add(
-    'hidden'
-  );
+}
 
 
-  message.innerHTML =
-    '📷 Наведите камеру на штрихкод';
+// =====================================================
+// СКАНЕР
+// =====================================================
+
+async function startScanner() {
+
+  if (scannerRunning) {
+    return;
+  }
 
 
   scanner =
@@ -238,420 +699,291 @@ function startScanner() {
     );
 
 
-  scanner.start(
+  try {
 
-    {
-      facingMode:
-        'environment'
-    },
+    await scanner.start(
 
-    {
-
-      fps: 10,
-
-      qrbox: {
-        width: 300,
-        height: 150
+      {
+        facingMode:
+          'environment'
       },
 
-      formatsToSupport: [
+      {
+        fps: 10,
 
-        Html5QrcodeSupportedFormats
-          .EAN_13,
+        qrbox: {
+          width: 280,
+          height: 140
+        },
 
-        Html5QrcodeSupportedFormats
-          .EAN_8,
+        aspectRatio: 1.7777778
 
-        Html5QrcodeSupportedFormats
-          .CODE_128,
+      },
 
-        Html5QrcodeSupportedFormats
-          .CODE_39
+      onScanSuccess,
 
-      ]
+      onScanFailure
 
-    },
-
-    function(decodedText) {
-
-      stopScanner();
-
-      loadProduct(
-        decodedText
-      );
-
-    },
-
-    function() {}
-
-  )
-
-  .catch(function(error) {
-
-    scanner = null;
-
-    startButton.classList.remove(
-      'hidden'
     );
 
-    message.innerHTML =
 
-      '<div class="error">' +
+    scannerRunning =
+      true;
 
-      'Не удалось включить камеру.' +
 
-      '<br><br>' +
+  } catch (error) {
 
-      escapeHtml(error) +
+    console.error(error);
 
-      '</div>';
+    showError(
+      'Не удалось запустить камеру: ' +
+      error.message
+    );
 
-  });
+  }
 
 }
 
 
-// ======================================================
-// ОСТАНОВКА СКАНЕРА
-// ======================================================
+// =====================================================
+// УСПЕШНОЕ СКАНИРОВАНИЕ
+// =====================================================
 
-function stopScanner() {
+async function onScanSuccess(
+  decodedText
+) {
 
-  if (!scanner) {
+  if (!scannerRunning) {
     return;
   }
 
 
-  scanner
-    .stop()
-    .then(function() {
-
-      scanner.clear();
-
-      scanner = null;
-
-    })
-    .catch(function() {
-
-      scanner = null;
-
-    });
+  const barcode =
+    String(
+      decodedText
+    ).trim();
 
 
-  reader.innerHTML = '';
-
-}
-
-
-// ======================================================
-// ПОЛУЧЕНИЕ ТОВАРА
-// ======================================================
-
-function loadProduct(
-  barcode
-) {
-
-  message.innerHTML =
-
-    '<div class="loading">' +
-
-    '🔄 Ищем товар...' +
-
-    '</div>';
+  console.log(
+    'Отсканирован:',
+    barcode
+  );
 
 
-  const callbackName =
-    'receiveProduct';
+  // ---------------------------------------------------
+  // Останавливаем камеру
+  // ---------------------------------------------------
 
+  try {
 
-  // Удаляем старый запрос
-  const oldScript =
-    document.getElementById(
-      'apiScript'
+    await scanner.pause(
+      true
     );
 
-  if (oldScript) {
-    oldScript.remove();
+  } catch (error) {
+
+    console.log(
+      'Pause error:',
+      error
+    );
+
   }
 
 
-  // ====================================================
-  // ОТВЕТ ОТ APPS SCRIPT
-  // ====================================================
-
-  window[callbackName] =
-    function(data) {
-
-      const script =
-        document.getElementById(
-          'apiScript'
-        );
-
-      if (script) {
-        script.remove();
-      }
+  scannerRunning =
+    false;
 
 
-      delete window[callbackName];
+  // ---------------------------------------------------
+  // Ищем товар ТОЛЬКО В ЛОКАЛЬНОЙ БАЗЕ
+  // ---------------------------------------------------
+
+  const product =
+    products[barcode];
 
 
-      if (
-        !data ||
-        !data.success
-      ) {
+  if (product) {
 
-        product.innerHTML =
-
-          '<div class="error">' +
-
-          'Товар не найден' +
-
-          '<br><br>' +
-
-          'Штрихкод: ' +
-
-          escapeHtml(
-            barcode
-          ) +
-
-          '</div>';
-
-      } else {
-
-        product.innerHTML =
-
-          '<div class="card">' +
-
-            '<div class="name">' +
-
-              escapeHtml(
-                data.name
-              ) +
-
-            '</div>' +
-
-
-            '<div class="row">' +
-
-              '<b>Доступный остаток:</b>' +
-
-              '<span class="value">' +
-
-                escapeHtml(
-                  data.available
-                ) +
-
-              '</span>' +
-
-            '</div>' +
-
-
-            '<div class="row">' +
-
-              '<b>Остаток:</b>' +
-
-              '<span class="value">' +
-
-                escapeHtml(
-                  data.stock
-                ) +
-
-              '</span>' +
-
-            '</div>' +
-
-
-            '<div class="row">' +
-
-              '<b>Цена:</b>' +
-
-              '<span class="price">' +
-
-                escapeHtml(
-                  data.price
-                ) +
-
-                ' ₽' +
-
-              '</span>' +
-
-            '</div>' +
-
-
-            '<div class="updated">' +
-
-              '🕐 Данные обновлены: ' +
-
-              escapeHtml(
-                data.updatedAt
-              ) +
-
-            '</div>' +
-
-
-            '<div class="barcode">' +
-
-              'Штрихкод: ' +
-
-              escapeHtml(
-                data.barcode
-              ) +
-
-            '</div>' +
-
-          '</div>';
-
-      }
-
-
-      message.innerHTML = '';
-
-      nextButton.classList.remove(
-        'hidden'
-      );
-
-    };
-
-
-  // ====================================================
-  // ОТПРАВЛЯЕМ ТОЛЬКО ШТРИХКОД
-  // ====================================================
-
-  const script =
-    document.createElement(
-      'script'
+    showProduct(
+      product
     );
 
+  } else {
 
-  script.id =
-    'apiScript';
-
-
-  script.src =
-    API_URL +
-
-    '?barcode=' +
-
-    encodeURIComponent(
-      barcode
-    ) +
-
-    '&callback=' +
-
-    callbackName;
-
-
-  script.onerror =
-    function() {
-
-      script.remove();
-
-      delete window[callbackName];
-
-
-      message.innerHTML =
-
-        '<div class="error">' +
-
-        'Не удалось получить данные.' +
-
-        '<br><br>' +
-
-        'Ошибка соединения с сервером' +
-
-        '</div>';
-
-
-      nextButton.classList.remove(
-        'hidden'
-      );
-
-    };
-
-
-  document.body.appendChild(
-    script
-  );
-
-}
-
-
-// ======================================================
-// ЭКРАНИРОВАНИЕ HTML
-// ======================================================
-
-function escapeHtml(
-  value
-) {
-
-  return String(
-    value ?? ''
-  )
-
-    .replace(
-      /&/g,
-      '&amp;'
-    )
-
-    .replace(
-      /</g,
-      '&lt;'
-    )
-
-    .replace(
-      />/g,
-      '&gt;'
-    )
-
-    .replace(
-      /"/g,
-      '&quot;'
-    )
-
-    .replace(
-      /'/g,
-      '&#039;'
+    showError(
+      'Товар со штрихкодом ' +
+      barcode +
+      ' не найден в базе.'
     );
 
+    resultElement.style.display =
+      'none';
+
+  }
+
 }
 
 
-// ======================================================
-// КНОПКИ
-// ======================================================
+// =====================================================
+// ОШИБКИ СКАНИРОВАНИЯ
+// =====================================================
 
-startButton.onclick =
-  startScanner;
-
-
-nextButton.onclick =
-  startScanner;
-
-
-// ======================================================
-// АВТОСКАНИРОВАНИЕ
-// ======================================================
-
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
-
-
-if (
-  params.get('scan') === '1'
+function onScanFailure(
+  error
 ) {
 
-  setTimeout(
-    startScanner,
-    300
-  );
+  // Ничего не делаем.
+  // Это нормальная ситуация,
+  // пока камера ищет штрихкод.
 
 }
 
+
+// =====================================================
+// ПОКАЗАТЬ ТОВАР
+// =====================================================
+
+function showProduct(
+  product
+) {
+
+  hideError();
+
+
+  document.getElementById(
+    'productName'
+  ).textContent =
+    product.name || 'Без названия';
+
+
+  document.getElementById(
+    'productBarcode'
+  ).textContent =
+    product.barcode || '';
+
+
+  document.getElementById(
+    'productAvailable'
+  ).textContent =
+    product.available || '0';
+
+
+  document.getElementById(
+    'productStock'
+  ).textContent =
+    product.stock || '0';
+
+
+  document.getElementById(
+    'productPrice'
+  ).textContent =
+    product.price
+      ? product.price + ' ₽'
+      : '0 ₽';
+
+
+  resultElement.style.display =
+    'block';
+
+}
+
+
+// =====================================================
+// СКАНИРОВАТЬ СЛЕДУЮЩИЙ
+// =====================================================
+
+async function scanNext() {
+
+  hideError();
+
+
+  resultElement.style.display =
+    'none';
+
+
+  statusElement.textContent =
+    'Наведите камеру на штрихкод';
+
+
+  if (
+    scanner &&
+    !scannerRunning
+  ) {
+
+    try {
+
+      await scanner.resume();
+
+      scannerRunning =
+        true;
+
+    } catch (error) {
+
+      console.error(error);
+
+      // Если resume не сработал,
+      // запускаем сканер заново.
+
+      try {
+
+        scanner.clear();
+
+      } catch (e) {}
+
+
+      scanner =
+        null;
+
+
+      await startScanner();
+
+    }
+
+  } else if (!scanner) {
+
+    await startScanner();
+
+  }
+
+}
+
+
+// =====================================================
+// ОШИБКА
+// =====================================================
+
+function showError(
+  message
+) {
+
+  errorElement.textContent =
+    message;
+
+  errorElement.style.display =
+    'block';
+
+}
+
+
+// =====================================================
+// СКРЫТЬ ОШИБКУ
+// =====================================================
+
+function hideError() {
+
+  errorElement.style.display =
+    'none';
+
+}
+
+
+// =====================================================
+// СТАРТ
+// =====================================================
+
+init();
 
 </script>
 
 </body>
-
 </html>
