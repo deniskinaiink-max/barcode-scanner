@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
@@ -10,6 +11,7 @@
   <title>Стройцентр Инком — Проверка товара</title>
 
   <style>
+
     :root {
       color-scheme: light dark;
 
@@ -24,7 +26,9 @@
       --accent: #007aff;
     }
 
+
     @media (prefers-color-scheme: dark) {
+
       :root {
         --bg: #111111;
         --card: #1c1c1e;
@@ -36,16 +40,20 @@
         --button-text: #111111;
         --accent: #0a84ff;
       }
+
     }
+
 
     * {
       box-sizing: border-box;
     }
 
+
     body {
       margin: 0;
       background: var(--bg);
       color: var(--text);
+
       font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -55,19 +63,24 @@
         sans-serif;
     }
 
+
     .container {
       width: 100%;
       max-width: 600px;
+
       margin: 0 auto;
+
       padding:
         20px
         16px
         calc(24px + env(safe-area-inset-bottom));
     }
 
+
     .header {
       margin-bottom: 20px;
     }
+
 
     .company {
       font-size: 14px;
@@ -75,232 +88,359 @@
       margin-bottom: 4px;
     }
 
+
     h1 {
       font-size: 27px;
       line-height: 1.15;
+
       margin: 0;
+
       font-weight: 700;
+
       letter-spacing: -0.5px;
     }
+
 
     .search-box {
       position: relative;
       margin-bottom: 12px;
     }
 
+
     #searchInput {
       width: 100%;
       height: 56px;
+
       padding: 0 18px;
-      border: 1px solid var(--border);
+
+      border:
+        1px solid
+        var(--border);
+
       border-radius: 16px;
+
       background: var(--input);
       color: var(--text);
+
       font-size: 17px;
+
       outline: none;
+
       -webkit-appearance: none;
     }
+
 
     #searchInput:focus {
       border-color: var(--accent);
     }
 
+
     #searchInput::placeholder {
       color: var(--secondary);
     }
 
+
     button {
       width: 100%;
+      height: 52px;
+
       border: 0;
       border-radius: 15px;
-      height: 52px;
+
       font-size: 16px;
       font-weight: 600;
+
       cursor: pointer;
+
       -webkit-tap-highlight-color: transparent;
     }
+
 
     .camera-button {
       background: var(--button);
       color: var(--button-text);
+
       margin-bottom: 12px;
     }
+
 
     .update-button {
       background: transparent;
       color: var(--text);
-      border: 1px solid var(--border);
+
+      border:
+        1px solid
+        var(--border);
+
       margin-top: 14px;
     }
 
+
     .camera-wrapper {
       display: none;
+
       margin-top: 8px;
       margin-bottom: 16px;
+
       overflow: hidden;
+
       border-radius: 18px;
+
       background: #000;
     }
+
 
     #reader {
       width: 100%;
     }
 
+
     .close-camera {
       margin-top: 8px;
+
       background: #333;
       color: #fff;
     }
 
+
     .status {
       margin: 14px 0;
+
       text-align: center;
+
       color: var(--secondary);
+
       font-size: 14px;
+
       min-height: 20px;
     }
 
+
     .result-card {
       background: var(--card);
-      border: 1px solid var(--border);
+
+      border:
+        1px solid
+        var(--border);
+
       border-radius: 20px;
+
       padding: 20px;
+
       margin-top: 14px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+
+      box-shadow:
+        0 2px 12px rgba(0,0,0,0.04);
     }
+
 
     .product-name {
       font-size: 21px;
       line-height: 1.25;
+
       font-weight: 650;
+
       margin-bottom: 18px;
     }
 
+
     .product-row {
       display: flex;
+
       justify-content: space-between;
       align-items: baseline;
+
       gap: 15px;
+
       padding: 10px 0;
-      border-top: 1px solid var(--border);
+
+      border-top:
+        1px solid
+        var(--border);
     }
+
 
     .product-row span {
       color: var(--secondary);
+
       font-size: 14px;
+
       flex-shrink: 0;
     }
 
+
     .product-row strong {
       text-align: right;
+
       font-size: 16px;
+
       font-weight: 600;
+
       word-break: break-word;
     }
 
+
     .stock-main {
       margin-top: 4px;
+
       padding: 15px 0 10px;
     }
+
 
     .stock-main span {
       font-size: 15px;
     }
 
+
     .stock-main strong {
       font-size: 25px;
+
       font-weight: 700;
     }
+
 
     .stock-total span,
     .stock-total strong {
       font-size: 13px;
     }
 
+
     .price {
       margin-top: 4px;
+
       padding-top: 15px;
     }
 
+
     .price strong {
       font-size: 22px;
+
       font-weight: 700;
     }
 
+
     .meta {
       margin-top: 16px;
+
       color: var(--secondary);
+
       font-size: 12px;
+
       line-height: 1.5;
     }
+
 
     .next-scan {
       margin-top: 16px;
+
       background: var(--accent);
+
       color: white;
     }
 
+
     .search-result {
       background: var(--card);
-      border: 1px solid var(--border);
+
+      border:
+        1px solid
+        var(--border);
+
       border-radius: 16px;
+
       padding: 16px;
+
       margin-top: 10px;
+
       cursor: pointer;
+
       -webkit-tap-highlight-color: transparent;
     }
 
+
     .search-result-name {
       font-size: 16px;
+
       font-weight: 600;
+
       line-height: 1.3;
+
       margin-bottom: 8px;
     }
 
+
     .search-result-info {
       display: flex;
+
       justify-content: space-between;
+
       gap: 10px;
+
       color: var(--secondary);
+
       font-size: 13px;
     }
 
+
     .empty {
       text-align: center;
+
       padding: 30px 10px;
+
       color: var(--secondary);
+
       font-size: 15px;
     }
 
+
     .footer {
       text-align: center;
+
       color: var(--secondary);
+
       font-size: 12px;
+
       line-height: 1.5;
+
       margin-top: 24px;
     }
+
 
     .hidden {
       display: none !important;
     }
 
+
     .loading {
       opacity: 0.6;
+
       pointer-events: none;
     }
+
   </style>
 </head>
+
 
 <body>
 
 <div class="container">
 
+
   <div class="header">
-    <div class="company">Стройцентр Инком</div>
-    <h1>Проверка товара</h1>
+
+    <div class="company">
+      Стройцентр Инком
+    </div>
+
+    <h1>
+      Проверка товара
+    </h1>
+
   </div>
 
+
   <div class="search-box">
+
     <input
       id="searchInput"
       type="search"
@@ -308,7 +448,9 @@
       autocomplete="off"
       placeholder="Штрихкод, код 1С или название"
     >
+
   </div>
+
 
   <button
     id="cameraButton"
@@ -318,8 +460,14 @@
     📷 Сканировать штрихкод
   </button>
 
-  <div id="cameraWrapper" class="camera-wrapper">
+
+  <div
+    id="cameraWrapper"
+    class="camera-wrapper"
+  >
+
     <div id="reader"></div>
+
 
     <button
       class="close-camera"
@@ -327,11 +475,18 @@
     >
       Закрыть камеру
     </button>
+
   </div>
 
-  <div id="status" class="status"></div>
+
+  <div
+    id="status"
+    class="status"
+  ></div>
+
 
   <div id="results"></div>
+
 
   <button
     id="updateButton"
@@ -341,298 +496,773 @@
     Обновить базу
   </button>
 
-  <div id="footer" class="footer"></div>
+
+  <div
+    id="footer"
+    class="footer"
+  ></div>
+
 
 </div>
 
 
 <script>
 
-  // =========================================================
-  // НАСТРОЙКИ
-  // =========================================================
 
-  const API_URL =
-    'https://script.google.com/macros/s/AKfycbwLJNTns2VnOebnan30cDWpad1tZaTtjI2g8B44HP6oj0M806NbzsZLcgn_9XkO-pwL/exec';
+// =========================================================
+// НАСТРОЙКИ
+// =========================================================
 
-  const STORAGE_KEY = 'SCANINK_DATABASE_V3';
-
-  let databaseData = null;
-  let products = {};
-
-  let html5QrCode = null;
-  let cameraOpen = false;
-  let cameraScriptLoaded = false;
+const API_URL =
+  'https://script.google.com/macros/s/AKfycbwLJNTns2VnOebnan30cDWpad1tZaTtjI2g8B44HP6oj0M806NbzsZLcgn_9XkO-pwL/exec';
 
 
-  // =========================================================
-  // НОРМАЛИЗАЦИЯ ТЕКСТА
-  // =========================================================
+// =========================================================
+// INDEXEDDB
+// =========================================================
 
-  function normalizeText(text) {
-    return String(text || '')
-      .toLowerCase()
-      .replace(/ё/g, 'е')
-      .replace(/\s+/g, ' ')
-      .trim();
-  }
+const DB_NAME = 'ScanInkDatabase';
+
+const DB_VERSION = 1;
+
+const STORE_NAME = 'database';
+
+const DB_KEY = 'current';
 
 
-  // =========================================================
-  // НОРМАЛИЗАЦИЯ КОДА 1С
-  //
-  // 00000200820 → 200820
-  // 00000002029 → 2029
-  // 200820 → 200820
-  // =========================================================
+let databaseData = null;
 
-  function normalizeCode(code) {
+let products = {};
 
-    const digits = String(code || '')
+let html5QrCode = null;
+
+let cameraOpen = false;
+
+let cameraScriptLoaded = false;
+
+
+// =========================================================
+// ОТКРЫТИЕ INDEXEDDB
+// =========================================================
+
+function openDatabase() {
+
+  return new Promise(function(resolve, reject) {
+
+    if (!window.indexedDB) {
+
+      reject(
+        new Error(
+          'IndexedDB не поддерживается'
+        )
+      );
+
+      return;
+
+    }
+
+
+    const request =
+      indexedDB.open(
+        DB_NAME,
+        DB_VERSION
+      );
+
+
+    request.onupgradeneeded =
+      function(event) {
+
+        const db =
+          event.target.result;
+
+
+        if (
+          !db.objectStoreNames.contains(
+            STORE_NAME
+          )
+        ) {
+
+          db.createObjectStore(
+            STORE_NAME
+          );
+
+        }
+
+      };
+
+
+    request.onsuccess =
+      function(event) {
+
+        resolve(
+          event.target.result
+        );
+
+      };
+
+
+    request.onerror =
+      function(event) {
+
+        reject(
+          event.target.error ||
+          new Error(
+            'Ошибка открытия IndexedDB'
+          )
+        );
+
+      };
+
+  });
+
+}
+
+
+// =========================================================
+// СОХРАНЕНИЕ БАЗЫ В INDEXEDDB
+// =========================================================
+
+async function saveDatabase(data) {
+
+  const db =
+    await openDatabase();
+
+
+  return new Promise(
+    function(resolve, reject) {
+
+      const transaction =
+        db.transaction(
+          STORE_NAME,
+          'readwrite'
+        );
+
+
+      const store =
+        transaction.objectStore(
+          STORE_NAME
+        );
+
+
+      const request =
+        store.put(
+          data,
+          DB_KEY
+        );
+
+
+      request.onsuccess =
+        function() {
+
+          resolve();
+
+        };
+
+
+      request.onerror =
+        function(event) {
+
+          reject(
+            event.target.error ||
+            new Error(
+              'Не удалось сохранить базу'
+            )
+          );
+
+        };
+
+
+      transaction.oncomplete =
+        function() {
+
+          db.close();
+
+        };
+
+
+      transaction.onerror =
+        function(event) {
+
+          reject(
+            event.target.error ||
+            new Error(
+              'Ошибка транзакции IndexedDB'
+            )
+          );
+
+        };
+
+    }
+  );
+
+}
+
+
+// =========================================================
+// ЗАГРУЗКА БАЗЫ ИЗ INDEXEDDB
+// =========================================================
+
+async function loadDatabaseFromStorage() {
+
+  const db =
+    await openDatabase();
+
+
+  return new Promise(
+    function(resolve, reject) {
+
+      const transaction =
+        db.transaction(
+          STORE_NAME,
+          'readonly'
+        );
+
+
+      const store =
+        transaction.objectStore(
+          STORE_NAME
+        );
+
+
+      const request =
+        store.get(DB_KEY);
+
+
+      request.onsuccess =
+        function(event) {
+
+          resolve(
+            event.target.result || null
+          );
+
+        };
+
+
+      request.onerror =
+        function(event) {
+
+          reject(
+            event.target.error ||
+            new Error(
+              'Не удалось прочитать базу'
+            )
+          );
+
+        };
+
+
+      transaction.oncomplete =
+        function() {
+
+          db.close();
+
+        };
+
+
+      transaction.onerror =
+        function(event) {
+
+          reject(
+            event.target.error ||
+            new Error(
+              'Ошибка чтения IndexedDB'
+            )
+          );
+
+        };
+
+    }
+  );
+
+}
+
+
+// =========================================================
+// НОРМАЛИЗАЦИЯ ТЕКСТА
+// =========================================================
+
+function normalizeText(text) {
+
+  return String(text || '')
+    .toLowerCase()
+    .replace(/ё/g, 'е')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+}
+
+
+// =========================================================
+// НОРМАЛИЗАЦИЯ КОДА 1С
+//
+// 00000200820 → 200820
+// 00000002029 → 2029
+// 200820 → 200820
+// =========================================================
+
+function normalizeCode(code) {
+
+  const digits =
+    String(code || '')
       .replace(/\D/g, '');
 
-    if (!digits) {
-      return '';
-    }
 
-    return digits.replace(/^0+/, '') || '0';
+  if (!digits) {
+    return '';
   }
 
 
-  // =========================================================
-  // ПОИСКОВЫЕ СЛОВА
-  // =========================================================
+  return digits.replace(/^0+/, '') || '0';
 
-  function getSearchWords(text) {
+}
 
-    return normalizeText(text)
-      .split(' ')
-      .filter(Boolean);
 
+// =========================================================
+// ПОИСКОВЫЕ СЛОВА
+// =========================================================
+
+function getSearchWords(text) {
+
+  return normalizeText(text)
+    .split(' ')
+    .filter(Boolean);
+
+}
+
+
+// =========================================================
+// ФОРМАТ ЦЕНЫ
+// =========================================================
+
+function formatPrice(price) {
+
+  if (!price) {
+    return '—';
   }
 
 
-  // =========================================================
-  // ФОРМАТ ЦЕНЫ
-  // =========================================================
+  const text =
+    String(price).trim();
 
-  function formatPrice(price) {
 
-    if (!price) {
-      return '—';
-    }
+  if (!text) {
+    return '—';
+  }
 
-    const text = String(price).trim();
 
-    if (!text) {
-      return '—';
-    }
-
-    const number = Number(
+  const number =
+    Number(
       text
         .replace(/\s/g, '')
         .replace(',', '.')
     );
 
-    if (!Number.isNaN(number)) {
 
-      return number.toLocaleString('ru-RU', {
+  if (!Number.isNaN(number)) {
+
+    return number.toLocaleString(
+      'ru-RU',
+      {
         maximumFractionDigits: 2
-      }) + ' ₽';
-
-    }
-
-    return text + ' ₽';
-  }
-
-
-  // =========================================================
-  // ОЧИСТКА РЕЗУЛЬТАТОВ
-  // =========================================================
-
-  function clearResults() {
-
-    document.getElementById('results').innerHTML = '';
+      }
+    ) + ' ₽';
 
   }
 
 
-  // =========================================================
-  // ПОИСК
-  // =========================================================
+  return text + ' ₽';
 
-  function searchProducts(query) {
-
-    const text = normalizeText(query);
-
-    if (!text) {
-      clearResults();
-      return;
-    }
+}
 
 
-    // -------------------------------------------------------
-    // 1. ТОЧНОЕ СОВПАДЕНИЕ ШТРИХКОДА
-    // -------------------------------------------------------
+// =========================================================
+// ОЧИСТКА РЕЗУЛЬТАТОВ
+// =========================================================
 
-    const exactBarcode = products[text];
+function clearResults() {
 
-    if (exactBarcode) {
+  document.getElementById(
+    'results'
+  ).innerHTML = '';
 
-      showSingleProduct(exactBarcode);
-
-      return;
-
-    }
+}
 
 
-    // -------------------------------------------------------
-    // 2. ПОИСК ПО КОДУ 1С
-    //
-    // Пользователь может написать:
-    //
-    // 200820
-    //
-    // а в базе:
-    //
-    // 00000200820
-    // -------------------------------------------------------
+// =========================================================
+// ПОИСК
+// =========================================================
 
-    const queryCode = normalizeCode(text);
+function searchProducts(query) {
 
-    if (queryCode) {
+  const text =
+    normalizeText(query);
 
-      const keys = Object.keys(products);
 
-      for (let i = 0; i < keys.length; i++) {
+  if (!text) {
 
-        const product = products[keys[i]];
+    clearResults();
 
-        if (!product.code1c) {
-          continue;
-        }
+    return;
 
-        const productCode = normalizeCode(product.code1c);
+  }
 
-        if (productCode === queryCode) {
 
-          showSingleProduct(product);
+  // -------------------------------------------------------
+  // 1. ТОЧНЫЙ ШТРИХКОД
+  // -------------------------------------------------------
 
-          return;
+  const exactBarcode =
+    products[text];
 
-        }
+
+  if (exactBarcode) {
+
+    showSingleProduct(
+      exactBarcode
+    );
+
+    return;
+
+  }
+
+
+  // -------------------------------------------------------
+  // 2. КОД 1С
+  //
+  // 200820
+  //
+  // найдёт:
+  //
+  // 00000200820
+  // -------------------------------------------------------
+
+  const queryCode =
+    normalizeCode(text);
+
+
+  if (queryCode) {
+
+    const keys =
+      Object.keys(products);
+
+
+    for (
+      let i = 0;
+      i < keys.length;
+      i++
+    ) {
+
+      const product =
+        products[keys[i]];
+
+
+      if (!product.code1c) {
+        continue;
+      }
+
+
+      const productCode =
+        normalizeCode(
+          product.code1c
+        );
+
+
+      if (
+        productCode ===
+        queryCode
+      ) {
+
+        showSingleProduct(
+          product
+        );
+
+        return;
 
       }
 
     }
 
+  }
 
-    // -------------------------------------------------------
-    // 3. ПОИСК ПО НАЗВАНИЮ
-    // -------------------------------------------------------
 
-    const words = getSearchWords(text);
+  // -------------------------------------------------------
+  // 3. ПОИСК ПО НАЗВАНИЮ
+  // -------------------------------------------------------
 
-    const found = [];
+  const words =
+    getSearchWords(text);
 
-    const keys = Object.keys(products);
 
-    for (let i = 0; i < keys.length; i++) {
+  const found = [];
 
-      const product = products[keys[i]];
 
-      const name = normalizeText(product.name);
+  const keys =
+    Object.keys(products);
 
-      const allWordsMatch = words.every(word =>
-        name.includes(word)
+
+  for (
+    let i = 0;
+    i < keys.length;
+    i++
+  ) {
+
+    const product =
+      products[keys[i]];
+
+
+    const name =
+      normalizeText(
+        product.name
       );
 
-      if (allWordsMatch) {
 
-        found.push(product);
+    const allWordsMatch =
+      words.every(
+        function(word) {
 
-      }
+          return name.includes(
+            word
+          );
 
-      if (found.length >= 30) {
-        break;
-      }
+        }
+      );
+
+
+    if (allWordsMatch) {
+
+      found.push(product);
 
     }
 
-    showSearchResults(found, query);
+
+    if (found.length >= 30) {
+
+      break;
+
+    }
 
   }
 
 
-  // =========================================================
-  // ОДИН ТОВАР
-  // =========================================================
+  showSearchResults(
+    found,
+    query
+  );
 
-  function showSingleProduct(product) {
+}
 
-    const results = document.getElementById('results');
+
+// =========================================================
+// КАРТОЧКА ТОВАРА
+// =========================================================
+
+function showSingleProduct(product) {
+
+  const results =
+    document.getElementById(
+      'results'
+    );
+
+
+  results.innerHTML = `
+
+    <div class="result-card">
+
+
+      <div class="product-name">
+
+        ${escapeHtml(
+          product.name
+        )}
+
+      </div>
+
+
+      <div class="product-row">
+
+        <span>
+          Штрихкод
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            product.barcode || '—'
+          )}
+        </strong>
+
+      </div>
+
+
+      <div class="product-row">
+
+        <span>
+          Код 1С
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            product.code1c || '—'
+          )}
+        </strong>
+
+      </div>
+
+
+      <div class="product-row stock-main">
+
+        <span>
+          Доступный остаток
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            product.available || '0'
+          )}
+        </strong>
+
+      </div>
+
+
+      <div class="product-row stock-total">
+
+        <span>
+          Остаток
+        </span>
+
+        <strong>
+          ${escapeHtml(
+            product.stock || '0'
+          )}
+        </strong>
+
+      </div>
+
+
+      <div class="product-row price">
+
+        <span>
+          Цена
+        </span>
+
+        <strong>
+          ${formatPrice(
+            product.price
+          )}
+        </strong>
+
+      </div>
+
+
+      <div class="meta">
+
+        Данные обновлены:
+
+        ${escapeHtml(
+          product.updatedAt || '—'
+        )}
+
+      </div>
+
+
+      <button
+        class="next-scan"
+        onclick="prepareNextScan()"
+      >
+        Сканировать следующий
+      </button>
+
+
+    </div>
+
+  `;
+
+}
+
+
+// =========================================================
+// СПИСОК РЕЗУЛЬТАТОВ
+// =========================================================
+
+function showSearchResults(
+  found,
+  query
+) {
+
+  const results =
+    document.getElementById(
+      'results'
+    );
+
+
+  if (!found.length) {
 
     results.innerHTML = `
 
-      <div class="result-card">
+      <div class="empty">
+        Ничего не найдено
+      </div>
 
-        <div class="product-name">
-          ${escapeHtml(product.name)}
+    `;
+
+    return;
+
+  }
+
+
+  let html = '';
+
+
+  for (
+    let i = 0;
+    i < found.length;
+    i++
+  ) {
+
+    const product =
+      found[i];
+
+
+    html += `
+
+      <div
+        class="search-result"
+        onclick='selectProduct(${JSON.stringify(product)})'
+      >
+
+
+        <div class="search-result-name">
+
+          ${escapeHtml(
+            product.name
+          )}
+
         </div>
 
 
-        <div class="product-row">
-          <span>Штрихкод</span>
-          <strong>
-            ${escapeHtml(product.barcode || '—')}
-          </strong>
+        <div class="search-result-info">
+
+          <span>
+
+            Код 1С:
+
+            ${escapeHtml(
+              product.code1c || '—'
+            )}
+
+          </span>
+
+
+          <span>
+
+            ${escapeHtml(
+              product.available || '0'
+            )}
+            шт.
+
+          </span>
+
         </div>
 
-
-        <div class="product-row">
-          <span>Код 1С</span>
-          <strong>
-            ${escapeHtml(product.code1c || '—')}
-          </strong>
-        </div>
-
-
-        <div class="product-row stock-main">
-          <span>Доступный остаток</span>
-          <strong>
-            ${escapeHtml(product.available || '0')}
-          </strong>
-        </div>
-
-
-        <div class="product-row stock-total">
-          <span>Остаток</span>
-          <strong>
-            ${escapeHtml(product.stock || '0')}
-          </strong>
-        </div>
-
-
-        <div class="product-row price">
-          <span>Цена</span>
-          <strong>
-            ${formatPrice(product.price)}
-          </strong>
-        </div>
-
-
-        <div class="meta">
-          Данные обновлены:
-          ${escapeHtml(product.updatedAt || '—')}
-        </div>
-
-
-        <button
-          class="next-scan"
-          onclick="prepareNextScan()"
-        >
-          Сканировать следующий
-        </button>
 
       </div>
 
@@ -641,157 +1271,126 @@
   }
 
 
-  // =========================================================
-  // СПИСОК РЕЗУЛЬТАТОВ
-  // =========================================================
+  results.innerHTML =
+    html;
 
-  function showSearchResults(found, query) {
-
-    const results = document.getElementById('results');
-
-    if (!found.length) {
-
-      results.innerHTML = `
-        <div class="empty">
-          Ничего не найдено
-        </div>
-      `;
-
-      return;
-
-    }
+}
 
 
-    let html = '';
+// =========================================================
+// ВЫБОР ТОВАРА
+// =========================================================
 
-    for (let i = 0; i < found.length; i++) {
+function selectProduct(product) {
 
-      const product = found[i];
-
-      html += `
-
-        <div
-          class="search-result"
-          onclick='selectProduct(${JSON.stringify(product)})'
-        >
-
-          <div class="search-result-name">
-            ${escapeHtml(product.name)}
-          </div>
-
-          <div class="search-result-info">
-
-            <span>
-              Код 1С:
-              ${escapeHtml(product.code1c || '—')}
-            </span>
-
-            <span>
-              ${escapeHtml(product.available || '0')} шт.
-            </span>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }
+  showSingleProduct(
+    product
+  );
 
 
-    results.innerHTML = html;
+  window.scrollTo({
 
-  }
+    top: 0,
 
+    behavior: 'smooth'
 
-  // =========================================================
-  // ВЫБОР ТОВАРА ИЗ СПИСКА
-  // =========================================================
+  });
 
-  function selectProduct(product) {
-
-    showSingleProduct(product);
-
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-
-  }
+}
 
 
-  // =========================================================
-  // ПОДГОТОВКА К СЛЕДУЮЩЕМУ СКАНУ
-  // =========================================================
+// =========================================================
+// СЛЕДУЮЩИЙ СКАН
+// =========================================================
 
-  function prepareNextScan() {
+function prepareNextScan() {
 
-    document.getElementById('searchInput').value = '';
-
-    clearResults();
-
-    document.getElementById('searchInput').focus();
-
-  }
+  document.getElementById(
+    'searchInput'
+  ).value = '';
 
 
-  // =========================================================
-  // БЕЗОПАСНЫЙ HTML
-  // =========================================================
-
-  function escapeHtml(value) {
-
-    return String(value || '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-
-  }
+  clearResults();
 
 
-  // =========================================================
-  // ЗАГРУЗКА БАЗЫ ЧЕРЕЗ JSONP
-  // =========================================================
+  document.getElementById(
+    'searchInput'
+  ).focus();
 
-  function loadDatabaseFromServer() {
+}
 
-    return new Promise((resolve, reject) => {
+
+// =========================================================
+// ESCAPE HTML
+// =========================================================
+
+function escapeHtml(value) {
+
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+
+}
+
+
+// =========================================================
+// ЗАГРУЗКА БАЗЫ С СЕРВЕРА
+// =========================================================
+
+function loadDatabaseFromServer() {
+
+  return new Promise(
+    function(resolve, reject) {
 
       const callbackName =
-        'receiveScanInkDatabase_' + Date.now();
+        'receiveScanInkDatabase_' +
+        Date.now();
 
 
-      window[callbackName] = function(data) {
+      window[callbackName] =
+        function(data) {
 
-        try {
+          try {
 
-          delete window[callbackName];
+            delete window[
+              callbackName
+            ];
 
-          if (!data || !data.products) {
 
-            reject(
-              new Error('Некорректная база данных')
-            );
+            if (
+              !data ||
+              !data.products
+            ) {
 
-            return;
+              reject(
+                new Error(
+                  'Некорректная база данных'
+                )
+              );
+
+              return;
+
+            }
+
+
+            resolve(data);
+
+          } catch (error) {
+
+            reject(error);
 
           }
 
-          resolve(data);
-
-        } catch (error) {
-
-          reject(error);
-
-        }
-
-      };
+        };
 
 
       const script =
-        document.createElement('script');
+        document.createElement(
+          'script'
+        );
 
 
       script.src =
@@ -803,218 +1402,238 @@
         Date.now();
 
 
-      script.onerror = function() {
+      script.onerror =
+        function() {
 
-        delete window[callbackName];
-
-        reject(
-          new Error('Не удалось загрузить базу')
-        );
-
-      };
+          delete window[
+            callbackName
+          ];
 
 
-      document.body.appendChild(script);
+          reject(
+            new Error(
+              'Не удалось загрузить базу'
+            )
+          );
 
-    });
-
-  }
+        };
 
 
-  // =========================================================
-  // СОХРАНЕНИЕ БАЗЫ
-  // =========================================================
-
-  function saveDatabase(data) {
-
-    try {
-
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(data)
-      );
-
-    } catch (error) {
-
-      console.error(
-        'Ошибка LocalStorage:',
-        error
+      document.body.appendChild(
+        script
       );
 
     }
+  );
 
-  }
-
-
-  // =========================================================
-  // ЗАГРУЗКА БАЗЫ ИЗ LOCALSTORAGE
-  // =========================================================
-
-  function loadDatabaseFromStorage() {
-
-    try {
-
-      const saved =
-        localStorage.getItem(STORAGE_KEY);
-
-      if (!saved) {
-        return null;
-      }
-
-      return JSON.parse(saved);
-
-    } catch (error) {
-
-      console.error(
-        'Ошибка чтения базы:',
-        error
-      );
-
-      return null;
-
-    }
-
-  }
+}
 
 
-  // =========================================================
-  // УСТАНОВКА БАЗЫ
-  // =========================================================
+// =========================================================
+// УСТАНОВКА БАЗЫ В ПАМЯТЬ
+// =========================================================
 
-  function setDatabase(data) {
+function setDatabase(data) {
 
-    databaseData = data;
-
-    products =
-      data.products || {};
-
-    updateFooter();
-
-  }
+  databaseData =
+    data;
 
 
-  // =========================================================
-  // ОБНОВЛЕНИЕ БАЗЫ
-  // =========================================================
-
-  async function updateDatabase() {
-
-    const button =
-      document.getElementById('updateButton');
-
-    const status =
-      document.getElementById('status');
+  products =
+    data.products || {};
 
 
-    button.classList.add('loading');
+  updateFooter();
 
-    button.textContent = 'Обновляем базу...';
+}
+
+
+// =========================================================
+// ОБНОВЛЕНИЕ БАЗЫ
+// =========================================================
+
+async function updateDatabase() {
+
+  const button =
+    document.getElementById(
+      'updateButton'
+    );
+
+
+  const status =
+    document.getElementById(
+      'status'
+    );
+
+
+  button.classList.add(
+    'loading'
+  );
+
+
+  button.textContent =
+    'Обновляем базу...';
+
+
+  status.textContent =
+    'Загружаем актуальную базу...';
+
+
+  try {
+
+    // -----------------------------------------------------
+    // Загружаем новую базу
+    // -----------------------------------------------------
+
+    const data =
+      await loadDatabaseFromServer();
+
+
+    // -----------------------------------------------------
+    // Сначала сохраняем её в IndexedDB
+    //
+    // Только после успешного сохранения
+    // переключаем текущую базу.
+    // -----------------------------------------------------
 
     status.textContent =
-      'Загружаем актуальную базу';
+      'Сохраняем базу на устройстве...';
 
 
-    try {
-
-      const data =
-        await loadDatabaseFromServer();
+    await saveDatabase(data);
 
 
-      setDatabase(data);
+    // -----------------------------------------------------
+    // Теперь делаем её активной
+    // -----------------------------------------------------
 
-      saveDatabase(data);
-
-
-      status.textContent =
-        'База успешно обновлена';
+    setDatabase(data);
 
 
-      setTimeout(() => {
-
-        status.textContent = '';
-
-      }, 2500);
+    status.textContent =
+      'База успешно обновлена';
 
 
-    } catch (error) {
+    setTimeout(
+      function() {
 
-      console.error(error);
+        status.textContent =
+          '';
 
-      status.textContent =
-        'Ошибка обновления базы';
+      },
+      2500
+    );
 
-    }
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
 
 
-    button.classList.remove('loading');
+    status.textContent =
+      'Ошибка обновления базы';
+
+
+  } finally {
+
+    button.classList.remove(
+      'loading'
+    );
+
 
     button.textContent =
       'Обновить базу';
 
   }
 
-
-  // =========================================================
-  // FOOTER
-  // =========================================================
-
-  function updateFooter() {
-
-    const footer =
-      document.getElementById('footer');
+}
 
 
-    if (!databaseData) {
+// =========================================================
+// FOOTER
+// =========================================================
 
-      footer.innerHTML = '';
+function updateFooter() {
 
-      return;
-
-    }
-
-
-    let updated = '—';
-
-    if (databaseData.updatedAt) {
-
-      try {
-
-        updated =
-          new Date(
-            databaseData.updatedAt
-          ).toLocaleString('ru-RU');
-
-      } catch (error) {
-
-        updated =
-          databaseData.updatedAt;
-
-      }
-
-    }
+  const footer =
+    document.getElementById(
+      'footer'
+    );
 
 
-    footer.innerHTML = `
-      Товаров в базе:
-      ${databaseData.count || Object.keys(products).length}
-      <br>
-      База обновлена:
-      ${escapeHtml(updated)}
-    `;
+  if (!databaseData) {
+
+    footer.innerHTML =
+      '';
+
+    return;
 
   }
 
 
-  // =========================================================
-  // ЗАГРУЗКА HTML5 QR CODE
-  // =========================================================
+  let updated =
+    '—';
 
-  function loadCameraLibrary() {
 
-    return new Promise((resolve, reject) => {
+  if (
+    databaseData.updatedAt
+  ) {
 
-      if (cameraScriptLoaded &&
-          typeof Html5Qrcode !== 'undefined') {
+    try {
+
+      updated =
+        new Date(
+          databaseData.updatedAt
+        ).toLocaleString(
+          'ru-RU'
+        );
+
+    } catch (error) {
+
+      updated =
+        databaseData.updatedAt;
+
+    }
+
+  }
+
+
+  footer.innerHTML = `
+
+    Товаров в базе:
+
+    ${
+      databaseData.count ||
+      Object.keys(products).length
+    }
+
+    <br>
+
+    База обновлена:
+
+    ${escapeHtml(updated)}
+
+  `;
+
+}
+
+
+// =========================================================
+// ЗАГРУЗКА HTML5 QR CODE
+// =========================================================
+
+function loadCameraLibrary() {
+
+  return new Promise(
+    function(resolve, reject) {
+
+      if (
+        cameraScriptLoaded &&
+        typeof Html5Qrcode !==
+        'undefined'
+      ) {
 
         resolve();
 
@@ -1037,7 +1656,9 @@
 
       function tryNext() {
 
-        if (index >= urls.length) {
+        if (
+          index >= urls.length
+        ) {
 
           reject(
             new Error(
@@ -1051,315 +1672,410 @@
 
 
         const script =
-          document.createElement('script');
+          document.createElement(
+            'script'
+          );
 
 
         script.src =
           urls[index++];
 
 
-        script.onload = function() {
+        script.onload =
+          function() {
 
-          if (
-            typeof Html5Qrcode !==
-            'undefined'
-          ) {
+            if (
+              typeof Html5Qrcode !==
+              'undefined'
+            ) {
 
-            cameraScriptLoaded = true;
+              cameraScriptLoaded =
+                true;
 
-            resolve();
 
-          } else {
+              resolve();
+
+            } else {
+
+              tryNext();
+
+            }
+
+          };
+
+
+        script.onerror =
+          function() {
 
             tryNext();
 
-          }
-
-        };
+          };
 
 
-        script.onerror = function() {
-
-          tryNext();
-
-        };
-
-
-        document.head.appendChild(script);
+        document.head.appendChild(
+          script
+        );
 
       }
 
 
       tryNext();
 
-    });
+    }
+  );
 
+}
+
+
+// =========================================================
+// ОТКРЫТЬ КАМЕРУ
+// =========================================================
+
+async function openCamera() {
+
+  if (cameraOpen) {
+    return;
   }
 
 
-  // =========================================================
-  // ОТКРЫТЬ КАМЕРУ
-  // =========================================================
+  const status =
+    document.getElementById(
+      'status'
+    );
 
-  async function openCamera() {
 
-    if (cameraOpen) {
-      return;
-    }
+  try {
 
+    status.textContent =
+      'Запускаем камеру...';
 
-    const status =
-      document.getElementById('status');
 
-
-    try {
-
-      status.textContent =
-        'Запускаем камеру...';
-
-
-      await loadCameraLibrary();
-
-
-      document.getElementById(
-        'cameraWrapper'
-      ).style.display = 'block';
-
-
-      document.getElementById(
-        'cameraButton'
-      ).textContent = '📷 Камера открыта';
-
-
-      html5QrCode =
-        new Html5Qrcode('reader');
-
-
-      cameraOpen = true;
-
-
-      await html5QrCode.start(
-
-        {
-          facingMode: 'environment'
-        },
-
-        {
-          fps: 10,
-
-          qrbox: {
-            width: 280,
-            height: 160
-          },
-
-          aspectRatio: 1.777778
-
-        },
-
-        function(decodedText) {
-
-          if (!decodedText) {
-            return;
-          }
-
-
-          closeCamera();
-
-
-          const input =
-            document.getElementById(
-              'searchInput'
-            );
-
-
-          input.value = decodedText;
-
-
-          searchProducts(decodedText);
-
-        },
-
-        function(errorMessage) {
-
-          // Ошибки отсутствия штрихкода
-          // здесь намеренно игнорируем.
-
-        }
-
-      );
-
-
-      status.textContent = '';
-
-    } catch (error) {
-
-      console.error(error);
-
-      status.textContent =
-        'Не удалось открыть камеру';
-
-      document.getElementById(
-        'cameraWrapper'
-      ).style.display = 'none';
-
-      cameraOpen = false;
-
-    }
-
-  }
-
-
-  // =========================================================
-  // ЗАКРЫТЬ КАМЕРУ
-  // =========================================================
-
-  async function closeCamera() {
-
-    if (
-      html5QrCode &&
-      cameraOpen
-    ) {
-
-      try {
-
-        await html5QrCode.stop();
-
-      } catch (error) {
-
-        console.log(error);
-
-      }
-
-
-      try {
-
-        html5QrCode.clear();
-
-      } catch (error) {
-
-        console.log(error);
-
-      }
-
-    }
-
-
-    html5QrCode = null;
-
-    cameraOpen = false;
+    await loadCameraLibrary();
 
 
     document.getElementById(
       'cameraWrapper'
-    ).style.display = 'none';
+    ).style.display =
+      'block';
 
 
     document.getElementById(
       'cameraButton'
     ).textContent =
-      '📷 Сканировать штрихкод';
+      '📷 Камера открыта';
+
+
+    html5QrCode =
+      new Html5Qrcode(
+        'reader'
+      );
+
+
+    cameraOpen =
+      true;
+
+
+    await html5QrCode.start(
+
+      {
+        facingMode:
+          'environment'
+      },
+
+
+      {
+        fps: 10,
+
+        qrbox: {
+          width: 280,
+          height: 160
+        },
+
+        aspectRatio:
+          1.777778
+      },
+
+
+      function(decodedText) {
+
+        if (!decodedText) {
+          return;
+        }
+
+
+        closeCamera();
+
+
+        const input =
+          document.getElementById(
+            'searchInput'
+          );
+
+
+        input.value =
+          decodedText;
+
+
+        searchProducts(
+          decodedText
+        );
+
+      },
+
+
+      function(errorMessage) {
+
+        // Ошибки отсутствия
+        // штрихкода игнорируем.
+
+      }
+
+    );
+
+
+    status.textContent =
+      '';
+
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    status.textContent =
+      'Не удалось открыть камеру';
+
+
+    document.getElementById(
+      'cameraWrapper'
+    ).style.display =
+      'none';
+
+
+    cameraOpen =
+      false;
+
+  }
+
+}
+
+
+// =========================================================
+// ЗАКРЫТЬ КАМЕРУ
+// =========================================================
+
+async function closeCamera() {
+
+  if (
+    html5QrCode &&
+    cameraOpen
+  ) {
+
+    try {
+
+      await html5QrCode.stop();
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+
+    try {
+
+      html5QrCode.clear();
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
 
   }
 
 
-  // =========================================================
-  // ПОИСК ПРИ ВВОДЕ
-  // =========================================================
+  html5QrCode =
+    null;
 
-  document
-    .getElementById('searchInput')
-    .addEventListener(
-      'input',
-      function() {
 
-        searchProducts(this.value);
+  cameraOpen =
+    false;
+
+
+  document.getElementById(
+    'cameraWrapper'
+  ).style.display =
+    'none';
+
+
+  document.getElementById(
+    'cameraButton'
+  ).textContent =
+    '📷 Сканировать штрихкод';
+
+}
+
+
+// =========================================================
+// ПОИСК ПРИ ВВОДЕ
+// =========================================================
+
+document
+  .getElementById(
+    'searchInput'
+  )
+  .addEventListener(
+    'input',
+    function() {
+
+      searchProducts(
+        this.value
+      );
+
+    }
+  );
+
+
+// =========================================================
+// ENTER
+// =========================================================
+
+document
+  .getElementById(
+    'searchInput'
+  )
+  .addEventListener(
+    'keydown',
+    function(event) {
+
+      if (
+        event.key ===
+        'Enter'
+      ) {
+
+        event.preventDefault();
+
+
+        searchProducts(
+          this.value
+        );
 
       }
+
+    }
+  );
+
+
+// =========================================================
+// ИНИЦИАЛИЗАЦИЯ
+// =========================================================
+
+async function init() {
+
+  const status =
+    document.getElementById(
+      'status'
     );
 
 
-  // =========================================================
-  // ENTER
-  // =========================================================
+  // -------------------------------------------------------
+  // Сначала пытаемся взять базу с устройства
+  // -------------------------------------------------------
 
-  document
-    .getElementById('searchInput')
-    .addEventListener(
-      'keydown',
-      function(event) {
+  try {
 
-        if (event.key === 'Enter') {
+    status.textContent =
+      'Загружаем сохранённую базу...';
 
-          event.preventDefault();
-
-          searchProducts(this.value);
-
-        }
-
-      }
-    );
-
-
-  // =========================================================
-  // ИНИЦИАЛИЗАЦИЯ
-  // =========================================================
-
-  async function init() {
 
     const saved =
-      loadDatabaseFromStorage();
+      await loadDatabaseFromStorage();
 
 
-    if (saved && saved.products) {
+    if (
+      saved &&
+      saved.products
+    ) {
 
-      setDatabase(saved);
+      setDatabase(
+        saved
+      );
 
-      document.getElementById(
-        'status'
-      ).textContent = '';
+
+      status.textContent =
+        '';
+
 
       return;
 
     }
 
+  } catch (error) {
 
-    document.getElementById(
-      'status'
-    ).textContent =
-      'Загружаем актуальную базу...';
-
-
-    try {
-
-      const data =
-        await loadDatabaseFromServer();
-
-
-      setDatabase(data);
-
-      saveDatabase(data);
-
-
-      document.getElementById(
-        'status'
-      ).textContent = '';
-
-
-    } catch (error) {
-
-      console.error(error);
-
-      document.getElementById(
-        'status'
-      ).textContent =
-        'Не удалось загрузить базу';
-
-    }
+    console.error(
+      'Ошибка IndexedDB:',
+      error
+    );
 
   }
 
 
-  init();
+  // -------------------------------------------------------
+  // Если базы на устройстве нет —
+  // скачиваем её с сервера
+  // -------------------------------------------------------
+
+  status.textContent =
+    'Загружаем актуальную базу...';
+
+
+  try {
+
+    const data =
+      await loadDatabaseFromServer();
+
+
+    // Сначала сохраняем
+
+    await saveDatabase(
+      data
+    );
+
+
+    // Затем устанавливаем
+
+    setDatabase(
+      data
+    );
+
+
+    status.textContent =
+      '';
+
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    status.textContent =
+      'Не удалось загрузить базу';
+
+  }
+
+}
+
+
+// =========================================================
+// ЗАПУСК
+// =========================================================
+
+init();
 
 </script>
 
