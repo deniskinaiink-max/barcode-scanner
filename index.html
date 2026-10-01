@@ -1,333 +1,601 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+>
 
 <title>Стройцентр Инком — Проверка товара</title>
 
+
 <style>
+
 * {
   box-sizing: border-box;
 }
 
 html,
 body {
+
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+
   background: #f5f5f7;
   color: #111;
+
 }
 
 body {
+
   min-height: 100vh;
+
 }
+
 
 .container {
+
   max-width: 650px;
+
   margin: 0 auto;
-  padding: 20px 16px 30px;
+
+  padding:
+    20px
+    16px
+    30px;
+
 }
+
 
 .header {
+
   margin-bottom: 18px;
+
 }
+
 
 .company {
+
   font-size: 14px;
+
   font-weight: 600;
+
   opacity: .65;
+
 }
+
 
 .title {
+
   font-size: 28px;
+
   font-weight: 700;
+
   margin-top: 3px;
+
 }
+
 
 .search-row {
+
   display: flex;
+
   gap: 8px;
+
   margin-bottom: 10px;
+
 }
+
 
 .search-input {
+
   flex: 1;
+
   min-width: 0;
+
   height: 52px;
-  padding: 0 16px;
-  border: 1px solid #d2d2d7;
+
+  padding:
+    0
+    16px;
+
+  border:
+    1px solid
+    #d2d2d7;
+
   border-radius: 14px;
+
   background: white;
+
   font-size: 17px;
+
   outline: none;
+
 }
+
 
 .search-input:focus {
+
   border-color: #888;
+
 }
+
 
 .button {
+
   border: 0;
+
   border-radius: 14px;
-  padding: 0 16px;
+
+  padding:
+    0
+    16px;
+
   height: 52px;
+
   font-size: 16px;
+
   font-weight: 600;
+
   cursor: pointer;
+
 }
+
 
 .camera-button {
+
   background: #111;
+
   color: white;
+
 }
+
 
 .update-button {
+
   width: 100%;
+
   margin-top: 10px;
+
   background: #e9e9ed;
+
   color: #111;
+
 }
+
 
 .update-button.loading {
+
   opacity: .6;
+
 }
+
 
 #reader {
+
   display: none;
+
   width: 100%;
+
   margin-top: 12px;
+
   border-radius: 16px;
+
   overflow: hidden;
+
   background: #000;
+
 }
+
 
 .camera-controls {
+
   display: none;
+
   margin-top: 8px;
+
   gap: 8px;
+
 }
+
 
 .camera-controls button {
+
   flex: 1;
+
 }
+
 
 .status {
+
   min-height: 22px;
-  margin: 8px 2px;
+
+  margin:
+    8px
+    2px;
+
   font-size: 14px;
+
   color: #666;
+
 }
+
 
 .results {
+
   margin-top: 12px;
+
 }
+
 
 .card {
+
   background: white;
+
   border-radius: 18px;
+
   padding: 18px;
+
   margin-bottom: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+
+  box-shadow:
+    0 2px 8px
+    rgba(0,0,0,.06);
+
 }
+
 
 .product-name {
+
   font-size: 19px;
+
   font-weight: 700;
+
   line-height: 1.3;
+
   margin-bottom: 14px;
+
 }
+
 
 .meta {
+
   font-size: 14px;
+
   color: #666;
+
   margin-top: 5px;
+
 }
+
 
 .stock-main {
+
   margin-top: 18px;
+
   font-size: 38px;
+
   line-height: 1;
+
   font-weight: 800;
+
 }
+
 
 .stock-label {
+
   font-size: 13px;
+
   color: #777;
+
   margin-top: 4px;
+
 }
+
 
 .stock-total {
+
   margin-top: 10px;
+
   font-size: 15px;
+
   color: #555;
+
 }
+
 
 .price {
+
   margin-top: 16px;
+
   font-size: 28px;
+
   font-weight: 750;
+
 }
+
 
 .next-button {
+
   width: 100%;
+
   margin-top: 16px;
+
   background: #111;
+
   color: white;
+
 }
+
 
 .no-results {
+
   text-align: center;
+
   color: #777;
+
   padding: 30px 10px;
+
 }
+
 
 .footer {
+
   margin-top: 22px;
+
   font-size: 12px;
+
   color: #888;
+
   text-align: center;
+
   line-height: 1.5;
+
 }
 
+
 .db-info {
+
   margin-top: 8px;
+
 }
+
 
 @media (prefers-color-scheme: dark) {
 
   html,
   body {
+
     background: #111;
+
     color: #f5f5f7;
+
   }
+
 
   .search-input {
+
     background: #1c1c1e;
+
     border-color: #38383a;
+
     color: white;
+
   }
+
 
   .update-button {
+
     background: #2c2c2e;
+
     color: white;
+
   }
 
+
   .card {
+
     background: #1c1c1e;
+
   }
+
 
   .meta,
   .status,
   .stock-label,
   .stock-total,
   .footer {
+
     color: #98989f;
+
   }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
+
   <div class="header">
-    <div class="company">СТРОЙЦЕНТР ИНКОМ</div>
-    <div class="title">Проверка товара</div>
+
+    <div class="company">
+      СТРОЙЦЕНТР ИНКОМ
+    </div>
+
+    <div class="title">
+      Проверка товара
+    </div>
+
   </div>
+
 
   <div class="search-row">
 
+
     <input
+
       id="searchInput"
+
       class="search-input"
+
       type="text"
+
       autocomplete="off"
+
       autocorrect="off"
+
       autocapitalize="off"
+
       spellcheck="false"
+
       placeholder="Штрихкод, код 1С или название"
+
     >
 
+
     <button
+
       id="cameraButton"
-      class="button camera-button">
+
+      class="button camera-button"
+
+    >
       📷
     </button>
 
+
   </div>
+
 
   <div id="reader"></div>
 
-  <div id="cameraControls" class="camera-controls">
+
+  <div
+    id="cameraControls"
+    class="camera-controls"
+  >
+
     <button
+
       id="closeCameraButton"
-      class="button update-button">
+
+      class="button update-button"
+
+    >
       Закрыть камеру
     </button>
+
   </div>
 
-  <div id="status" class="status"></div>
 
-  <div id="results" class="results"></div>
+  <div
+    id="status"
+    class="status"
+  ></div>
+
+
+  <div
+    id="results"
+    class="results"
+  ></div>
+
 
   <button
+
     id="updateButton"
-    class="button update-button">
+
+    class="button update-button"
+
+  >
     Обновить базу
+
   </button>
+
 
   <div class="footer">
 
     <div id="dbCount"></div>
 
-    <div id="dbInfo" class="db-info"></div>
+    <div
+      id="dbInfo"
+      class="db-info"
+    ></div>
 
   </div>
+
 
 </div>
 
 
 <script>
 
+
+/*
+==================================================
+НАСТРОЙКИ
+==================================================
+*/
+
+
 const API_URL =
   'https://script.google.com/macros/s/AKfycbwLJNTns2VnOebnan30cDWpad1tZaTtjI2g8B44HP6oj0M806NbzsZLcgn_9XkO-pwL/exec';
 
 
 /*
-==================================================
-НАСТРОЙКИ ЛОКАЛЬНОЙ БАЗЫ
-==================================================
+Новая локальная база.
+
+Старая база V1 полностью игнорируется.
 */
 
-/*
-Используем новое имя базы.
-
-Это важно:
-если на телефоне осталась старая
-IndexedDB от предыдущих экспериментов,
-она больше не будет мешать.
-*/
-
-const DB_NAME = 'ScanInkDatabaseV2';
-
-const DB_VERSION = 1;
-
-const STORE_NAME = 'database';
-
-const DB_KEY = 'current';
+const DB_NAME =
+  'ScanInkDatabaseV2';
 
 
-let databaseData = null;
+const DB_VERSION =
+  1;
 
-let products = {};
 
-let html5QrCode = null;
+const STORE_NAME =
+  'database';
 
-let cameraRunning = false;
+
+const DB_KEY =
+  'current';
+
+
+let databaseData =
+  null;
+
+
+let products =
+  {};
+
+
+let html5QrCode =
+  null;
+
+
+let cameraRunning =
+  false;
 
 
 /*
@@ -336,55 +604,78 @@ INDEXED DB
 ==================================================
 */
 
+
 function openDatabase() {
 
-  return new Promise((resolve, reject) => {
-
-    if (!window.indexedDB) {
-
-      reject(
-        new Error('IndexedDB не поддерживается')
-      );
-
-      return;
-    }
-
-    const request =
-      indexedDB.open(DB_NAME, DB_VERSION);
+  return new Promise(
+    (resolve, reject) => {
 
 
-    request.onupgradeneeded = function(event) {
+      if (!window.indexedDB) {
 
-      const db = event.target.result;
+        reject(
+          new Error(
+            'IndexedDB не поддерживается'
+          )
+        );
 
-      if (
-        !db.objectStoreNames.contains(STORE_NAME)
-      ) {
-
-        db.createObjectStore(STORE_NAME);
+        return;
 
       }
 
-    };
+
+      const request =
+        indexedDB.open(
+          DB_NAME,
+          DB_VERSION
+        );
 
 
-    request.onsuccess = function(event) {
+      request.onupgradeneeded =
+        function(event) {
 
-      resolve(event.target.result);
+          const db =
+            event.target.result;
 
-    };
+
+          if (
+            !db.objectStoreNames
+              .contains(STORE_NAME)
+          ) {
+
+            db.createObjectStore(
+              STORE_NAME
+            );
+
+          }
+
+        };
 
 
-    request.onerror = function(event) {
+      request.onsuccess =
+        function(event) {
 
-      reject(
-        event.target.error ||
-        new Error('Ошибка открытия IndexedDB')
-      );
+          resolve(
+            event.target.result
+          );
 
-    };
+        };
 
-  });
+
+      request.onerror =
+        function(event) {
+
+          reject(
+            event.target.error ||
+            new Error(
+              'Ошибка открытия IndexedDB'
+            )
+          );
+
+        };
+
+    }
+  );
 
 }
 
@@ -395,57 +686,78 @@ function openDatabase() {
 ==================================================
 */
 
+
 async function saveDatabase(data) {
 
-  const db = await openDatabase();
-
-  return new Promise((resolve, reject) => {
-
-    const transaction =
-      db.transaction(
-        STORE_NAME,
-        'readwrite'
-      );
-
-    const store =
-      transaction.objectStore(STORE_NAME);
+  const db =
+    await openDatabase();
 
 
-    const request =
-      store.put(data, DB_KEY);
+  return new Promise(
+    (resolve, reject) => {
 
 
-    request.onerror = function(event) {
-
-      reject(
-        event.target.error ||
-        new Error('Не удалось сохранить базу')
-      );
-
-    };
+      const transaction =
+        db.transaction(
+          STORE_NAME,
+          'readwrite'
+        );
 
 
-    transaction.oncomplete = function() {
-
-      db.close();
-
-      resolve();
-
-    };
+      const store =
+        transaction.objectStore(
+          STORE_NAME
+        );
 
 
-    transaction.onerror = function(event) {
+      const request =
+        store.put(
+          data,
+          DB_KEY
+        );
 
-      db.close();
 
-      reject(
-        event.target.error ||
-        new Error('Ошибка записи IndexedDB')
-      );
+      request.onerror =
+        function(event) {
 
-    };
+          db.close();
 
-  });
+          reject(
+            event.target.error ||
+            new Error(
+              'Не удалось сохранить базу'
+            )
+          );
+
+        };
+
+
+      transaction.oncomplete =
+        function() {
+
+          db.close();
+
+          resolve();
+
+        };
+
+
+      transaction.onerror =
+        function(event) {
+
+          db.close();
+
+          reject(
+            event.target.error ||
+            new Error(
+              'Ошибка записи IndexedDB'
+            )
+          );
+
+        };
+
+    }
+  );
 
 }
 
@@ -456,49 +768,67 @@ async function saveDatabase(data) {
 ==================================================
 */
 
+
 async function loadDatabaseFromStorage() {
 
-  const db = await openDatabase();
-
-  return new Promise((resolve, reject) => {
-
-    const transaction =
-      db.transaction(
-        STORE_NAME,
-        'readonly'
-      );
-
-    const store =
-      transaction.objectStore(STORE_NAME);
+  const db =
+    await openDatabase();
 
 
-    const request =
-      store.get(DB_KEY);
+  return new Promise(
+    (resolve, reject) => {
 
 
-    request.onsuccess = function(event) {
-
-      const data = event.target.result || null;
-
-      db.close();
-
-      resolve(data);
-
-    };
+      const transaction =
+        db.transaction(
+          STORE_NAME,
+          'readonly'
+        );
 
 
-    request.onerror = function(event) {
+      const store =
+        transaction.objectStore(
+          STORE_NAME
+        );
 
-      db.close();
 
-      reject(
-        event.target.error ||
-        new Error('Не удалось прочитать базу')
-      );
+      const request =
+        store.get(DB_KEY);
 
-    };
 
-  });
+      request.onsuccess =
+        function(event) {
+
+          const data =
+            event.target.result ||
+            null;
+
+
+          db.close();
+
+
+          resolve(data);
+
+        };
+
+
+      request.onerror =
+        function(event) {
+
+          db.close();
+
+
+          reject(
+            event.target.error ||
+            new Error(
+              'Не удалось прочитать базу'
+            )
+          );
+
+        };
+
+    }
+  );
 
 }
 
@@ -507,111 +837,158 @@ async function loadDatabaseFromStorage() {
 ==================================================
 JSONP
 ==================================================
+
+Используем JSONP ТОЛЬКО для
+маленького запроса версии.
+
+Большую базу через JSONP больше
+не качаем.
+==================================================
 */
+
 
 function jsonp(url) {
 
-  return new Promise((resolve, reject) => {
-
-    const callbackName =
-      'scanInkCallback_' +
-      Date.now() +
-      '_' +
-      Math.random()
-        .toString(36)
-        .substring(2);
+  return new Promise(
+    (resolve, reject) => {
 
 
-    const script =
-      document.createElement('script');
+      const callbackName =
+        'scanInkCallback_' +
+        Date.now() +
+        '_' +
+        Math.random()
+          .toString(36)
+          .substring(2);
 
 
-    const timeout =
-      setTimeout(() => {
-
-        cleanup();
-
-        reject(
-          new Error('Истекло время ожидания')
+      const script =
+        document.createElement(
+          'script'
         );
 
-      }, 60000);
+
+      let finished =
+        false;
 
 
-    function cleanup() {
+      const timeout =
+        setTimeout(
+          function() {
 
-      clearTimeout(timeout);
+            if (finished) {
+              return;
+            }
 
-      script.remove();
 
-      try {
-        delete window[callbackName];
-      } catch (e) {
-        window[callbackName] = undefined;
+            finished = true;
+
+
+            cleanup();
+
+
+            reject(
+              new Error(
+                'Истекло время ожидания'
+              )
+            );
+
+          },
+          30000
+        );
+
+
+      function cleanup() {
+
+        clearTimeout(timeout);
+
+
+        script.remove();
+
+
+        try {
+
+          delete window[
+            callbackName
+          ];
+
+        } catch (e) {
+
+          window[
+            callbackName
+          ] = undefined;
+
+        }
+
       }
 
-    }
+
+      window[callbackName] =
+        function(data) {
+
+          if (finished) {
+            return;
+          }
 
 
-    window[callbackName] =
-      function(data) {
-
-        cleanup();
-
-        resolve(data);
-
-      };
+          finished = true;
 
 
-    script.onerror =
-      function() {
+          cleanup();
 
-        cleanup();
 
-        reject(
-          new Error('Ошибка загрузки данных')
+          resolve(data);
+
+        };
+
+
+      script.onerror =
+        function() {
+
+          if (finished) {
+            return;
+          }
+
+
+          finished = true;
+
+
+          cleanup();
+
+
+          reject(
+            new Error(
+              'Ошибка JSONP'
+            )
+          );
+
+        };
+
+
+      script.src =
+        url +
+        '&callback=' +
+        encodeURIComponent(
+          callbackName
         );
 
-      };
 
+      document.body.appendChild(
+        script
+      );
 
-    script.src =
-      url +
-      '&callback=' +
-      encodeURIComponent(callbackName);
-
-
-    document.body.appendChild(script);
-
-  });
+    }
+  );
 
 }
 
 
 /*
 ==================================================
-ПОЛНАЯ ЗАГРУЗКА БАЗЫ
+ПОЛУЧЕНИЕ ВЕРСИИ СЕРВЕРА
 ==================================================
 */
 
-async function loadDatabaseFromServer() {
-
-  const url =
-    API_URL +
-    '?mode=database&_=' +
-    Date.now();
-
-
-  return await jsonp(url);
-
-}
-
-
-/*
-==================================================
-ПРОВЕРКА ТОЛЬКО ВЕРСИИ
-==================================================
-*/
 
 async function getServerVersion() {
 
@@ -628,26 +1005,95 @@ async function getServerVersion() {
 
 /*
 ==================================================
+ПОЛУЧЕНИЕ ПОЛНОЙ БАЗЫ
+==================================================
+
+Здесь используем fetch.
+
+Это ключевое изменение.
+==================================================
+*/
+
+
+async function loadDatabaseFromServer() {
+
+  const url =
+    API_URL +
+    '?mode=database&_=' +
+    Date.now();
+
+
+  const response =
+    await fetch(
+      url,
+      {
+        method: 'GET',
+        cache: 'no-store'
+      }
+    );
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      'Сервер вернул HTTP ' +
+      response.status
+    );
+
+  }
+
+
+  const data =
+    await response.json();
+
+
+  if (
+    !data ||
+    !data.products
+  ) {
+
+    throw new Error(
+      'Сервер вернул некорректную базу'
+    );
+
+  }
+
+
+  return data;
+
+}
+
+
+/*
+==================================================
 УСТАНОВКА БАЗЫ В ПАМЯТЬ
 ==================================================
 */
 
+
 function setDatabase(data) {
 
-  databaseData = data;
+  databaseData =
+    data;
+
 
   products =
     data.products || {};
 
 
-  document.getElementById('dbCount')
-    .textContent =
-      'Товаров в базе: ' +
-      Number(data.count || 0)
-        .toLocaleString('ru-RU');
+  document.getElementById(
+    'dbCount'
+  ).textContent =
+    'Товаров в базе: ' +
+    Number(
+      data.count || 0
+    ).toLocaleString(
+      'ru-RU'
+    );
 
 
-  let updatedText = '';
+  let updatedText =
+    '';
 
 
   if (data.updatedAt) {
@@ -655,7 +1101,10 @@ function setDatabase(data) {
     try {
 
       const date =
-        new Date(data.updatedAt);
+        new Date(
+          data.updatedAt
+        );
+
 
       updatedText =
         date.toLocaleString(
@@ -672,20 +1121,28 @@ function setDatabase(data) {
     } catch (e) {
 
       updatedText =
-        String(data.updatedAt);
+        String(
+          data.updatedAt
+        );
 
     }
 
   }
 
 
-  document.getElementById('dbInfo')
-    .textContent =
-      'Версия: ' +
-      String(data.version || '—') +
-      (updatedText
-        ? ' · Обновлено: ' + updatedText
-        : '');
+  document.getElementById(
+    'dbInfo'
+  ).textContent =
+    'Версия: ' +
+    String(
+      data.version || '—'
+    ) +
+    (
+      updatedText
+        ? ' · Обновлено: ' +
+          updatedText
+        : ''
+    );
 
 }
 
@@ -696,17 +1153,31 @@ function setDatabase(data) {
 ==================================================
 */
 
+
 function normalizeCode(value) {
 
   const digits =
-    String(value || '')
-      .replace(/\D/g, '');
+    String(
+      value || ''
+    )
+      .replace(
+        /\D/g,
+        ''
+      );
 
 
-  if (!digits) return '';
+  if (!digits) {
+
+    return '';
+
+  }
+
 
   return (
-    digits.replace(/^0+/, '') ||
+    digits.replace(
+      /^0+/,
+      ''
+    ) ||
     '0'
   );
 
@@ -719,11 +1190,13 @@ function normalizeCode(value) {
 ==================================================
 */
 
+
 function searchProducts(query) {
 
   query =
-    String(query || '')
-      .trim();
+    String(
+      query || ''
+    ).trim();
 
 
   if (!query) {
@@ -735,13 +1208,9 @@ function searchProducts(query) {
   }
 
 
-  const normalizedCode =
-    normalizeCode(query);
-
-
   /*
-  Сначала пробуем точное совпадение
-  по штрихкоду.
+  1.
+  Точное совпадение штрихкода.
   */
 
   if (products[query]) {
@@ -756,40 +1225,63 @@ function searchProducts(query) {
 
 
   /*
-  Затем точное совпадение
-  по коду 1С.
+  2.
+  Точное совпадение кода 1С.
   */
+
+  const normalizedCode =
+    normalizeCode(query);
+
 
   if (normalizedCode) {
 
-    const exactCodeResults = [];
+    const exactCodeResults =
+      [];
+
 
     const keys =
-      Object.keys(products);
+      Object.keys(
+        products
+      );
 
 
-    for (let i = 0; i < keys.length; i++) {
+    for (
+      let i = 0;
+      i < keys.length;
+      i++
+    ) {
 
       const product =
-        products[keys[i]];
+        products[
+          keys[i]
+        ];
 
 
       if (
-        normalizeCode(product.code1c) ===
+        normalizeCode(
+          product.code1c
+        ) ===
         normalizedCode
       ) {
 
-        exactCodeResults.push(product);
+        exactCodeResults.push(
+          product
+        );
 
       }
 
     }
 
 
-    if (exactCodeResults.length) {
+    if (
+      exactCodeResults.length
+    ) {
 
       renderResults(
-        exactCodeResults.slice(0, 30)
+        exactCodeResults.slice(
+          0,
+          30
+        )
       );
 
       return;
@@ -800,6 +1292,7 @@ function searchProducts(query) {
 
 
   /*
+  3.
   Поиск по названию.
   */
 
@@ -810,31 +1303,52 @@ function searchProducts(query) {
       .filter(Boolean);
 
 
-  const results = [];
+  const results =
+    [];
+
 
   const keys =
-    Object.keys(products);
+    Object.keys(
+      products
+    );
 
 
-  for (let i = 0; i < keys.length; i++) {
+  for (
+    let i = 0;
+    i < keys.length;
+    i++
+  ) {
 
     const product =
-      products[keys[i]];
+      products[
+        keys[i]
+      ];
 
 
     const name =
-      String(product.name || '')
-        .toLowerCase();
+      String(
+        product.name || ''
+      ).toLowerCase();
 
 
-    let matches = true;
+    let matches =
+      true;
 
 
-    for (let j = 0; j < words.length; j++) {
+    for (
+      let j = 0;
+      j < words.length;
+      j++
+    ) {
 
-      if (!name.includes(words[j])) {
+      if (
+        !name.includes(
+          words[j]
+        )
+      ) {
 
-        matches = false;
+        matches =
+          false;
 
         break;
 
@@ -845,9 +1359,14 @@ function searchProducts(query) {
 
     if (matches) {
 
-      results.push(product);
+      results.push(
+        product
+      );
 
-      if (results.length >= 30) {
+
+      if (
+        results.length >= 30
+      ) {
 
         break;
 
@@ -858,7 +1377,9 @@ function searchProducts(query) {
   }
 
 
-  renderResults(results);
+  renderResults(
+    results
+  );
 
 }
 
@@ -869,20 +1390,28 @@ function searchProducts(query) {
 ==================================================
 */
 
+
 function renderResults(results) {
 
   const container =
-    document.getElementById('results');
+    document.getElementById(
+      'results'
+    );
 
 
-  container.innerHTML = '';
+  container.innerHTML =
+    '';
 
 
   if (!results.length) {
 
     if (
-      document.getElementById('searchInput')
-        .value.trim()
+      document
+        .getElementById(
+          'searchInput'
+        )
+        .value
+        .trim()
     ) {
 
       container.innerHTML =
@@ -892,164 +1421,259 @@ function renderResults(results) {
 
     }
 
+
     return;
 
   }
 
 
-  results.forEach(product => {
-
-    const card =
-      document.createElement('div');
-
-    card.className = 'card';
+  results.forEach(
+    function(product) {
 
 
-    const name =
-      document.createElement('div');
-
-    name.className =
-      'product-name';
-
-    name.textContent =
-      product.name || 'Без названия';
+      const card =
+        document.createElement(
+          'div'
+        );
 
 
-    const barcode =
-      document.createElement('div');
-
-    barcode.className =
-      'meta';
-
-    barcode.textContent =
-      'Штрихкод: ' +
-      (product.barcode || '—');
+      card.className =
+        'card';
 
 
-    const code =
-      document.createElement('div');
-
-    code.className =
-      'meta';
-
-    code.textContent =
-      'Код 1С: ' +
-      (product.code1c || '—');
+      const name =
+        document.createElement(
+          'div'
+        );
 
 
-    const stockLabel =
-      document.createElement('div');
-
-    stockLabel.className =
-      'stock-label';
-
-    stockLabel.textContent =
-      'Доступный остаток';
+      name.className =
+        'product-name';
 
 
-    const stock =
-      document.createElement('div');
-
-    stock.className =
-      'stock-main';
-
-    stock.textContent =
-      product.available || '0';
+      name.textContent =
+        product.name ||
+        'Без названия';
 
 
-    const total =
-      document.createElement('div');
-
-    total.className =
-      'stock-total';
-
-    total.textContent =
-      'Остаток: ' +
-      (product.stock || '0');
+      const barcode =
+        document.createElement(
+          'div'
+        );
 
 
-    const price =
-      document.createElement('div');
-
-    price.className =
-      'price';
-
-    price.textContent =
-      (product.price || '—') +
-      ' ₽';
+      barcode.className =
+        'meta';
 
 
-    const updated =
-      document.createElement('div');
-
-    updated.className =
-      'meta';
-
-    updated.style.marginTop =
-      '10px';
-
-    updated.textContent =
-      'Последнее обновление: ' +
-      (product.updatedAt || '—');
+      barcode.textContent =
+        'Штрихкод: ' +
+        (
+          product.barcode ||
+          '—'
+        );
 
 
-    const nextButton =
-      document.createElement('button');
-
-    nextButton.className =
-      'button next-button';
-
-    nextButton.textContent =
-      'Сканировать следующий';
+      const code =
+        document.createElement(
+          'div'
+        );
 
 
-    nextButton.onclick =
-      function() {
-
-        document.getElementById(
-          'searchInput'
-        ).value = '';
-
-        container.innerHTML = '';
-
-        document.getElementById(
-          'searchInput'
-        ).focus();
-
-      };
+      code.className =
+        'meta';
 
 
-    card.appendChild(name);
-
-    card.appendChild(barcode);
-
-    card.appendChild(code);
-
-    card.appendChild(stockLabel);
-
-    card.appendChild(stock);
-
-    card.appendChild(total);
-
-    card.appendChild(price);
-
-    card.appendChild(updated);
-
-    card.appendChild(nextButton);
+      code.textContent =
+        'Код 1С: ' +
+        (
+          product.code1c ||
+          '—'
+        );
 
 
-    container.appendChild(card);
+      const stockLabel =
+        document.createElement(
+          'div'
+        );
 
-  });
+
+      stockLabel.className =
+        'stock-label';
+
+
+      stockLabel.textContent =
+        'Доступный остаток';
+
+
+      const stock =
+        document.createElement(
+          'div'
+        );
+
+
+      stock.className =
+        'stock-main';
+
+
+      stock.textContent =
+        product.available ||
+        '0';
+
+
+      const total =
+        document.createElement(
+          'div'
+        );
+
+
+      total.className =
+        'stock-total';
+
+
+      total.textContent =
+        'Остаток: ' +
+        (
+          product.stock ||
+          '0'
+        );
+
+
+      const price =
+        document.createElement(
+          'div'
+        );
+
+
+      price.className =
+        'price';
+
+
+      price.textContent =
+        (
+          product.price ||
+          '—'
+        ) +
+        ' ₽';
+
+
+      const updated =
+        document.createElement(
+          'div'
+        );
+
+
+      updated.className =
+        'meta';
+
+
+      updated.style.marginTop =
+        '10px';
+
+
+      updated.textContent =
+        'Последнее обновление: ' +
+        (
+          product.updatedAt ||
+          '—'
+        );
+
+
+      const nextButton =
+        document.createElement(
+          'button'
+        );
+
+
+      nextButton.className =
+        'button next-button';
+
+
+      nextButton.textContent =
+        'Сканировать следующий';
+
+
+      nextButton.onclick =
+        function() {
+
+          document.getElementById(
+            'searchInput'
+          ).value =
+            '';
+
+
+          container.innerHTML =
+            '';
+
+
+          document.getElementById(
+            'searchInput'
+          ).focus();
+
+        };
+
+
+      card.appendChild(
+        name
+      );
+
+
+      card.appendChild(
+        barcode
+      );
+
+
+      card.appendChild(
+        code
+      );
+
+
+      card.appendChild(
+        stockLabel
+      );
+
+
+      card.appendChild(
+        stock
+      );
+
+
+      card.appendChild(
+        total
+      );
+
+
+      card.appendChild(
+        price
+      );
+
+
+      card.appendChild(
+        updated
+      );
+
+
+      card.appendChild(
+        nextButton
+      );
+
+
+      container.appendChild(
+        card
+      );
+
+    }
+  );
 
 }
 
 
 /*
 ==================================================
-АВТОМАТИЧЕСКАЯ ПРОВЕРКА ВЕРСИИ
+ПРОВЕРКА НОВОЙ ВЕРСИИ
 ==================================================
 */
+
 
 async function checkForNewVersion() {
 
@@ -1066,7 +1690,14 @@ async function checkForNewVersion() {
       await getServerVersion();
 
 
-    if (!server || !server.ok) {
+    if (
+      !server ||
+      !server.ok
+    ) {
+
+      console.log(
+        'Не удалось получить версию сервера'
+      );
 
       return;
 
@@ -1075,78 +1706,128 @@ async function checkForNewVersion() {
 
     const localVersion =
       Number(
-        databaseData.version || 0
+        databaseData.version ||
+        0
       );
 
 
     const serverVersion =
       Number(
-        server.version || 0
+        server.version ||
+        0
       );
 
 
     console.log(
-      'Локальная версия:',
-      localVersion
-    );
-
-
-    console.log(
-      'Версия сервера:',
+      'ScanInk:',
+      'локальная версия =',
+      localVersion,
+      'серверная версия =',
       serverVersion
     );
 
 
+    /*
+    База уже актуальна.
+    */
+
     if (
-      serverVersion >
+      serverVersion <=
       localVersion
     ) {
 
-      const status =
-        document.getElementById('status');
+      console.log(
+        'База актуальна'
+      );
 
-
-      status.textContent =
-        'Доступна новая база. Обновляем...';
-
-
-      const newDatabase =
-        await loadDatabaseFromServer();
-
-
-      /*
-      Дополнительная защита:
-      сохраняем только действительно
-      более новую версию.
-      */
-
-      if (
-        Number(newDatabase.version || 0) >=
-        serverVersion
-      ) {
-
-        await saveDatabase(
-          newDatabase
-        );
-
-        setDatabase(
-          newDatabase
-        );
-
-
-        status.textContent =
-          'База автоматически обновлена';
-
-
-        setTimeout(() => {
-
-          status.textContent = '';
-
-        }, 2500);
-
-      }
+      return;
 
     }
+
+
+    /*
+    Есть новая версия.
+    */
+
+    const status =
+      document.getElementById(
+        'status'
+      );
+
+
+    status.textContent =
+      'Доступна новая база. Обновляем...';
+
+
+    /*
+    Скачиваем полную базу
+    через fetch.
+    */
+
+    const newDatabase =
+      await loadDatabaseFromServer();
+
+
+    const newVersion =
+      Number(
+        newDatabase.version ||
+        0
+      );
+
+
+    /*
+    Проверяем, что действительно
+    получили новую версию.
+    */
+
+    if (
+      newVersion <
+      serverVersion
+    ) {
+
+      throw new Error(
+        'Получена старая версия базы'
+      );
+
+    }
+
+
+    /*
+    Сначала сохраняем.
+    */
+
+    status.textContent =
+      'Сохраняем новую базу...';
+
+
+    await saveDatabase(
+      newDatabase
+    );
+
+
+    /*
+    Только после успешного сохранения
+    переключаем приложение на новую базу.
+    */
+
+    setDatabase(
+      newDatabase
+    );
+
+
+    status.textContent =
+      'База автоматически обновлена';
+
+
+    setTimeout(
+      function() {
+
+        status.textContent =
+          '';
+
+      },
+      3000
+    );
 
 
   } catch (error) {
@@ -1156,13 +1837,34 @@ async function checkForNewVersion() {
       error
     );
 
-    /*
-    Здесь специально ничего
-    не показываем пользователю.
 
-    Если интернет временно недоступен,
+    /*
+    Очень важно:
+
     старая база продолжает работать.
+
+    Пользователь ничего не теряет.
     */
+
+    const status =
+      document.getElementById(
+        'status'
+      );
+
+
+    status.textContent =
+      'Не удалось проверить обновление';
+
+
+    setTimeout(
+      function() {
+
+        status.textContent =
+          '';
+
+      },
+      3000
+    );
 
   }
 
@@ -1175,12 +1877,14 @@ async function checkForNewVersion() {
 ==================================================
 */
 
+
 async function updateDatabase() {
 
   const button =
     document.getElementById(
       'updateButton'
     );
+
 
   const status =
     document.getElementById(
@@ -1192,7 +1896,10 @@ async function updateDatabase() {
     'loading'
   );
 
-  button.disabled = true;
+
+  button.disabled =
+    true;
+
 
   button.textContent =
     'Обновляем базу...';
@@ -1224,26 +1931,37 @@ async function updateDatabase() {
       'Сохраняем базу на устройстве...';
 
 
-    await saveDatabase(data);
+    await saveDatabase(
+      data
+    );
 
 
-    setDatabase(data);
+    setDatabase(
+      data
+    );
 
 
     status.textContent =
       'База успешно обновлена';
 
 
-    setTimeout(() => {
+    setTimeout(
+      function() {
 
-      status.textContent = '';
+        status.textContent =
+          '';
 
-    }, 2500);
+      },
+      2500
+    );
 
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      'Ошибка обновления:',
+      error
+    );
 
 
     status.textContent =
@@ -1256,7 +1974,10 @@ async function updateDatabase() {
       'loading'
     );
 
-    button.disabled = false;
+
+    button.disabled =
+      false;
+
 
     button.textContent =
       'Обновить базу';
@@ -1272,42 +1993,60 @@ async function updateDatabase() {
 ==================================================
 */
 
+
 function loadScannerLibrary() {
 
-  return new Promise((resolve, reject) => {
-
-    if (window.Html5Qrcode) {
-
-      resolve();
-
-      return;
-
-    }
+  return new Promise(
+    (resolve, reject) => {
 
 
-    const script =
-      document.createElement('script');
+      if (
+        window.Html5Qrcode
+      ) {
+
+        resolve();
+
+        return;
+
+      }
 
 
-    script.src =
-      'https://unpkg.com/html5-qrcode';
+      const script =
+        document.createElement(
+          'script'
+        );
 
 
-    script.onload =
-      () => resolve();
+      script.src =
+        'https://unpkg.com/html5-qrcode';
 
 
-    script.onerror =
-      () => reject(
-        new Error(
-          'Не удалось загрузить сканер'
-        )
+      script.onload =
+        function() {
+
+          resolve();
+
+        };
+
+
+      script.onerror =
+        function() {
+
+          reject(
+            new Error(
+              'Не удалось загрузить сканер'
+            )
+          );
+
+        };
+
+
+      document.head.appendChild(
+        script
       );
 
-
-    document.head.appendChild(script);
-
-  });
+    }
+  );
 
 }
 
@@ -1321,12 +2060,14 @@ async function startCamera() {
 
     document.getElementById(
       'reader'
-    ).style.display = 'block';
+    ).style.display =
+      'block';
 
 
     document.getElementById(
       'cameraControls'
-    ).style.display = 'flex';
+    ).style.display =
+      'flex';
 
 
     if (!html5QrCode) {
@@ -1342,7 +2083,8 @@ async function startCamera() {
     await html5QrCode.start(
 
       {
-        facingMode: 'environment'
+        facingMode:
+          'environment'
       },
 
       {
@@ -1353,11 +2095,13 @@ async function startCamera() {
           height: 160
         },
 
-        aspectRatio: 1.777778
+        aspectRatio:
+          1.777778
 
       },
 
-      decodedText => {
+      function(decodedText) {
+
 
         document.getElementById(
           'searchInput'
@@ -1374,19 +2118,27 @@ async function startCamera() {
 
       },
 
-      errorMessage => {
-        // Игнорируем ошибки отдельных кадров
+      function(errorMessage) {
+
+        /*
+        Игнорируем ошибки
+        отдельных кадров.
+        */
+
       }
 
     );
 
 
-    cameraRunning = true;
+    cameraRunning =
+      true;
 
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
 
 
     document.getElementById(
@@ -1412,33 +2164,39 @@ async function stopCamera() {
 
     } catch (e) {
 
-      console.error(e);
+      console.error(
+        e
+      );
 
     }
 
   }
 
 
-  cameraRunning = false;
+  cameraRunning =
+    false;
 
 
   document.getElementById(
     'reader'
-  ).style.display = 'none';
+  ).style.display =
+    'none';
 
 
   document.getElementById(
     'cameraControls'
-  ).style.display = 'none';
+  ).style.display =
+    'none';
 
 }
 
 
 /*
 ==================================================
-ПОИСК ПРИ ВВОДЕ
+ПОИСК
 ==================================================
 */
+
 
 document.getElementById(
   'searchInput'
@@ -1460,13 +2218,16 @@ document.getElementById(
 ==================================================
 */
 
+
 document.getElementById(
   'cameraButton'
 ).addEventListener(
   'click',
   function() {
 
-    if (cameraRunning) {
+    if (
+      cameraRunning
+    ) {
 
       stopCamera();
 
@@ -1494,9 +2255,10 @@ document.getElementById(
 
 /*
 ==================================================
-КНОПКА ОБНОВЛЕНИЯ
+ОБНОВЛЕНИЕ
 ==================================================
 */
+
 
 document.getElementById(
   'updateButton'
@@ -1512,9 +2274,10 @@ document.getElementById(
 
 /*
 ==================================================
-ЗАПУСК
+ЗАПУСК ПРИЛОЖЕНИЯ
 ==================================================
 */
+
 
 async function init() {
 
@@ -1525,8 +2288,9 @@ async function init() {
 
 
   /*
-  Сначала пытаемся открыть
-  локальную базу.
+  ================================================
+  ПЫТАЕМСЯ ВЗЯТЬ ЛОКАЛЬНУЮ БАЗУ
+  ================================================
   */
 
   try {
@@ -1539,27 +2303,34 @@ async function init() {
       await loadDatabaseFromStorage();
 
 
+    /*
+    Локальная база найдена.
+    */
+
     if (
       saved &&
       saved.products
     ) {
 
-      /*
-      Показываем её сразу.
 
-      Пользователь может начинать
-      поиск, не дожидаясь сервера.
+      /*
+      Показываем её СРАЗУ.
+
+      Никакого ожидания сервера.
       */
 
-      setDatabase(saved);
+      setDatabase(
+        saved
+      );
 
 
-      status.textContent = '';
+      status.textContent =
+        '';
 
 
       /*
-      А теперь в фоне проверяем,
-      нет ли более новой версии.
+      Проверку новой версии
+      запускаем в фоне.
       */
 
       checkForNewVersion();
@@ -1580,32 +2351,57 @@ async function init() {
 
 
   /*
-  Если локальной базы нет —
-  скачиваем полную базу.
+  ================================================
+  ЛОКАЛЬНОЙ БАЗЫ НЕТ
+  ================================================
   */
 
   status.textContent =
-    'Первичная загрузка базы...';
+    'Первая загрузка базы...';
 
 
   try {
+
+    /*
+    Скачиваем полную базу
+    */
 
     const data =
       await loadDatabaseFromServer();
 
 
-    await saveDatabase(data);
+    /*
+    Сохраняем её локально
+    */
+
+    status.textContent =
+      'Сохраняем базу...';
 
 
-    setDatabase(data);
+    await saveDatabase(
+      data
+    );
 
 
-    status.textContent = '';
+    /*
+    Активируем
+    */
+
+    setDatabase(
+      data
+    );
+
+
+    status.textContent =
+      '';
 
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      'Ошибка первой загрузки:',
+      error
+    );
 
 
     status.textContent =
@@ -1616,9 +2412,15 @@ async function init() {
 }
 
 
+/*
+Запускаем приложение.
+*/
+
 init();
+
 
 </script>
 
 </body>
+
 </html>
