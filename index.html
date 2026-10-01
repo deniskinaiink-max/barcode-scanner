@@ -2,6 +2,7 @@
 <html lang="ru">
 
 <head>
+
 <meta charset="UTF-8">
 
 <meta
@@ -9,7 +10,7 @@
   content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
 >
 
-<title>Сканер товара</title>
+<title>Стройцентр Инком — Сканер</title>
 
 <style>
 
@@ -17,126 +18,407 @@
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  padding: 20px;
-  background: #000;
-  color: #fff;
-  font-family: Arial, sans-serif;
+  padding: 0;
+  background: #f5f5f5;
+  color: #111;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
 }
+
+body {
+  min-height: 100vh;
+}
+
+
+/* =====================================================
+   ОСНОВНОЙ КОНТЕЙНЕР
+===================================================== */
 
 .container {
-  max-width: 500px;
+  width: 100%;
+  max-width: 560px;
   margin: 0 auto;
+  padding: 18px 16px 30px;
 }
 
-h1 {
-  font-size: 22px;
-  margin: 0 0 8px;
+
+/* =====================================================
+   ШАПКА
+===================================================== */
+
+.header {
+  padding: 8px 2px 20px;
 }
+
+.logo {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #777;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-top: 4px;
+  font-size: 28px;
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   ПОИСК
+===================================================== */
+
+.searchBox {
+  position: relative;
+  margin-top: 4px;
+}
+
+.searchInput {
+  width: 100%;
+  height: 58px;
+  border: 1px solid #ddd;
+  border-radius: 17px;
+  padding: 0 48px 0 50px;
+  background: #fff;
+  color: #111;
+  font-size: 17px;
+  outline: none;
+  box-shadow:
+    0 2px 10px rgba(0,0,0,0.05);
+}
+
+.searchInput:focus {
+  border-color: #999;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 17px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  pointer-events: none;
+}
+
+.clearButton {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  padding: 0;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  color: #888;
+  font-size: 22px;
+  display: none;
+}
+
+
+/* =====================================================
+   КНОПКА КАМЕРЫ
+===================================================== */
+
+.cameraButton {
+  width: 100%;
+  height: 56px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 16px;
+  background: #111;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.cameraButton:active {
+  transform: scale(0.99);
+}
+
+
+/* =====================================================
+   СТАТУС
+===================================================== */
 
 .status {
-  color: #aaa;
-  font-size: 14px;
-  margin-bottom: 15px;
+  margin-top: 14px;
+  min-height: 20px;
+  color: #777;
+  font-size: 13px;
+}
+
+
+/* =====================================================
+   КАМЕРА
+===================================================== */
+
+.cameraBlock {
+  display: none;
+  margin-top: 14px;
+  padding: 10px;
+  background: #111;
+  border-radius: 18px;
+  overflow: hidden;
 }
 
 #reader {
   width: 100%;
   overflow: hidden;
   border-radius: 12px;
-  margin-top: 15px;
 }
 
-.result {
-  margin-top: 20px;
-  padding: 18px;
-  background: #151515;
-  border-radius: 12px;
-  display: none;
-}
-
-.name {
-  font-size: 20px;
-  font-weight: bold;
-  line-height: 1.3;
-  margin-bottom: 15px;
-}
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 9px 0;
-  border-bottom: 1px solid #292929;
-}
-
-.row:last-child {
-  border-bottom: none;
-}
-
-.label {
-  color: #999;
-}
-
-.value {
-  text-align: right;
-  font-weight: bold;
-}
-
-button {
+.cameraClose {
   width: 100%;
-  border: none;
-  border-radius: 10px;
-  padding: 15px;
-  margin-top: 12px;
-  font-size: 16px;
-  font-weight: bold;
-  background: #fff;
-  color: #000;
-  cursor: pointer;
-}
-
-button:active {
-  opacity: 0.7;
-}
-
-button:disabled {
-  opacity: 0.5;
-}
-
-.secondary {
+  height: 46px;
+  margin-top: 10px;
+  border: 1px solid #444;
+  border-radius: 12px;
   background: #222;
   color: #fff;
-  border: 1px solid #444;
+  font-size: 15px;
+  font-weight: 600;
 }
 
-.danger {
-  background: #222;
-  color: #aaa;
-  border: 1px solid #444;
-}
 
-.database {
-  margin-top: 15px;
+/* =====================================================
+   РЕЗУЛЬТАТЫ
+===================================================== */
+
+.resultsHeader {
+  display: none;
+  margin-top: 24px;
+  margin-bottom: 10px;
+  font-size: 14px;
   color: #777;
-  font-size: 12px;
-  text-align: center;
-  line-height: 1.5;
 }
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+/* =====================================================
+   КАРТОЧКА ТОВАРА
+===================================================== */
+
+.productCard {
+  background: #fff;
+  border-radius: 18px;
+  padding: 17px;
+  box-shadow:
+    0 2px 10px rgba(0,0,0,0.05);
+}
+
+.productName {
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: 750;
+}
+
+.productBarcode {
+  margin-top: 7px;
+  color: #888;
+  font-size: 13px;
+}
+
+.productInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.infoBox {
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 11px;
+}
+
+.infoLabel {
+  font-size: 12px;
+  color: #888;
+}
+
+.infoValue {
+  margin-top: 3px;
+  font-size: 18px;
+  font-weight: 750;
+}
+
+
+/* =====================================================
+   КНОПКА СЛЕДУЮЩЕГО
+===================================================== */
+
+.nextButton {
+  width: 100%;
+  height: 52px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 15px;
+  background: #111;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   ПУСТО
+===================================================== */
+
+.empty {
+  display: none;
+  margin-top: 25px;
+  padding: 25px 15px;
+  text-align: center;
+  color: #888;
+  font-size: 15px;
+}
+
+
+/* =====================================================
+   ОШИБКА
+===================================================== */
 
 .error {
-  margin-top: 15px;
-  padding: 14px;
-  border-radius: 10px;
-  background: #1c1c1c;
-  color: #aaa;
   display: none;
-  white-space: pre-line;
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #fff;
+  color: #777;
+  font-size: 14px;
 }
 
-.cameraButtons {
-  display: none;
+
+/* =====================================================
+   НИЗ
+===================================================== */
+
+.footer {
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid #ddd;
+  text-align: center;
+}
+
+.databaseInfo {
+  color: #999;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.refreshButton {
+  width: auto;
+  height: 42px;
+  margin-top: 12px;
+  padding: 0 18px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  color: #666;
+  font-size: 13px;
+}
+
+
+/* =====================================================
+   ЗАГРУЗКА
+===================================================== */
+
+.loading {
+  position: fixed;
+  inset: 0;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.loadingBox {
+  text-align: center;
+}
+
+.loadingIcon {
+  font-size: 38px;
+}
+
+.loadingText {
+  margin-top: 12px;
+  color: #777;
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   ТЕМНАЯ ТЕМА
+===================================================== */
+
+@media (prefers-color-scheme: dark) {
+
+  html,
+  body {
+    background: #000;
+    color: #fff;
+  }
+
+  .logo,
+  .status,
+  .resultsHeader {
+    color: #888;
+  }
+
+  .searchInput {
+    background: #151515;
+    color: #fff;
+    border-color: #292929;
+  }
+
+  .productCard {
+    background: #111;
+  }
+
+  .infoBox {
+    background: #1c1c1c;
+  }
+
+  .footer {
+    border-color: #222;
+  }
+
+  .refreshButton {
+    background: #111;
+    border-color: #333;
+    color: #aaa;
+  }
+
+  .loading {
+    background: #000;
+  }
+
+  .loadingText {
+    color: #888;
+  }
+
+  .empty,
+  .error {
+    color: #888;
+  }
+
 }
 
 </style>
@@ -146,116 +428,172 @@ button:disabled {
 
 <body>
 
-<div class="container">
-
-<h1>📦 Сканер товара</h1>
-
-<div id="status" class="status">
-Проверяем локальную базу...
-</div>
-
-
-<div id="reader"></div>
-
-
-<div id="cameraButtons" class="cameraButtons">
-
-<button
-  id="startCameraButton"
-  onclick="startCamera()"
->
-📷 Включить камеру
-</button>
-
-<button
-  id="stopCameraButton"
-  class="danger"
-  onclick="stopCamera()"
-  style="display:none;"
->
-⏹ Выключить камеру
-</button>
-
-</div>
-
-
-<div id="error" class="error"></div>
-
-
-<div id="result" class="result">
-
-<div id="productName" class="name"></div>
-
-
-<div class="row">
-
-<div class="label">
-Штрихкод
-</div>
-
-<div id="productBarcode" class="value"></div>
-
-</div>
-
-
-<div class="row">
-
-<div class="label">
-Доступный остаток
-</div>
-
-<div id="productAvailable" class="value"></div>
-
-</div>
-
-
-<div class="row">
-
-<div class="label">
-Остаток
-</div>
-
-<div id="productStock" class="value"></div>
-
-</div>
-
-
-<div class="row">
-
-<div class="label">
-Цена
-</div>
-
-<div id="productPrice" class="value"></div>
-
-</div>
-
-
-<button
-onclick="scanNext()"
->
-📷 Сканировать следующий
-</button>
-
-
-</div>
-
-
-<button
-id="refreshButton"
-class="secondary"
-onclick="updateDatabase()"
-style="display:none;"
->
-Обновить базу
-</button>
-
 
 <div
-id="databaseInfo"
-class="database"
+  id="loading"
+  class="loading"
 >
+
+  <div class="loadingBox">
+
+    <div class="loadingIcon">
+      📦
+    </div>
+
+    <div
+      id="loadingText"
+      class="loadingText"
+    >
+      Загружаем базу...
+    </div>
+
+  </div>
+
 </div>
+
+
+<div class="container">
+
+
+  <!-- =================================================
+       ШАПКА
+  ================================================== -->
+
+  <div class="header">
+
+    <div class="logo">
+      Стройцентр Инком
+    </div>
+
+    <div class="title">
+      Проверка товара
+    </div>
+
+  </div>
+
+
+  <!-- =================================================
+       ПОИСК
+  ================================================== -->
+
+  <div class="searchBox">
+
+    <div class="searchIcon">
+      🔎
+    </div>
+
+    <input
+      id="searchInput"
+      class="searchInput"
+      type="text"
+      inputmode="search"
+      autocomplete="off"
+      placeholder="Штрихкод или название"
+    >
+
+    <button
+      id="clearButton"
+      class="clearButton"
+      onclick="clearSearch()"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <!-- =================================================
+       КАМЕРА
+  ================================================== -->
+
+  <button
+    id="cameraButton"
+    class="cameraButton"
+    onclick="openCamera()"
+  >
+    📷 Сканировать штрихкод
+  </button>
+
+
+  <div
+    id="status"
+    class="status"
+  >
+    База загружена.
+  </div>
+
+
+  <div
+    id="cameraBlock"
+    class="cameraBlock"
+  >
+
+    <div id="reader"></div>
+
+    <button
+      class="cameraClose"
+      onclick="closeCamera()"
+    >
+      Закрыть камеру
+    </button>
+
+  </div>
+
+
+  <!-- =================================================
+       РЕЗУЛЬТАТЫ
+  ================================================== -->
+
+  <div
+    id="resultsHeader"
+    class="resultsHeader"
+  >
+  </div>
+
+
+  <div
+    id="results"
+    class="results"
+  >
+  </div>
+
+
+  <div
+    id="empty"
+    class="empty"
+  >
+    Ничего не найдено
+  </div>
+
+
+  <div
+    id="error"
+    class="error"
+  >
+  </div>
+
+
+  <!-- =================================================
+       НИЗ
+  ================================================== -->
+
+  <div class="footer">
+
+    <div
+      id="databaseInfo"
+      class="databaseInfo"
+    >
+    </div>
+
+    <button
+      id="refreshButton"
+      class="refreshButton"
+      onclick="updateDatabase()"
+    >
+      Обновить базу
+    </button>
+
+  </div>
 
 
 </div>
@@ -295,29 +633,590 @@ let scannerLibraryLoaded = false;
 // DOM
 // =====================================================
 
-const statusElement =
-document.getElementById('status');
+const loading =
+document.getElementById(
+  'loading'
+);
 
-const resultElement =
-document.getElementById('result');
+const loadingText =
+document.getElementById(
+  'loadingText'
+);
+
+const searchInput =
+document.getElementById(
+  'searchInput'
+);
+
+const clearButton =
+document.getElementById(
+  'clearButton'
+);
+
+const cameraButton =
+document.getElementById(
+  'cameraButton'
+);
+
+const cameraBlock =
+document.getElementById(
+  'cameraBlock'
+);
+
+const statusElement =
+document.getElementById(
+  'status'
+);
+
+const resultsHeader =
+document.getElementById(
+  'resultsHeader'
+);
+
+const resultsElement =
+document.getElementById(
+  'results'
+);
+
+const emptyElement =
+document.getElementById(
+  'empty'
+);
 
 const errorElement =
-document.getElementById('error');
+document.getElementById(
+  'error'
+);
 
 const databaseInfoElement =
-document.getElementById('databaseInfo');
+document.getElementById(
+  'databaseInfo'
+);
 
 const refreshButton =
-document.getElementById('refreshButton');
+document.getElementById(
+  'refreshButton'
+);
 
-const cameraButtons =
-document.getElementById('cameraButtons');
 
-const startCameraButton =
-document.getElementById('startCameraButton');
+// =====================================================
+// НОРМАЛИЗАЦИЯ ТЕКСТА
+// =====================================================
 
-const stopCameraButton =
-document.getElementById('stopCameraButton');
+function normalizeText(text) {
+
+  return String(text || '')
+    .toLowerCase()
+    .replace(/ё/g, 'е')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+}
+
+
+// =====================================================
+// ПОЛУЧЕНИЕ СЛОВ ПОИСКА
+// =====================================================
+
+function getSearchWords(text) {
+
+  return normalizeText(text)
+    .split(' ')
+    .filter(Boolean);
+
+}
+
+
+// =====================================================
+// ПОИСК
+// =====================================================
+
+function searchProducts(query) {
+
+  const text =
+    normalizeText(query);
+
+
+  if (!text) {
+
+    clearResults();
+
+    return;
+
+  }
+
+
+  // ---------------------------------------------------
+  // СНАЧАЛА ПРОБУЕМ ТОЧНЫЙ ШТРИХКОД
+  // ---------------------------------------------------
+
+  const exactProduct =
+    products[text];
+
+
+  if (exactProduct) {
+
+    showSingleProduct(
+      exactProduct
+    );
+
+    return;
+
+  }
+
+
+  // ---------------------------------------------------
+  // ТЕКСТОВЫЙ ПОИСК
+  // ---------------------------------------------------
+
+  const words =
+    getSearchWords(text);
+
+
+  if (!words.length) {
+
+    clearResults();
+
+    return;
+
+  }
+
+
+  const found = [];
+
+
+  const keys =
+    Object.keys(products);
+
+
+  for (
+    let i = 0;
+    i < keys.length;
+    i++
+  ) {
+
+    const product =
+      products[keys[i]];
+
+
+    const name =
+      normalizeText(
+        product.name
+      );
+
+
+    const allWordsMatch =
+      words.every(
+        function(word) {
+
+          return name.includes(
+            word
+          );
+
+        }
+      );
+
+
+    if (allWordsMatch) {
+
+      found.push(
+        product
+      );
+
+    }
+
+
+    // -------------------------------------------------
+    // Не показываем сотни результатов
+    // -------------------------------------------------
+
+    if (
+      found.length >= 30
+    ) {
+
+      break;
+
+    }
+
+  }
+
+
+  showSearchResults(
+    found,
+    query
+  );
+
+}
+
+
+// =====================================================
+// РЕЗУЛЬТАТЫ ПОИСКА
+// =====================================================
+
+function showSearchResults(
+  found,
+  query
+) {
+
+  resultsElement.innerHTML =
+    '';
+
+  emptyElement.style.display =
+    'none';
+
+
+  if (!found.length) {
+
+    resultsHeader.style.display =
+      'none';
+
+    emptyElement.style.display =
+      'block';
+
+    return;
+
+  }
+
+
+  resultsHeader.style.display =
+    'block';
+
+
+  resultsHeader.textContent =
+    'Найдено: ' +
+    found.length +
+    (
+      found.length >= 30
+        ? ' и более'
+        : ''
+    );
+
+
+  found.forEach(
+    function(product) {
+
+      resultsElement.appendChild(
+        createProductCard(
+          product
+        )
+      );
+
+    }
+  );
+
+}
+
+
+// =====================================================
+// ОДИН ТОВАР
+// =====================================================
+
+function showSingleProduct(
+  product
+) {
+
+  resultsElement.innerHTML =
+    '';
+
+  resultsHeader.style.display =
+    'none';
+
+  emptyElement.style.display =
+    'none';
+
+
+  const card =
+    createProductCard(
+      product,
+      true
+    );
+
+
+  resultsElement.appendChild(
+    card
+  );
+
+}
+
+
+// =====================================================
+// СОЗДАНИЕ КАРТОЧКИ
+// =====================================================
+
+function createProductCard(
+  product,
+  showNextButton = false
+) {
+
+  const card =
+    document.createElement(
+      'div'
+    );
+
+
+  card.className =
+    'productCard';
+
+
+  const name =
+    document.createElement(
+      'div'
+    );
+
+
+  name.className =
+    'productName';
+
+
+  name.textContent =
+    product.name ||
+    'Без названия';
+
+
+  card.appendChild(
+    name
+  );
+
+
+  const barcode =
+    document.createElement(
+      'div'
+    );
+
+
+  barcode.className =
+    'productBarcode';
+
+
+  barcode.textContent =
+    product.barcode ||
+    '';
+
+
+  card.appendChild(
+    barcode
+  );
+
+
+  const info =
+    document.createElement(
+      'div'
+    );
+
+
+  info.className =
+    'productInfo';
+
+
+  info.appendChild(
+    createInfoBox(
+      'Доступный остаток',
+      product.available || '0'
+    )
+  );
+
+
+  info.appendChild(
+    createInfoBox(
+      'Цена',
+      product.price
+        ? product.price + ' ₽'
+        : '0 ₽'
+    )
+  );
+
+
+  card.appendChild(
+    info
+  );
+
+
+  if (showNextButton) {
+
+    const button =
+      document.createElement(
+        'button'
+      );
+
+
+    button.className =
+      'nextButton';
+
+
+    button.textContent =
+      '📷 Сканировать следующий';
+
+
+    button.onclick =
+      function() {
+
+        clearSearch();
+
+        openCamera();
+
+      };
+
+
+    card.appendChild(
+      button
+    );
+
+  }
+
+
+  return card;
+
+}
+
+
+// =====================================================
+// INFO BOX
+// =====================================================
+
+function createInfoBox(
+  label,
+  value
+) {
+
+  const box =
+    document.createElement(
+      'div'
+    );
+
+
+  box.className =
+    'infoBox';
+
+
+  const labelElement =
+    document.createElement(
+      'div'
+    );
+
+
+  labelElement.className =
+    'infoLabel';
+
+
+  labelElement.textContent =
+    label;
+
+
+  const valueElement =
+    document.createElement(
+      'div'
+    );
+
+
+  valueElement.className =
+    'infoValue';
+
+
+  valueElement.textContent =
+    value;
+
+
+  box.appendChild(
+    labelElement
+  );
+
+
+  box.appendChild(
+    valueElement
+  );
+
+
+  return box;
+
+}
+
+
+// =====================================================
+// ОЧИСТКА ПОИСКА
+// =====================================================
+
+function clearSearch() {
+
+  searchInput.value =
+    '';
+
+  clearButton.style.display =
+    'none';
+
+  clearResults();
+
+  searchInput.focus();
+
+}
+
+
+// =====================================================
+// ОЧИСТКА РЕЗУЛЬТАТОВ
+// =====================================================
+
+function clearResults() {
+
+  resultsElement.innerHTML =
+    '';
+
+  resultsHeader.style.display =
+    'none';
+
+  emptyElement.style.display =
+    'none';
+
+}
+
+
+// =====================================================
+// ВВОД ПОИСКА
+// =====================================================
+
+searchInput.addEventListener(
+  'input',
+  function() {
+
+    const value =
+      searchInput.value;
+
+
+    clearButton.style.display =
+      value
+        ? 'block'
+        : 'none';
+
+
+    searchProducts(
+      value
+    );
+
+  }
+);
+
+
+// =====================================================
+// ENTER
+// =====================================================
+
+searchInput.addEventListener(
+  'keydown',
+  function(event) {
+
+    if (
+      event.key ===
+      'Enter'
+    ) {
+
+      searchProducts(
+        searchInput.value
+      );
+
+      searchInput.blur();
+
+    }
+
+  }
+);
 
 
 // =====================================================
@@ -326,238 +1225,360 @@ document.getElementById('stopCameraButton');
 
 function loadScannerLibrary() {
 
-return new Promise((resolve, reject) => {
+  return new Promise(
+    function(resolve, reject) {
 
-const sources = [
+      const sources = [
 
-'https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js',
+        'https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js',
 
-'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js'
+        'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js'
 
-];
-
-
-let index = 0;
+      ];
 
 
-function tryNext() {
+      let index = 0;
 
-if (index >= sources.length) {
 
-reject(
-new Error(
-'Не удалось загрузить библиотеку камеры'
-)
-);
+      function tryNext() {
 
-return;
+        if (
+          index >=
+          sources.length
+        ) {
+
+          reject(
+            new Error(
+              'Не удалось загрузить библиотеку камеры'
+            )
+          );
+
+          return;
+
+        }
+
+
+        const script =
+          document.createElement(
+            'script'
+          );
+
+
+        script.src =
+          sources[index++];
+
+
+        script.onload =
+          function() {
+
+            if (
+              typeof Html5Qrcode !==
+              'undefined'
+            ) {
+
+              scannerLibraryLoaded =
+                true;
+
+              resolve();
+
+            }
+            else {
+
+              tryNext();
+
+            }
+
+          };
+
+
+        script.onerror =
+          function() {
+
+            tryNext();
+
+          };
+
+
+        document.head.appendChild(
+          script
+        );
+
+      }
+
+
+      tryNext();
+
+    }
+  );
 
 }
 
 
-const script =
-document.createElement('script');
+// =====================================================
+// ОТКРЫТЬ КАМЕРУ
+// =====================================================
+
+async function openCamera() {
+
+  hideError();
 
 
-script.src =
-sources[index++];
+  if (scannerRunning) {
+    return;
+  }
 
 
-script.onload =
-function() {
+  try {
 
-if (
-typeof Html5Qrcode !==
-'undefined'
+    if (
+      !scannerLibraryLoaded
+    ) {
+
+      statusElement.textContent =
+        'Запускаем камеру...';
+
+
+      await loadScannerLibrary();
+
+    }
+
+
+    if (!scanner) {
+
+      scanner =
+        new Html5Qrcode(
+          'reader'
+        );
+
+    }
+
+
+    cameraBlock.style.display =
+      'block';
+
+
+    await scanner.start(
+
+      {
+        facingMode:
+          'environment'
+      },
+
+      {
+        fps: 10,
+
+        qrbox: {
+          width: 280,
+          height: 140
+        },
+
+        aspectRatio:
+          1.7777778
+
+      },
+
+      onScanSuccess,
+
+      function(error) {
+
+        // Камера ищет штрихкод.
+        // Ошибка здесь является нормальной.
+
+      }
+
+    );
+
+
+    scannerRunning =
+      true;
+
+
+    cameraButton.style.display =
+      'none';
+
+
+    statusElement.textContent =
+      'Наведите камеру на штрихкод';
+
+
+  }
+  catch (error) {
+
+    console.error(error);
+
+    showError(
+      'Не удалось запустить камеру: ' +
+      error.message
+    );
+
+  }
+
+}
+
+
+// =====================================================
+// ЗАКРЫТЬ КАМЕРУ
+// =====================================================
+
+async function closeCamera() {
+
+  if (
+    !scanner ||
+    !scannerRunning
+  ) {
+
+    cameraBlock.style.display =
+      'none';
+
+    return;
+
+  }
+
+
+  try {
+
+    await scanner.stop();
+
+  }
+  catch (error) {
+
+    console.log(error);
+
+  }
+
+
+  scannerRunning =
+    false;
+
+
+  cameraBlock.style.display =
+    'none';
+
+
+  cameraButton.style.display =
+    'block';
+
+
+  statusElement.textContent =
+    'Камера выключена.';
+
+}
+
+
+// =====================================================
+// УСПЕШНОЕ СКАНИРОВАНИЕ
+// =====================================================
+
+async function onScanSuccess(
+  decodedText
 ) {
 
-scannerLibraryLoaded =
-true;
-
-resolve();
-
-}
-else {
-
-tryNext();
-
-}
-
-};
+  if (!scannerRunning) {
+    return;
+  }
 
 
-script.onerror =
-function() {
-
-tryNext();
-
-};
+  const barcode =
+    String(
+      decodedText
+    ).trim();
 
 
-document.head.appendChild(
-script
-);
-
-}
-
-
-tryNext();
-
-});
-
-}
+  console.log(
+    'Штрихкод:',
+    barcode
+  );
 
 
-// =====================================================
-// ЗАПУСК ПРИЛОЖЕНИЯ
-// =====================================================
-
-async function init() {
-
-try {
+  await closeCamera();
 
 
-// -----------------------------------------------------
-// Сначала пытаемся взять локальную базу
-// -----------------------------------------------------
-
-const saved =
-localStorage.getItem(
-STORAGE_KEY
-);
+  searchInput.value =
+    barcode;
 
 
-if (saved) {
-
-try {
-
-databaseData =
-JSON.parse(saved);
-
-products =
-databaseData.products || {};
+  clearButton.style.display =
+    'block';
 
 
-showDatabaseInfo(
-databaseData
-);
+  searchProducts(
+    barcode
+  );
 
 
-statusElement.textContent =
-'База загружена. Можно сканировать.';
-
-
-refreshButton.style.display =
-'block';
-
-
-cameraButtons.style.display =
-'block';
-
-
-return;
-
-}
-catch (error) {
-
-console.log(
-'Локальная база повреждена.'
-);
-
-localStorage.removeItem(
-STORAGE_KEY
-);
-
-}
-
-}
-
-
-// -----------------------------------------------------
-// Если базы нет — загружаем
-// -----------------------------------------------------
-
-statusElement.textContent =
-'Загружаем актуальную базу...';
-
-
-await updateDatabase();
-
-
-}
-catch (error) {
-
-console.error(error);
-
-showError(
-'Ошибка запуска: ' +
-error.message
-);
-
-}
+  statusElement.textContent =
+    'Товар найден.';
 
 }
 
 
 // =====================================================
-// ЗАГРУЗКА БАЗЫ С СЕРВЕРА
+// ЗАГРУЗКА БАЗЫ
 // =====================================================
 
 function loadDatabaseFromServer() {
 
-return new Promise((resolve, reject) => {
+  return new Promise(
+    function(resolve, reject) {
 
-const callbackName =
-'receiveScanInkDatabase_' +
-Date.now();
-
-
-const script =
-document.createElement('script');
+      const callbackName =
+        'receiveScanInkDatabase_' +
+        Date.now();
 
 
-window[callbackName] =
-function(data) {
-
-delete window[callbackName];
-
-script.remove();
-
-resolve(data);
-
-};
+      const script =
+        document.createElement(
+          'script'
+        );
 
 
-script.src =
-API_URL +
-'?mode=database' +
-'&callback=' +
-callbackName +
-'&v=' +
-Date.now();
+      window[callbackName] =
+        function(data) {
+
+          delete window[
+            callbackName
+          ];
+
+          script.remove();
+
+          resolve(data);
+
+        };
 
 
-script.onerror =
-function() {
-
-delete window[callbackName];
-
-script.remove();
-
-reject(
-new Error(
-'Не удалось загрузить базу'
-)
-);
-
-};
+      script.src =
+        API_URL +
+        '?mode=database' +
+        '&callback=' +
+        callbackName +
+        '&v=' +
+        Date.now();
 
 
-document.body.appendChild(
-script
-);
+      script.onerror =
+        function() {
 
-});
+          delete window[
+            callbackName
+          ];
+
+          script.remove();
+
+          reject(
+            new Error(
+              'Не удалось загрузить базу'
+            )
+          );
+
+        };
+
+
+      document.body.appendChild(
+        script
+      );
+
+    }
+  );
 
 }
 
@@ -568,92 +1589,78 @@ script
 
 async function updateDatabase() {
 
-try {
+  try {
 
-refreshButton.disabled =
-true;
-
-
-statusElement.textContent =
-'Загружаем актуальную базу...';
+    refreshButton.disabled =
+      true;
 
 
-hideError();
+    refreshButton.textContent =
+      'Обновляем...';
 
 
-const data =
-await loadDatabaseFromServer();
+    const data =
+      await loadDatabaseFromServer();
 
 
-if (
-!data ||
-!data.products
-) {
+    if (
+      !data ||
+      !data.products
+    ) {
 
-throw new Error(
-'Сервер вернул некорректную базу'
-);
+      throw new Error(
+        'Сервер вернул некорректную базу'
+      );
 
-}
-
-
-databaseData =
-data;
+    }
 
 
-products =
-data.products;
+    databaseData =
+      data;
 
 
-// -----------------------------------------------------
-// Сохраняем локально
-// -----------------------------------------------------
-
-localStorage.setItem(
-STORAGE_KEY,
-JSON.stringify(data)
-);
+    products =
+      data.products;
 
 
-showDatabaseInfo(
-data
-);
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(data)
+    );
 
 
-statusElement.textContent =
-'База загружена. Можно сканировать.';
+    showDatabaseInfo(
+      data
+    );
 
 
-refreshButton.style.display =
-'block';
+    clearSearch();
 
 
-cameraButtons.style.display =
-'block';
+    statusElement.textContent =
+      'База обновлена.';
 
 
-}
-catch (error) {
+  }
+  catch (error) {
 
-console.error(error);
+    console.error(error);
 
-showError(
-'Ошибка обновления базы: ' +
-error.message
-);
+    showError(
+      'Не удалось обновить базу: ' +
+      error.message
+    );
 
+  }
+  finally {
 
-statusElement.textContent =
-'База не обновилась.';
+    refreshButton.disabled =
+      false;
 
+    refreshButton.textContent =
+      'Обновить базу';
 
-}
-finally {
-
-refreshButton.disabled =
-false;
-
-}
+  }
 
 }
 
@@ -662,386 +1669,203 @@ false;
 // ИНФОРМАЦИЯ О БАЗЕ
 // =====================================================
 
-function showDatabaseInfo(data) {
-
-const count =
-data.count ||
-Object.keys(
-data.products || {}
-).length;
-
-
-let dateText =
-'неизвестно';
-
-
-if (data.updatedAt) {
-
-const date =
-new Date(
-data.updatedAt
-);
-
-
-if (!isNaN(date.getTime())) {
-
-dateText =
-date.toLocaleString(
-'ru-RU'
-);
-
-}
-
-}
-
-
-databaseInfoElement.innerHTML =
-'Товаров: ' +
-count +
-'<br>' +
-'База обновлена: ' +
-dateText;
-
-}
-
-
-// =====================================================
-// ВКЛЮЧЕНИЕ КАМЕРЫ
-// =====================================================
-
-async function startCamera() {
-
-hideError();
-
-
-if (scannerRunning) {
-return;
-}
-
-
-try {
-
-
-// -----------------------------------------------------
-// Загружаем библиотеку только сейчас
-// -----------------------------------------------------
-
-if (!scannerLibraryLoaded) {
-
-statusElement.textContent =
-'Запускаем камеру...';
-
-
-await loadScannerLibrary();
-
-}
-
-
-// -----------------------------------------------------
-// Создаём сканер
-// -----------------------------------------------------
-
-if (!scanner) {
-
-scanner =
-new Html5Qrcode(
-'reader'
-);
-
-}
-
-
-// -----------------------------------------------------
-// Запускаем камеру
-// -----------------------------------------------------
-
-await scanner.start(
-
-{
-facingMode:
-'environment'
-},
-
-{
-fps: 10,
-
-qrbox: {
-width: 280,
-height: 140
-},
-
-aspectRatio: 1.7777778
-
-},
-
-onScanSuccess,
-
-function(error) {
-
-// Ничего не делаем.
-// Пока штрихкод не найден — это нормально.
-
-}
-
-);
-
-
-scannerRunning =
-true;
-
-
-startCameraButton.style.display =
-'none';
-
-
-stopCameraButton.style.display =
-'block';
-
-
-statusElement.textContent =
-'Наведите камеру на штрихкод';
-
-
-}
-catch (error) {
-
-console.error(error);
-
-showError(
-'Не удалось запустить камеру: ' +
-error.message
-);
-
-}
-
-}
-
-
-// =====================================================
-// ВЫКЛЮЧЕНИЕ КАМЕРЫ
-// =====================================================
-
-async function stopCamera() {
-
-if (
-!scanner ||
-!scannerRunning
-) {
-return;
-}
-
-
-try {
-
-await scanner.stop();
-
-scannerRunning =
-false;
-
-
-startCameraButton.style.display =
-'block';
-
-
-stopCameraButton.style.display =
-'none';
-
-
-statusElement.textContent =
-'Камера выключена.';
-
-
-}
-catch (error) {
-
-console.error(error);
-
-}
-
-}
-
-
-// =====================================================
-// УСПЕШНОЕ СКАНИРОВАНИЕ
-// =====================================================
-
-async function onScanSuccess(
-decodedText
+function showDatabaseInfo(
+  data
 ) {
 
-if (!scannerRunning) {
-return;
-}
+  const count =
+    data.count ||
+    Object.keys(
+      data.products || {}
+    ).length;
 
 
-const barcode =
-String(
-decodedText
-).trim();
+  let dateText =
+    'неизвестно';
 
 
-console.log(
-'Штрихкод:',
-barcode
-);
+  if (
+    data.updatedAt
+  ) {
+
+    const date =
+      new Date(
+        data.updatedAt
+      );
 
 
-// -----------------------------------------------------
-// Останавливаем камеру
-// -----------------------------------------------------
+    if (
+      !isNaN(
+        date.getTime()
+      )
+    ) {
 
-try {
+      dateText =
+        date.toLocaleString(
+          'ru-RU'
+        );
 
-await scanner.stop();
+    }
 
-}
-catch (error) {
-
-console.log(error);
-
-}
-
-
-scannerRunning =
-false;
+  }
 
 
-startCameraButton.style.display =
-'none';
-
-
-stopCameraButton.style.display =
-'none';
-
-
-// -----------------------------------------------------
-// Ищем товар в памяти
-// -----------------------------------------------------
-
-const product =
-products[barcode];
-
-
-if (product) {
-
-showProduct(
-product
-);
-
-statusElement.textContent =
-'Товар найден.';
-
-}
-else {
-
-showError(
-'Товар не найден\n\n' +
-'Штрихкод: ' +
-barcode
-);
-
-resultElement.style.display =
-'none';
-
-statusElement.textContent =
-'Товар не найден.';
-
-}
+  databaseInfoElement.innerHTML =
+    'Товаров: ' +
+    count +
+    '<br>' +
+    'База обновлена: ' +
+    dateText;
 
 }
 
 
 // =====================================================
-// ПОКАЗ ТОВАРА
+// ОШИБКА
 // =====================================================
 
-function showProduct(product) {
+function showError(
+  message
+) {
 
-hideError();
+  errorElement.textContent =
+    message;
 
-
-document.getElementById(
-'productName'
-).textContent =
-product.name || 'Без названия';
-
-
-document.getElementById(
-'productBarcode'
-).textContent =
-product.barcode || '';
-
-
-document.getElementById(
-'productAvailable'
-).textContent =
-product.available || '0';
-
-
-document.getElementById(
-'productStock'
-).textContent =
-product.stock || '0';
-
-
-document.getElementById(
-'productPrice'
-).textContent =
-product.price
-? product.price + ' ₽'
-: '0 ₽';
-
-
-resultElement.style.display =
-'block';
-
-}
-
-
-// =====================================================
-// СКАНИРОВАТЬ СЛЕДУЮЩИЙ
-// =====================================================
-
-async function scanNext() {
-
-hideError();
-
-
-resultElement.style.display =
-'none';
-
-
-await startCamera();
-
-}
-
-
-// =====================================================
-// ОШИБКИ
-// =====================================================
-
-function showError(message) {
-
-errorElement.textContent =
-message;
-
-errorElement.style.display =
-'block';
+  errorElement.style.display =
+    'block';
 
 }
 
 
 function hideError() {
 
-errorElement.style.display =
-'none';
+  errorElement.style.display =
+    'none';
 
 }
 
 
 // =====================================================
-// СТАРТ
+// ИНИЦИАЛИЗАЦИЯ
 // =====================================================
+
+async function init() {
+
+  try {
+
+    const saved =
+      localStorage.getItem(
+        STORAGE_KEY
+      );
+
+
+    if (saved) {
+
+      try {
+
+        databaseData =
+          JSON.parse(
+            saved
+          );
+
+
+        products =
+          databaseData.products ||
+          {};
+
+
+        showDatabaseInfo(
+          databaseData
+        );
+
+
+        statusElement.textContent =
+          'База загружена. Можно искать.';
+
+
+        loading.style.display =
+          'none';
+
+
+        return;
+
+      }
+      catch (error) {
+
+        localStorage.removeItem(
+          STORAGE_KEY
+        );
+
+      }
+
+    }
+
+
+    loadingText.textContent =
+      'Первичная загрузка базы...';
+
+
+    const data =
+      await loadDatabaseFromServer();
+
+
+    if (
+      !data ||
+      !data.products
+    ) {
+
+      throw new Error(
+        'Сервер вернул некорректную базу'
+      );
+
+    }
+
+
+    databaseData =
+      data;
+
+
+    products =
+      data.products;
+
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(data)
+    );
+
+
+    showDatabaseInfo(
+      data
+    );
+
+
+    statusElement.textContent =
+      'База загружена. Можно искать.';
+
+
+    loading.style.display =
+      'none';
+
+
+  }
+  catch (error) {
+
+    console.error(error);
+
+    loading.style.display =
+      'none';
+
+
+    showError(
+      'Не удалось загрузить базу: ' +
+      error.message
+    );
+
+  }
+
+}
+
 
 init();
 
