@@ -12,7 +12,6 @@
 
 <title>Стройцентр Инком — Проверка товара</title>
 
-
 <style>
 
 * {
@@ -21,7 +20,6 @@
 
 html,
 body {
-
   margin: 0;
   padding: 0;
 
@@ -35,18 +33,13 @@ body {
 
   background: #f5f5f7;
   color: #111;
-
 }
 
 body {
-
   min-height: 100vh;
-
 }
 
-
 .container {
-
   max-width: 650px;
 
   margin: 0 auto;
@@ -55,54 +48,32 @@ body {
     20px
     16px
     30px;
-
 }
-
 
 .header {
-
   margin-bottom: 18px;
-
 }
-
 
 .company {
-
   font-size: 14px;
-
   font-weight: 600;
-
   opacity: .65;
-
 }
-
 
 .title {
-
   font-size: 28px;
-
   font-weight: 700;
-
   margin-top: 3px;
-
 }
-
 
 .search-row {
-
   display: flex;
-
   gap: 8px;
-
   margin-bottom: 10px;
-
 }
 
-
 .search-input {
-
   flex: 1;
-
   min-width: 0;
 
   height: 52px;
@@ -122,19 +93,13 @@ body {
   font-size: 17px;
 
   outline: none;
-
 }
-
 
 .search-input:focus {
-
   border-color: #888;
-
 }
 
-
 .button {
-
   border: 0;
 
   border-radius: 14px;
@@ -150,41 +115,27 @@ body {
   font-weight: 600;
 
   cursor: pointer;
-
 }
-
 
 .camera-button {
-
   background: #111;
-
   color: white;
-
 }
 
-
 .update-button {
-
   width: 100%;
 
   margin-top: 10px;
 
   background: #e9e9ed;
-
   color: #111;
-
 }
-
 
 .update-button.loading {
-
   opacity: .6;
-
 }
 
-
 #reader {
-
   display: none;
 
   width: 100%;
@@ -196,30 +147,21 @@ body {
   overflow: hidden;
 
   background: #000;
-
 }
 
-
 .camera-controls {
-
   display: none;
 
   margin-top: 8px;
 
   gap: 8px;
-
 }
-
 
 .camera-controls button {
-
   flex: 1;
-
 }
 
-
 .status {
-
   min-height: 22px;
 
   margin:
@@ -229,19 +171,13 @@ body {
   font-size: 14px;
 
   color: #666;
-
 }
-
 
 .results {
-
   margin-top: 12px;
-
 }
 
-
 .card {
-
   background: white;
 
   border-radius: 18px;
@@ -253,12 +189,9 @@ body {
   box-shadow:
     0 2px 8px
     rgba(0,0,0,.06);
-
 }
 
-
 .product-name {
-
   font-size: 19px;
 
   font-weight: 700;
@@ -266,23 +199,17 @@ body {
   line-height: 1.3;
 
   margin-bottom: 14px;
-
 }
 
-
 .meta {
-
   font-size: 14px;
 
   color: #666;
 
   margin-top: 5px;
-
 }
 
-
 .stock-main {
-
   margin-top: 18px;
 
   font-size: 38px;
@@ -290,45 +217,33 @@ body {
   line-height: 1;
 
   font-weight: 800;
-
 }
 
-
 .stock-label {
-
   font-size: 13px;
 
   color: #777;
 
   margin-top: 4px;
-
 }
 
-
 .stock-total {
-
   margin-top: 10px;
 
   font-size: 15px;
 
   color: #555;
-
 }
 
-
 .price {
-
   margin-top: 16px;
 
   font-size: 28px;
 
   font-weight: 750;
-
 }
 
-
 .next-button {
-
   width: 100%;
 
   margin-top: 16px;
@@ -336,23 +251,17 @@ body {
   background: #111;
 
   color: white;
-
 }
 
-
 .no-results {
-
   text-align: center;
 
   color: #777;
 
   padding: 30px 10px;
-
 }
 
-
 .footer {
-
   margin-top: 22px;
 
   font-size: 12px;
@@ -362,64 +271,44 @@ body {
   text-align: center;
 
   line-height: 1.5;
-
 }
-
 
 .db-info {
-
   margin-top: 8px;
-
 }
-
 
 @media (prefers-color-scheme: dark) {
 
   html,
   body {
-
     background: #111;
-
     color: #f5f5f7;
-
   }
 
-
   .search-input {
-
     background: #1c1c1e;
 
     border-color: #38383a;
 
     color: white;
-
   }
 
-
   .update-button {
-
     background: #2c2c2e;
 
     color: white;
-
   }
-
 
   .card {
-
     background: #1c1c1e;
-
   }
-
 
   .meta,
   .status,
   .stock-label,
   .stock-total,
   .footer {
-
     color: #98989f;
-
   }
 
 }
@@ -428,12 +317,9 @@ body {
 
 </head>
 
-
 <body>
 
-
 <div class="container">
-
 
   <div class="header">
 
@@ -450,38 +336,23 @@ body {
 
   <div class="search-row">
 
-
     <input
-
       id="searchInput"
-
       class="search-input"
-
       type="text"
-
       autocomplete="off"
-
       autocorrect="off"
-
       autocapitalize="off"
-
       spellcheck="false"
-
       placeholder="Штрихкод, код 1С или название"
-
     >
 
-
     <button
-
       id="cameraButton"
-
       class="button camera-button"
-
     >
       📷
     </button>
-
 
   </div>
 
@@ -495,11 +366,8 @@ body {
   >
 
     <button
-
       id="closeCameraButton"
-
       class="button update-button"
-
     >
       Закрыть камеру
     </button>
@@ -520,14 +388,10 @@ body {
 
 
   <button
-
     id="updateButton"
-
     class="button update-button"
-
   >
     Обновить базу
-
   </button>
 
 
@@ -542,12 +406,10 @@ body {
 
   </div>
 
-
 </div>
 
 
 <script>
-
 
 /*
 ==================================================
@@ -555,16 +417,9 @@ body {
 ==================================================
 */
 
-
 const API_URL =
   'https://script.google.com/macros/s/AKfycbwLJNTns2VnOebnan30cDWpad1tZaTtjI2g8B44HP6oj0M806NbzsZLcgn_9XkO-pwL/exec';
 
-
-/*
-Новая локальная база.
-
-Старая база V1 полностью игнорируется.
-*/
 
 const DB_NAME =
   'ScanInkDatabaseV2';
@@ -598,18 +453,20 @@ let cameraRunning =
   false;
 
 
+let scannerLibraryPromise =
+  null;
+
+
 /*
 ==================================================
 INDEXED DB
 ==================================================
 */
 
-
 function openDatabase() {
 
   return new Promise(
     (resolve, reject) => {
-
 
       if (!window.indexedDB) {
 
@@ -686,7 +543,6 @@ function openDatabase() {
 ==================================================
 */
 
-
 async function saveDatabase(data) {
 
   const db =
@@ -696,7 +552,6 @@ async function saveDatabase(data) {
   return new Promise(
     (resolve, reject) => {
 
-
       const transaction =
         db.transaction(
           STORE_NAME,
@@ -704,32 +559,12 @@ async function saveDatabase(data) {
         );
 
 
-      const store =
-        transaction.objectStore(
-          STORE_NAME
-        );
-
-
-      const request =
-        store.put(
+      transaction
+        .objectStore(STORE_NAME)
+        .put(
           data,
           DB_KEY
         );
-
-
-      request.onerror =
-        function(event) {
-
-          db.close();
-
-          reject(
-            event.target.error ||
-            new Error(
-              'Не удалось сохранить базу'
-            )
-          );
-
-        };
 
 
       transaction.oncomplete =
@@ -756,6 +591,21 @@ async function saveDatabase(data) {
 
         };
 
+
+      transaction.onabort =
+        function(event) {
+
+          db.close();
+
+          reject(
+            event.target.error ||
+            new Error(
+              'Запись IndexedDB отменена'
+            )
+          );
+
+        };
+
     }
   );
 
@@ -768,7 +618,6 @@ async function saveDatabase(data) {
 ==================================================
 */
 
-
 async function loadDatabaseFromStorage() {
 
   const db =
@@ -778,7 +627,6 @@ async function loadDatabaseFromStorage() {
   return new Promise(
     (resolve, reject) => {
 
-
       const transaction =
         db.transaction(
           STORE_NAME,
@@ -786,14 +634,10 @@ async function loadDatabaseFromStorage() {
         );
 
 
-      const store =
-        transaction.objectStore(
-          STORE_NAME
-        );
-
-
       const request =
-        store.get(DB_KEY);
+        transaction
+          .objectStore(STORE_NAME)
+          .get(DB_KEY);
 
 
       request.onsuccess =
@@ -806,7 +650,6 @@ async function loadDatabaseFromStorage() {
 
           db.close();
 
-
           resolve(data);
 
         };
@@ -816,7 +659,6 @@ async function loadDatabaseFromStorage() {
         function(event) {
 
           db.close();
-
 
           reject(
             event.target.error ||
@@ -837,21 +679,12 @@ async function loadDatabaseFromStorage() {
 ==================================================
 JSONP
 ==================================================
-
-Используем JSONP ТОЛЬКО для
-маленького запроса версии.
-
-Большую базу через JSONP больше
-не качаем.
-==================================================
 */
-
 
 function jsonp(url) {
 
   return new Promise(
     (resolve, reject) => {
-
 
       const callbackName =
         'scanInkCallback_' +
@@ -872,35 +705,11 @@ function jsonp(url) {
         false;
 
 
-      const timeout =
-        setTimeout(
-          function() {
-
-            if (finished) {
-              return;
-            }
-
-
-            finished = true;
-
-
-            cleanup();
-
-
-            reject(
-              new Error(
-                'Истекло время ожидания'
-              )
-            );
-
-          },
-          30000
-        );
-
-
       function cleanup() {
 
-        clearTimeout(timeout);
+        clearTimeout(
+          timeout
+        );
 
 
         script.remove();
@@ -923,6 +732,33 @@ function jsonp(url) {
       }
 
 
+      const timeout =
+        setTimeout(
+          function() {
+
+            if (finished) {
+              return;
+            }
+
+
+            finished =
+              true;
+
+
+            cleanup();
+
+
+            reject(
+              new Error(
+                'Истекло время ожидания'
+              )
+            );
+
+          },
+          30000
+        );
+
+
       window[callbackName] =
         function(data) {
 
@@ -931,7 +767,8 @@ function jsonp(url) {
           }
 
 
-          finished = true;
+          finished =
+            true;
 
 
           cleanup();
@@ -950,7 +787,8 @@ function jsonp(url) {
           }
 
 
-          finished = true;
+          finished =
+            true;
 
 
           cleanup();
@@ -989,16 +827,13 @@ function jsonp(url) {
 ==================================================
 */
 
-
 async function getServerVersion() {
 
-  const url =
+  return jsonp(
     API_URL +
     '?mode=version&_=' +
-    Date.now();
-
-
-  return await jsonp(url);
+    Date.now()
+  );
 
 }
 
@@ -1007,25 +842,15 @@ async function getServerVersion() {
 ==================================================
 ПОЛУЧЕНИЕ ПОЛНОЙ БАЗЫ
 ==================================================
-
-Здесь используем fetch.
-
-Это ключевое изменение.
-==================================================
 */
-
 
 async function loadDatabaseFromServer() {
 
-  const url =
-    API_URL +
-    '?mode=database&_=' +
-    Date.now();
-
-
   const response =
     await fetch(
-      url,
+      API_URL +
+      '?mode=database&_=' +
+      Date.now(),
       {
         method: 'GET',
         cache: 'no-store'
@@ -1070,7 +895,6 @@ async function loadDatabaseFromServer() {
 ==================================================
 */
 
-
 function setDatabase(data) {
 
   databaseData =
@@ -1100,14 +924,10 @@ function setDatabase(data) {
 
     try {
 
-      const date =
+      updatedText =
         new Date(
           data.updatedAt
-        );
-
-
-      updatedText =
-        date.toLocaleString(
+        ).toLocaleString(
           'ru-RU',
           {
             day: '2-digit',
@@ -1153,7 +973,6 @@ function setDatabase(data) {
 ==================================================
 */
 
-
 function normalizeCode(value) {
 
   const digits =
@@ -1189,7 +1008,6 @@ function normalizeCode(value) {
 ПОИСК
 ==================================================
 */
-
 
 function searchProducts(query) {
 
@@ -1268,6 +1086,15 @@ function searchProducts(query) {
           product
         );
 
+
+        if (
+          exactCodeResults.length >= 30
+        ) {
+
+          break;
+
+        }
+
       }
 
     }
@@ -1278,10 +1105,7 @@ function searchProducts(query) {
     ) {
 
       renderResults(
-        exactCodeResults.slice(
-          0,
-          30
-        )
+        exactCodeResults
       );
 
       return;
@@ -1390,7 +1214,6 @@ function searchProducts(query) {
 ==================================================
 */
 
-
 function renderResults(results) {
 
   const container =
@@ -1429,7 +1252,6 @@ function renderResults(results) {
 
   results.forEach(
     function(product) {
-
 
       const card =
         document.createElement(
@@ -1617,41 +1439,33 @@ function renderResults(results) {
         name
       );
 
-
       card.appendChild(
         barcode
       );
-
 
       card.appendChild(
         code
       );
 
-
       card.appendChild(
         stockLabel
       );
-
 
       card.appendChild(
         stock
       );
 
-
       card.appendChild(
         total
       );
-
 
       card.appendChild(
         price
       );
 
-
       card.appendChild(
         updated
       );
-
 
       card.appendChild(
         nextButton
@@ -1674,7 +1488,6 @@ function renderResults(results) {
 ==================================================
 */
 
-
 async function checkForNewVersion() {
 
   if (!databaseData) {
@@ -1695,10 +1508,6 @@ async function checkForNewVersion() {
       !server.ok
     ) {
 
-      console.log(
-        'Не удалось получить версию сервера'
-      );
-
       return;
 
     }
@@ -1718,36 +1527,15 @@ async function checkForNewVersion() {
       );
 
 
-    console.log(
-      'ScanInk:',
-      'локальная версия =',
-      localVersion,
-      'серверная версия =',
-      serverVersion
-    );
-
-
-    /*
-    База уже актуальна.
-    */
-
     if (
       serverVersion <=
       localVersion
     ) {
 
-      console.log(
-        'База актуальна'
-      );
-
       return;
 
     }
 
-
-    /*
-    Есть новая версия.
-    */
 
     const status =
       document.getElementById(
@@ -1759,11 +1547,6 @@ async function checkForNewVersion() {
       'Доступна новая база. Обновляем...';
 
 
-    /*
-    Скачиваем полную базу
-    через fetch.
-    */
-
     const newDatabase =
       await loadDatabaseFromServer();
 
@@ -1774,11 +1557,6 @@ async function checkForNewVersion() {
         0
       );
 
-
-    /*
-    Проверяем, что действительно
-    получили новую версию.
-    */
 
     if (
       newVersion <
@@ -1792,10 +1570,6 @@ async function checkForNewVersion() {
     }
 
 
-    /*
-    Сначала сохраняем.
-    */
-
     status.textContent =
       'Сохраняем новую базу...';
 
@@ -1804,11 +1578,6 @@ async function checkForNewVersion() {
       newDatabase
     );
 
-
-    /*
-    Только после успешного сохранения
-    переключаем приложение на новую базу.
-    */
 
     setDatabase(
       newDatabase
@@ -1837,14 +1606,6 @@ async function checkForNewVersion() {
       error
     );
 
-
-    /*
-    Очень важно:
-
-    старая база продолжает работать.
-
-    Пользователь ничего не теряет.
-    */
 
     const status =
       document.getElementById(
@@ -1876,7 +1637,6 @@ async function checkForNewVersion() {
 ПРИНУДИТЕЛЬНОЕ ОБНОВЛЕНИЕ
 ==================================================
 */
-
 
 async function updateDatabase() {
 
@@ -1989,74 +1749,241 @@ async function updateDatabase() {
 
 /*
 ==================================================
-КАМЕРА
+ЗАГРУЗКА СКАНЕРА
 ==================================================
 */
 
-
 function loadScannerLibrary() {
 
-  return new Promise(
-    (resolve, reject) => {
+  if (
+    window.Html5Qrcode
+  ) {
+
+    return Promise.resolve();
+
+  }
 
 
-      if (
-        window.Html5Qrcode
-      ) {
+  if (
+    scannerLibraryPromise
+  ) {
 
-        resolve();
+    return scannerLibraryPromise;
 
-        return;
-
-      }
+  }
 
 
-      const script =
-        document.createElement(
-          'script'
-        );
+  scannerLibraryPromise =
+    new Promise(
+      (resolve, reject) => {
 
-
-      script.src =
-        'https://unpkg.com/html5-qrcode';
-
-
-      script.onload =
-        function() {
-
-          resolve();
-
-        };
-
-
-      script.onerror =
-        function() {
-
-          reject(
-            new Error(
-              'Не удалось загрузить сканер'
-            )
+        const script =
+          document.createElement(
+            'script'
           );
 
-        };
+
+        /*
+        Фиксируем стабильную версию
+        html5-qrcode.
+        */
+
+        script.src =
+          'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js';
 
 
-      document.head.appendChild(
-        script
-      );
+        script.onload =
+          function() {
 
-    }
-  );
+            if (
+              window.Html5Qrcode
+            ) {
+
+              resolve();
+
+            } else {
+
+              reject(
+                new Error(
+                  'Библиотека сканера загрузилась, но Html5Qrcode не найден'
+                )
+              );
+
+            }
+
+          };
+
+
+        script.onerror =
+          function() {
+
+            scannerLibraryPromise =
+              null;
+
+
+            reject(
+              new Error(
+                'Не удалось загрузить сканер'
+              )
+            );
+
+          };
+
+
+        document.head.appendChild(
+          script
+        );
+
+      }
+    );
+
+
+  return scannerLibraryPromise;
 
 }
 
 
+/*
+==================================================
+КАМЕРА
+==================================================
+*/
+
 async function startCamera() {
+
+  const status =
+    document.getElementById(
+      'status'
+    );
+
 
   try {
 
+    /*
+    Проверяем HTTPS.
+    */
+
+    if (
+      !window.isSecureContext
+    ) {
+
+      throw new Error(
+        'Камера доступна только через HTTPS'
+      );
+
+    }
+
+
+    /*
+    Проверяем API камеры.
+    */
+
+    if (
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia
+    ) {
+
+      throw new Error(
+        'Браузер не предоставляет доступ к камере'
+      );
+
+    }
+
+
+    status.textContent =
+      'Запускаем камеру...';
+
+
     await loadScannerLibrary();
 
+
+    if (
+      !window.Html5Qrcode
+    ) {
+
+      throw new Error(
+        'Библиотека сканера не загрузилась'
+      );
+
+    }
+
+
+    /*
+    Получаем реальные камеры телефона.
+    */
+
+    let cameras;
+
+
+    try {
+
+      cameras =
+        await Html5Qrcode.getCameras();
+
+    } catch (error) {
+
+      throw new Error(
+        (
+          error &&
+          error.name
+            ? error.name + ': '
+            : ''
+        ) +
+        (
+          error &&
+          error.message
+            ? error.message
+            : String(error)
+        )
+      );
+
+    }
+
+
+    if (
+      !cameras ||
+      !cameras.length
+    ) {
+
+      throw new Error(
+        'Браузер не обнаружил ни одной камеры'
+      );
+
+    }
+
+
+    /*
+    Ищем заднюю камеру.
+
+    Если название камеры браузер
+    не передал — используем первую.
+    */
+
+    const camera =
+      cameras.find(
+        function(item) {
+
+          const label =
+            String(
+              item.label || ''
+            ).toLowerCase();
+
+
+          return (
+            label.includes('back') ||
+            label.includes('rear') ||
+            label.includes('environment') ||
+            label.includes('зад')
+          );
+
+        }
+      ) ||
+      cameras[0];
+
+
+    /*
+    Показываем окно камеры.
+    */
 
     document.getElementById(
       'reader'
@@ -2064,13 +1991,13 @@ async function startCamera() {
       'block';
 
 
-    document.getElementById(
-      'cameraControls'
-    ).style.display =
-      'flex';
+    /*
+    Создаём сканер.
+    */
 
-
-    if (!html5QrCode) {
+    if (
+      !html5QrCode
+    ) {
 
       html5QrCode =
         new Html5Qrcode(
@@ -2080,12 +2007,17 @@ async function startCamera() {
     }
 
 
+    /*
+    Запускаем конкретную камеру
+    по её ID.
+
+    Это надёжнее для мобильных
+    браузеров, чем только facingMode.
+    */
+
     await html5QrCode.start(
 
-      {
-        facingMode:
-          'environment'
-      },
+      camera.id,
 
       {
         fps: 10,
@@ -2093,15 +2025,16 @@ async function startCamera() {
         qrbox: {
           width: 280,
           height: 160
-        },
-
-        aspectRatio:
-          1.777778
+        }
 
       },
 
-      function(decodedText) {
 
+      /*
+      Штрихкод найден.
+      */
+
+      function(decodedText) {
 
         document.getElementById(
           'searchInput'
@@ -2118,12 +2051,15 @@ async function startCamera() {
 
       },
 
+
+      /*
+      Ошибки отдельных кадров
+      игнорируем.
+      */
+
       function(errorMessage) {
 
-        /*
-        Игнорируем ошибки
-        отдельных кадров.
-        */
+        // Ничего не делаем.
 
       }
 
@@ -2134,22 +2070,82 @@ async function startCamera() {
       true;
 
 
+    document.getElementById(
+      'cameraControls'
+    ).style.display =
+      'flex';
+
+
+    status.textContent =
+      '';
+
+
   } catch (error) {
 
     console.error(
+      'Ошибка камеры:',
       error
     );
 
 
+    /*
+    Теперь показываем настоящую
+    ошибку камеры.
+    */
+
+    let message =
+      error &&
+      error.message
+        ? error.message
+        : String(error);
+
+
+    if (
+      error &&
+      error.name &&
+      !message.startsWith(
+        error.name
+      )
+    ) {
+
+      message =
+        error.name +
+        ': ' +
+        message;
+
+    }
+
+
     document.getElementById(
-      'status'
-    ).textContent =
-      'Не удалось открыть камеру';
+      'reader'
+    ).style.display =
+      'none';
+
+
+    document.getElementById(
+      'cameraControls'
+    ).style.display =
+      'none';
+
+
+    cameraRunning =
+      false;
+
+
+    status.textContent =
+      'Камера: ' +
+      message;
 
   }
 
 }
 
+
+/*
+==================================================
+ОСТАНОВКА КАМЕРЫ
+==================================================
+*/
 
 async function stopCamera() {
 
@@ -2162,10 +2158,11 @@ async function stopCamera() {
 
       await html5QrCode.stop();
 
-    } catch (e) {
+    } catch (error) {
 
       console.error(
-        e
+        'Ошибка остановки камеры:',
+        error
       );
 
     }
@@ -2197,7 +2194,6 @@ async function stopCamera() {
 ==================================================
 */
 
-
 document.getElementById(
   'searchInput'
 ).addEventListener(
@@ -2214,10 +2210,9 @@ document.getElementById(
 
 /*
 ==================================================
-КАМЕРА
+КНОПКА КАМЕРЫ
 ==================================================
 */
-
 
 document.getElementById(
   'cameraButton'
@@ -2241,6 +2236,12 @@ document.getElementById(
 );
 
 
+/*
+==================================================
+ЗАКРЫТИЕ КАМЕРЫ
+==================================================
+*/
+
 document.getElementById(
   'closeCameraButton'
 ).addEventListener(
@@ -2255,10 +2256,9 @@ document.getElementById(
 
 /*
 ==================================================
-ОБНОВЛЕНИЕ
+ОБНОВЛЕНИЕ БАЗЫ
 ==================================================
 */
-
 
 document.getElementById(
   'updateButton'
@@ -2278,7 +2278,6 @@ document.getElementById(
 ==================================================
 */
 
-
 async function init() {
 
   const status =
@@ -2288,9 +2287,7 @@ async function init() {
 
 
   /*
-  ================================================
-  ПЫТАЕМСЯ ВЗЯТЬ ЛОКАЛЬНУЮ БАЗУ
-  ================================================
+  Пытаемся взять локальную базу.
   */
 
   try {
@@ -2312,11 +2309,8 @@ async function init() {
       saved.products
     ) {
 
-
       /*
-      Показываем её СРАЗУ.
-
-      Никакого ожидания сервера.
+      Показываем её сразу.
       */
 
       setDatabase(
@@ -2329,8 +2323,8 @@ async function init() {
 
 
       /*
-      Проверку новой версии
-      запускаем в фоне.
+      Проверяем обновление
+      в фоне.
       */
 
       checkForNewVersion();
@@ -2351,9 +2345,7 @@ async function init() {
 
 
   /*
-  ================================================
-  ЛОКАЛЬНОЙ БАЗЫ НЕТ
-  ================================================
+  Локальной базы нет.
   */
 
   status.textContent =
@@ -2362,17 +2354,9 @@ async function init() {
 
   try {
 
-    /*
-    Скачиваем полную базу
-    */
-
     const data =
       await loadDatabaseFromServer();
 
-
-    /*
-    Сохраняем её локально
-    */
 
     status.textContent =
       'Сохраняем базу...';
@@ -2382,10 +2366,6 @@ async function init() {
       data
     );
 
-
-    /*
-    Активируем
-    */
 
     setDatabase(
       data
@@ -2413,11 +2393,12 @@ async function init() {
 
 
 /*
-Запускаем приложение.
+==================================================
+СТАРТ
+==================================================
 */
 
 init();
-
 
 </script>
 
