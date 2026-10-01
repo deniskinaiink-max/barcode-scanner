@@ -1,1234 +1,1029 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
->
-
-<title>Стройцентр Инком — Сканер</title>
-
-<style>
-
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  background: #f5f5f5;
-  color: #111;
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Arial,
-    sans-serif;
-}
-
-body {
-  min-height: 100vh;
-}
-
-
-/* =====================================================
-   ОСНОВНОЙ КОНТЕЙНЕР
-===================================================== */
-
-.container {
-  width: 100%;
-  max-width: 560px;
-  margin: 0 auto;
-  padding: 18px 16px 30px;
-}
-
-
-/* =====================================================
-   ШАПКА
-===================================================== */
-
-.header {
-  padding: 8px 2px 20px;
-}
-
-.logo {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  color: #777;
-  text-transform: uppercase;
-}
-
-.title {
-  margin-top: 4px;
-  font-size: 28px;
-  line-height: 1.15;
-  font-weight: 800;
-}
-
-
-/* =====================================================
-   ПОИСК
-===================================================== */
-
-.searchBox {
-  position: relative;
-  margin-top: 4px;
-}
-
-.searchInput {
-  width: 100%;
-  height: 58px;
-  border: 1px solid #ddd;
-  border-radius: 17px;
-  padding: 0 48px 0 50px;
-  background: #fff;
-  color: #111;
-  font-size: 17px;
-  outline: none;
-  box-shadow:
-    0 2px 10px rgba(0,0,0,0.05);
-}
-
-.searchInput:focus {
-  border-color: #999;
-}
-
-.searchIcon {
-  position: absolute;
-  left: 17px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 22px;
-  pointer-events: none;
-}
-
-.clearButton {
-  position: absolute;
-  right: 8px;
-  top: 8px;
-  width: 42px;
-  height: 42px;
-  margin: 0;
-  padding: 0;
-  border-radius: 12px;
-  border: none;
-  background: transparent;
-  color: #888;
-  font-size: 22px;
-  display: none;
-}
-
-
-/* =====================================================
-   КНОПКА КАМЕРЫ
-===================================================== */
-
-.cameraButton {
-  width: 100%;
-  height: 56px;
-  margin-top: 12px;
-  border: none;
-  border-radius: 16px;
-  background: #111;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.cameraButton:active {
-  transform: scale(0.99);
-}
-
-
-/* =====================================================
-   СТАТУС
-===================================================== */
-
-.status {
-  margin-top: 14px;
-  min-height: 20px;
-  color: #777;
-  font-size: 13px;
-}
-
-
-/* =====================================================
-   КАМЕРА
-===================================================== */
-
-.cameraBlock {
-  display: none;
-  margin-top: 14px;
-  padding: 10px;
-  background: #111;
-  border-radius: 18px;
-  overflow: hidden;
-}
-
-#reader {
-  width: 100%;
-  overflow: hidden;
-  border-radius: 12px;
-}
-
-.cameraClose {
-  width: 100%;
-  height: 46px;
-  margin-top: 10px;
-  border: 1px solid #444;
-  border-radius: 12px;
-  background: #222;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-}
-
-
-/* =====================================================
-   РЕЗУЛЬТАТЫ
-===================================================== */
-
-.resultsHeader {
-  display: none;
-  margin-top: 24px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  color: #777;
-}
-
-.results {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-
-/* =====================================================
-   КАРТОЧКА ТОВАРА
-===================================================== */
-
-.productCard {
-  background: #fff;
-  border-radius: 18px;
-  padding: 17px;
-  box-shadow:
-    0 2px 10px rgba(0,0,0,0.05);
-}
-
-.productName {
-  font-size: 18px;
-  line-height: 1.3;
-  font-weight: 750;
-}
-
-.productBarcode {
-  margin-top: 7px;
-  color: #888;
-  font-size: 13px;
-}
-
-.productInfo {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-top: 15px;
-}
-
-.infoBox {
-  background: #f5f5f5;
-  border-radius: 12px;
-  padding: 11px;
-}
-
-.infoLabel {
-  font-size: 12px;
-  color: #888;
-}
-
-.infoValue {
-  margin-top: 3px;
-  font-size: 18px;
-  font-weight: 750;
-}
-
-
-/* =====================================================
-   КНОПКА СЛЕДУЮЩЕГО
-===================================================== */
-
-.nextButton {
-  width: 100%;
-  height: 52px;
-  margin-top: 12px;
-  border: none;
-  border-radius: 15px;
-  background: #111;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 700;
-}
-
-
-/* =====================================================
-   ПУСТО
-===================================================== */
-
-.empty {
-  display: none;
-  margin-top: 25px;
-  padding: 25px 15px;
-  text-align: center;
-  color: #888;
-  font-size: 15px;
-}
-
-
-/* =====================================================
-   ОШИБКА
-===================================================== */
-
-.error {
-  display: none;
-  margin-top: 14px;
-  padding: 14px;
-  border-radius: 14px;
-  background: #fff;
-  color: #777;
-  font-size: 14px;
-}
-
-
-/* =====================================================
-   НИЗ
-===================================================== */
-
-.footer {
-  margin-top: 30px;
-  padding-top: 15px;
-  border-top: 1px solid #ddd;
-  text-align: center;
-}
-
-.databaseInfo {
-  color: #999;
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-.refreshButton {
-  width: auto;
-  height: 42px;
-  margin-top: 12px;
-  padding: 0 18px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  background: #fff;
-  color: #666;
-  font-size: 13px;
-}
-
-
-/* =====================================================
-   ЗАГРУЗКА
-===================================================== */
-
-.loading {
-  position: fixed;
-  inset: 0;
-  background: #f5f5f5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.loadingBox {
-  text-align: center;
-}
-
-.loadingIcon {
-  font-size: 38px;
-}
-
-.loadingText {
-  margin-top: 12px;
-  color: #777;
-  font-size: 14px;
-}
-
-
-/* =====================================================
-   ТЕМНАЯ ТЕМА
-===================================================== */
-
-@media (prefers-color-scheme: dark) {
-
-  html,
-  body {
-    background: #000;
-    color: #fff;
-  }
-
-  .logo,
-  .status,
-  .resultsHeader {
-    color: #888;
-  }
-
-  .searchInput {
-    background: #151515;
-    color: #fff;
-    border-color: #292929;
-  }
-
-  .productCard {
-    background: #111;
-  }
-
-  .infoBox {
-    background: #1c1c1c;
-  }
-
-  .footer {
-    border-color: #222;
-  }
-
-  .refreshButton {
-    background: #111;
-    border-color: #333;
-    color: #aaa;
-  }
-
-  .loading {
-    background: #000;
-  }
-
-  .loadingText {
-    color: #888;
-  }
-
-  .empty,
-  .error {
-    color: #888;
-  }
-
-}
-
-</style>
-
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+  >
+
+  <title>Стройцентр Инком — Проверка товара</title>
+
+  <style>
+    :root {
+      color-scheme: light dark;
+
+      --bg: #f5f5f7;
+      --card: #ffffff;
+      --text: #171717;
+      --secondary: #777777;
+      --border: #e5e5e5;
+      --input: #ffffff;
+      --button: #171717;
+      --button-text: #ffffff;
+      --accent: #007aff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111111;
+        --card: #1c1c1e;
+        --text: #f5f5f7;
+        --secondary: #a1a1a6;
+        --border: #333336;
+        --input: #1c1c1e;
+        --button: #ffffff;
+        --button-text: #111111;
+        --accent: #0a84ff;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding:
+        20px
+        16px
+        calc(24px + env(safe-area-inset-bottom));
+    }
+
+    .header {
+      margin-bottom: 20px;
+    }
+
+    .company {
+      font-size: 14px;
+      color: var(--secondary);
+      margin-bottom: 4px;
+    }
+
+    h1 {
+      font-size: 27px;
+      line-height: 1.15;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .search-box {
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    #searchInput {
+      width: 100%;
+      height: 56px;
+      padding: 0 18px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--input);
+      color: var(--text);
+      font-size: 17px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    #searchInput:focus {
+      border-color: var(--accent);
+    }
+
+    #searchInput::placeholder {
+      color: var(--secondary);
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 15px;
+      height: 52px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .camera-button {
+      background: var(--button);
+      color: var(--button-text);
+      margin-bottom: 12px;
+    }
+
+    .update-button {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      margin-top: 14px;
+    }
+
+    .camera-wrapper {
+      display: none;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #000;
+    }
+
+    #reader {
+      width: 100%;
+    }
+
+    .close-camera {
+      margin-top: 8px;
+      background: #333;
+      color: #fff;
+    }
+
+    .status {
+      margin: 14px 0;
+      text-align: center;
+      color: var(--secondary);
+      font-size: 14px;
+      min-height: 20px;
+    }
+
+    .result-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      margin-top: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+
+    .product-name {
+      font-size: 21px;
+      line-height: 1.25;
+      font-weight: 650;
+      margin-bottom: 18px;
+    }
+
+    .product-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 15px;
+      padding: 10px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .product-row span {
+      color: var(--secondary);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .product-row strong {
+      text-align: right;
+      font-size: 16px;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    .stock-main {
+      margin-top: 4px;
+      padding: 15px 0 10px;
+    }
+
+    .stock-main span {
+      font-size: 15px;
+    }
+
+    .stock-main strong {
+      font-size: 25px;
+      font-weight: 700;
+    }
+
+    .stock-total span,
+    .stock-total strong {
+      font-size: 13px;
+    }
+
+    .price {
+      margin-top: 4px;
+      padding-top: 15px;
+    }
+
+    .price strong {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .meta {
+      margin-top: 16px;
+      color: var(--secondary);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .next-scan {
+      margin-top: 16px;
+      background: var(--accent);
+      color: white;
+    }
+
+    .search-result {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .search-result-name {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .search-result-info {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--secondary);
+      font-size: 13px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 30px 10px;
+      color: var(--secondary);
+      font-size: 15px;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--secondary);
+      font-size: 12px;
+      line-height: 1.5;
+      margin-top: 24px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  </style>
 </head>
-
 
 <body>
 
-
-<div
-  id="loading"
-  class="loading"
->
-
-  <div class="loadingBox">
-
-    <div class="loadingIcon">
-      📦
-    </div>
-
-    <div
-      id="loadingText"
-      class="loadingText"
-    >
-      Загружаем базу...
-    </div>
-
-  </div>
-
-</div>
-
-
 <div class="container">
 
-
-  <!-- =================================================
-       ШАПКА
-  ================================================== -->
-
   <div class="header">
-
-    <div class="logo">
-      Стройцентр Инком
-    </div>
-
-    <div class="title">
-      Проверка товара
-    </div>
-
+    <div class="company">Стройцентр Инком</div>
+    <h1>Проверка товара</h1>
   </div>
 
-
-  <!-- =================================================
-       ПОИСК
-  ================================================== -->
-
-  <div class="searchBox">
-
-    <div class="searchIcon">
-      🔎
-    </div>
-
+  <div class="search-box">
     <input
       id="searchInput"
-      class="searchInput"
-      type="text"
+      type="search"
       inputmode="search"
       autocomplete="off"
-      placeholder="Штрихкод или название"
+      placeholder="Штрихкод, код 1С или название"
     >
-
-    <button
-      id="clearButton"
-      class="clearButton"
-      onclick="clearSearch()"
-    >
-      ×
-    </button>
-
   </div>
-
-
-  <!-- =================================================
-       КАМЕРА
-  ================================================== -->
 
   <button
     id="cameraButton"
-    class="cameraButton"
+    class="camera-button"
     onclick="openCamera()"
   >
     📷 Сканировать штрихкод
   </button>
 
-
-  <div
-    id="status"
-    class="status"
-  >
-    База загружена.
-  </div>
-
-
-  <div
-    id="cameraBlock"
-    class="cameraBlock"
-  >
-
+  <div id="cameraWrapper" class="camera-wrapper">
     <div id="reader"></div>
 
     <button
-      class="cameraClose"
+      class="close-camera"
       onclick="closeCamera()"
     >
       Закрыть камеру
     </button>
-
   </div>
 
+  <div id="status" class="status"></div>
 
-  <!-- =================================================
-       РЕЗУЛЬТАТЫ
-  ================================================== -->
+  <div id="results"></div>
 
-  <div
-    id="resultsHeader"
-    class="resultsHeader"
+  <button
+    id="updateButton"
+    class="update-button"
+    onclick="updateDatabase()"
   >
-  </div>
+    Обновить базу
+  </button>
 
-
-  <div
-    id="results"
-    class="results"
-  >
-  </div>
-
-
-  <div
-    id="empty"
-    class="empty"
-  >
-    Ничего не найдено
-  </div>
-
-
-  <div
-    id="error"
-    class="error"
-  >
-  </div>
-
-
-  <!-- =================================================
-       НИЗ
-  ================================================== -->
-
-  <div class="footer">
-
-    <div
-      id="databaseInfo"
-      class="databaseInfo"
-    >
-    </div>
-
-    <button
-      id="refreshButton"
-      class="refreshButton"
-      onclick="updateDatabase()"
-    >
-      Обновить базу
-    </button>
-
-  </div>
-
+  <div id="footer" class="footer"></div>
 
 </div>
 
 
 <script>
 
+  // =========================================================
+  // НАСТРОЙКИ
+  // =========================================================
 
-// =====================================================
-// НАСТРОЙКИ
-// =====================================================
+  const API_URL =
+    'https://script.google.com/macros/s/AKfycbwLJNTns2VnOebnan30cDWpad1tZaTtjI2g8B44HP6oj0M806NbzsZLcgn_9XkO-pwL/exec';
 
-const API_URL =
-'https://script.google.com/macros/s/AKfycbwLJNTns2VnOebnan30cDWpad1tZaTtjI2g8B44HP6oj0M806NbzsZLcgn_9XkO-pwL/exec';
+  const STORAGE_KEY = 'SCANINK_DATABASE_V3';
 
+  let databaseData = null;
+  let products = {};
 
-const STORAGE_KEY =
-'SCANINK_DATABASE_V3';
-
-
-// =====================================================
-// ПЕРЕМЕННЫЕ
-// =====================================================
-
-let products = {};
-
-let databaseData = null;
-
-let scanner = null;
-
-let scannerRunning = false;
-
-let scannerLibraryLoaded = false;
+  let html5QrCode = null;
+  let cameraOpen = false;
+  let cameraScriptLoaded = false;
 
 
-// =====================================================
-// DOM
-// =====================================================
+  // =========================================================
+  // НОРМАЛИЗАЦИЯ ТЕКСТА
+  // =========================================================
 
-const loading =
-document.getElementById(
-  'loading'
-);
-
-const loadingText =
-document.getElementById(
-  'loadingText'
-);
-
-const searchInput =
-document.getElementById(
-  'searchInput'
-);
-
-const clearButton =
-document.getElementById(
-  'clearButton'
-);
-
-const cameraButton =
-document.getElementById(
-  'cameraButton'
-);
-
-const cameraBlock =
-document.getElementById(
-  'cameraBlock'
-);
-
-const statusElement =
-document.getElementById(
-  'status'
-);
-
-const resultsHeader =
-document.getElementById(
-  'resultsHeader'
-);
-
-const resultsElement =
-document.getElementById(
-  'results'
-);
-
-const emptyElement =
-document.getElementById(
-  'empty'
-);
-
-const errorElement =
-document.getElementById(
-  'error'
-);
-
-const databaseInfoElement =
-document.getElementById(
-  'databaseInfo'
-);
-
-const refreshButton =
-document.getElementById(
-  'refreshButton'
-);
+  function normalizeText(text) {
+    return String(text || '')
+      .toLowerCase()
+      .replace(/ё/g, 'е')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
 
 
-// =====================================================
-// НОРМАЛИЗАЦИЯ ТЕКСТА
-// =====================================================
+  // =========================================================
+  // НОРМАЛИЗАЦИЯ КОДА 1С
+  //
+  // 00000200820 → 200820
+  // 00000002029 → 2029
+  // 200820 → 200820
+  // =========================================================
 
-function normalizeText(text) {
+  function normalizeCode(code) {
 
-  return String(text || '')
-    .toLowerCase()
-    .replace(/ё/g, 'е')
-    .replace(/\s+/g, ' ')
-    .trim();
+    const digits = String(code || '')
+      .replace(/\D/g, '');
 
-}
+    if (!digits) {
+      return '';
+    }
 
-
-// =====================================================
-// ПОЛУЧЕНИЕ СЛОВ ПОИСКА
-// =====================================================
-
-function getSearchWords(text) {
-
-  return normalizeText(text)
-    .split(' ')
-    .filter(Boolean);
-
-}
+    return digits.replace(/^0+/, '') || '0';
+  }
 
 
-// =====================================================
-// ПОИСК
-// =====================================================
+  // =========================================================
+  // ПОИСКОВЫЕ СЛОВА
+  // =========================================================
 
-function searchProducts(query) {
+  function getSearchWords(text) {
 
-  const text =
-    normalizeText(query);
-
-
-  if (!text) {
-
-    clearResults();
-
-    return;
+    return normalizeText(text)
+      .split(' ')
+      .filter(Boolean);
 
   }
 
 
-  // ---------------------------------------------------
-  // СНАЧАЛА ПРОБУЕМ ТОЧНЫЙ ШТРИХКОД
-  // ---------------------------------------------------
+  // =========================================================
+  // ФОРМАТ ЦЕНЫ
+  // =========================================================
 
-  const exactProduct =
-    products[text];
+  function formatPrice(price) {
 
+    if (!price) {
+      return '—';
+    }
 
-  if (exactProduct) {
+    const text = String(price).trim();
 
-    showSingleProduct(
-      exactProduct
+    if (!text) {
+      return '—';
+    }
+
+    const number = Number(
+      text
+        .replace(/\s/g, '')
+        .replace(',', '.')
     );
 
-    return;
+    if (!Number.isNaN(number)) {
+
+      return number.toLocaleString('ru-RU', {
+        maximumFractionDigits: 2
+      }) + ' ₽';
+
+    }
+
+    return text + ' ₽';
+  }
+
+
+  // =========================================================
+  // ОЧИСТКА РЕЗУЛЬТАТОВ
+  // =========================================================
+
+  function clearResults() {
+
+    document.getElementById('results').innerHTML = '';
 
   }
 
 
-  // ---------------------------------------------------
-  // ТЕКСТОВЫЙ ПОИСК
-  // ---------------------------------------------------
+  // =========================================================
+  // ПОИСК
+  // =========================================================
 
-  const words =
-    getSearchWords(text);
+  function searchProducts(query) {
 
+    const text = normalizeText(query);
 
-  if (!words.length) {
-
-    clearResults();
-
-    return;
-
-  }
+    if (!text) {
+      clearResults();
+      return;
+    }
 
 
-  const found = [];
+    // -------------------------------------------------------
+    // 1. ТОЧНОЕ СОВПАДЕНИЕ ШТРИХКОДА
+    // -------------------------------------------------------
+
+    const exactBarcode = products[text];
+
+    if (exactBarcode) {
+
+      showSingleProduct(exactBarcode);
+
+      return;
+
+    }
 
 
-  const keys =
-    Object.keys(products);
+    // -------------------------------------------------------
+    // 2. ПОИСК ПО КОДУ 1С
+    //
+    // Пользователь может написать:
+    //
+    // 200820
+    //
+    // а в базе:
+    //
+    // 00000200820
+    // -------------------------------------------------------
 
+    const queryCode = normalizeCode(text);
 
-  for (
-    let i = 0;
-    i < keys.length;
-    i++
-  ) {
+    if (queryCode) {
 
-    const product =
-      products[keys[i]];
+      const keys = Object.keys(products);
 
+      for (let i = 0; i < keys.length; i++) {
 
-    const name =
-      normalizeText(
-        product.name
-      );
+        const product = products[keys[i]];
 
+        if (!product.code1c) {
+          continue;
+        }
 
-    const allWordsMatch =
-      words.every(
-        function(word) {
+        const productCode = normalizeCode(product.code1c);
 
-          return name.includes(
-            word
-          );
+        if (productCode === queryCode) {
+
+          showSingleProduct(product);
+
+          return;
 
         }
-      );
 
-
-    if (allWordsMatch) {
-
-      found.push(
-        product
-      );
+      }
 
     }
 
 
-    // -------------------------------------------------
-    // Не показываем сотни результатов
-    // -------------------------------------------------
+    // -------------------------------------------------------
+    // 3. ПОИСК ПО НАЗВАНИЮ
+    // -------------------------------------------------------
 
-    if (
-      found.length >= 30
-    ) {
+    const words = getSearchWords(text);
 
-      break;
+    const found = [];
+
+    const keys = Object.keys(products);
+
+    for (let i = 0; i < keys.length; i++) {
+
+      const product = products[keys[i]];
+
+      const name = normalizeText(product.name);
+
+      const allWordsMatch = words.every(word =>
+        name.includes(word)
+      );
+
+      if (allWordsMatch) {
+
+        found.push(product);
+
+      }
+
+      if (found.length >= 30) {
+        break;
+      }
 
     }
+
+    showSearchResults(found, query);
 
   }
 
 
-  showSearchResults(
-    found,
-    query
-  );
+  // =========================================================
+  // ОДИН ТОВАР
+  // =========================================================
 
-}
+  function showSingleProduct(product) {
 
+    const results = document.getElementById('results');
 
-// =====================================================
-// РЕЗУЛЬТАТЫ ПОИСКА
-// =====================================================
+    results.innerHTML = `
 
-function showSearchResults(
-  found,
-  query
-) {
+      <div class="result-card">
 
-  resultsElement.innerHTML =
-    '';
-
-  emptyElement.style.display =
-    'none';
+        <div class="product-name">
+          ${escapeHtml(product.name)}
+        </div>
 
 
-  if (!found.length) {
+        <div class="product-row">
+          <span>Штрихкод</span>
+          <strong>
+            ${escapeHtml(product.barcode || '—')}
+          </strong>
+        </div>
 
-    resultsHeader.style.display =
-      'none';
 
-    emptyElement.style.display =
-      'block';
+        <div class="product-row">
+          <span>Код 1С</span>
+          <strong>
+            ${escapeHtml(product.code1c || '—')}
+          </strong>
+        </div>
 
-    return;
+
+        <div class="product-row stock-main">
+          <span>Доступный остаток</span>
+          <strong>
+            ${escapeHtml(product.available || '0')}
+          </strong>
+        </div>
+
+
+        <div class="product-row stock-total">
+          <span>Остаток</span>
+          <strong>
+            ${escapeHtml(product.stock || '0')}
+          </strong>
+        </div>
+
+
+        <div class="product-row price">
+          <span>Цена</span>
+          <strong>
+            ${formatPrice(product.price)}
+          </strong>
+        </div>
+
+
+        <div class="meta">
+          Данные обновлены:
+          ${escapeHtml(product.updatedAt || '—')}
+        </div>
+
+
+        <button
+          class="next-scan"
+          onclick="prepareNextScan()"
+        >
+          Сканировать следующий
+        </button>
+
+      </div>
+
+    `;
 
   }
 
 
-  resultsHeader.style.display =
-    'block';
+  // =========================================================
+  // СПИСОК РЕЗУЛЬТАТОВ
+  // =========================================================
 
+  function showSearchResults(found, query) {
 
-  resultsHeader.textContent =
-    'Найдено: ' +
-    found.length +
-    (
-      found.length >= 30
-        ? ' и более'
-        : ''
-    );
+    const results = document.getElementById('results');
 
+    if (!found.length) {
 
-  found.forEach(
-    function(product) {
+      results.innerHTML = `
+        <div class="empty">
+          Ничего не найдено
+        </div>
+      `;
 
-      resultsElement.appendChild(
-        createProductCard(
-          product
-        )
-      );
+      return;
 
     }
-  );
-
-}
 
 
-// =====================================================
-// ОДИН ТОВАР
-// =====================================================
+    let html = '';
 
-function showSingleProduct(
-  product
-) {
+    for (let i = 0; i < found.length; i++) {
 
-  resultsElement.innerHTML =
-    '';
+      const product = found[i];
 
-  resultsHeader.style.display =
-    'none';
+      html += `
 
-  emptyElement.style.display =
-    'none';
+        <div
+          class="search-result"
+          onclick='selectProduct(${JSON.stringify(product)})'
+        >
 
+          <div class="search-result-name">
+            ${escapeHtml(product.name)}
+          </div>
 
-  const card =
-    createProductCard(
-      product,
-      true
-    );
+          <div class="search-result-info">
 
+            <span>
+              Код 1С:
+              ${escapeHtml(product.code1c || '—')}
+            </span>
 
-  resultsElement.appendChild(
-    card
-  );
+            <span>
+              ${escapeHtml(product.available || '0')} шт.
+            </span>
 
-}
+          </div>
 
+        </div>
 
-// =====================================================
-// СОЗДАНИЕ КАРТОЧКИ
-// =====================================================
+      `;
 
-function createProductCard(
-  product,
-  showNextButton = false
-) {
-
-  const card =
-    document.createElement(
-      'div'
-    );
+    }
 
 
-  card.className =
-    'productCard';
+    results.innerHTML = html;
+
+  }
 
 
-  const name =
-    document.createElement(
-      'div'
-    );
+  // =========================================================
+  // ВЫБОР ТОВАРА ИЗ СПИСКА
+  // =========================================================
+
+  function selectProduct(product) {
+
+    showSingleProduct(product);
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+
+  }
 
 
-  name.className =
-    'productName';
+  // =========================================================
+  // ПОДГОТОВКА К СЛЕДУЮЩЕМУ СКАНУ
+  // =========================================================
+
+  function prepareNextScan() {
+
+    document.getElementById('searchInput').value = '';
+
+    clearResults();
+
+    document.getElementById('searchInput').focus();
+
+  }
 
 
-  name.textContent =
-    product.name ||
-    'Без названия';
+  // =========================================================
+  // БЕЗОПАСНЫЙ HTML
+  // =========================================================
+
+  function escapeHtml(value) {
+
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+
+  }
 
 
-  card.appendChild(
-    name
-  );
+  // =========================================================
+  // ЗАГРУЗКА БАЗЫ ЧЕРЕЗ JSONP
+  // =========================================================
+
+  function loadDatabaseFromServer() {
+
+    return new Promise((resolve, reject) => {
+
+      const callbackName =
+        'receiveScanInkDatabase_' + Date.now();
 
 
-  const barcode =
-    document.createElement(
-      'div'
-    );
+      window[callbackName] = function(data) {
 
+        try {
 
-  barcode.className =
-    'productBarcode';
+          delete window[callbackName];
 
+          if (!data || !data.products) {
 
-  barcode.textContent =
-    product.barcode ||
-    '';
+            reject(
+              new Error('Некорректная база данных')
+            );
 
+            return;
 
-  card.appendChild(
-    barcode
-  );
+          }
 
+          resolve(data);
 
-  const info =
-    document.createElement(
-      'div'
-    );
+        } catch (error) {
 
+          reject(error);
 
-  info.className =
-    'productInfo';
-
-
-  info.appendChild(
-    createInfoBox(
-      'Доступный остаток',
-      product.available || '0'
-    )
-  );
-
-
-  info.appendChild(
-    createInfoBox(
-      'Цена',
-      product.price
-        ? product.price + ' ₽'
-        : '0 ₽'
-    )
-  );
-
-
-  card.appendChild(
-    info
-  );
-
-
-  if (showNextButton) {
-
-    const button =
-      document.createElement(
-        'button'
-      );
-
-
-    button.className =
-      'nextButton';
-
-
-    button.textContent =
-      '📷 Сканировать следующий';
-
-
-    button.onclick =
-      function() {
-
-        clearSearch();
-
-        openCamera();
+        }
 
       };
 
 
-    card.appendChild(
-      button
-    );
+      const script =
+        document.createElement('script');
+
+
+      script.src =
+        API_URL +
+        '?mode=database' +
+        '&callback=' +
+        callbackName +
+        '&v=' +
+        Date.now();
+
+
+      script.onerror = function() {
+
+        delete window[callbackName];
+
+        reject(
+          new Error('Не удалось загрузить базу')
+        );
+
+      };
+
+
+      document.body.appendChild(script);
+
+    });
 
   }
 
 
-  return card;
+  // =========================================================
+  // СОХРАНЕНИЕ БАЗЫ
+  // =========================================================
 
-}
+  function saveDatabase(data) {
 
+    try {
 
-// =====================================================
-// INFO BOX
-// =====================================================
-
-function createInfoBox(
-  label,
-  value
-) {
-
-  const box =
-    document.createElement(
-      'div'
-    );
-
-
-  box.className =
-    'infoBox';
-
-
-  const labelElement =
-    document.createElement(
-      'div'
-    );
-
-
-  labelElement.className =
-    'infoLabel';
-
-
-  labelElement.textContent =
-    label;
-
-
-  const valueElement =
-    document.createElement(
-      'div'
-    );
-
-
-  valueElement.className =
-    'infoValue';
-
-
-  valueElement.textContent =
-    value;
-
-
-  box.appendChild(
-    labelElement
-  );
-
-
-  box.appendChild(
-    valueElement
-  );
-
-
-  return box;
-
-}
-
-
-// =====================================================
-// ОЧИСТКА ПОИСКА
-// =====================================================
-
-function clearSearch() {
-
-  searchInput.value =
-    '';
-
-  clearButton.style.display =
-    'none';
-
-  clearResults();
-
-  searchInput.focus();
-
-}
-
-
-// =====================================================
-// ОЧИСТКА РЕЗУЛЬТАТОВ
-// =====================================================
-
-function clearResults() {
-
-  resultsElement.innerHTML =
-    '';
-
-  resultsHeader.style.display =
-    'none';
-
-  emptyElement.style.display =
-    'none';
-
-}
-
-
-// =====================================================
-// ВВОД ПОИСКА
-// =====================================================
-
-searchInput.addEventListener(
-  'input',
-  function() {
-
-    const value =
-      searchInput.value;
-
-
-    clearButton.style.display =
-      value
-        ? 'block'
-        : 'none';
-
-
-    searchProducts(
-      value
-    );
-
-  }
-);
-
-
-// =====================================================
-// ENTER
-// =====================================================
-
-searchInput.addEventListener(
-  'keydown',
-  function(event) {
-
-    if (
-      event.key ===
-      'Enter'
-    ) {
-
-      searchProducts(
-        searchInput.value
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(data)
       );
 
-      searchInput.blur();
+    } catch (error) {
+
+      console.error(
+        'Ошибка LocalStorage:',
+        error
+      );
 
     }
 
   }
-);
 
 
-// =====================================================
-// ЗАГРУЗКА БИБЛИОТЕКИ КАМЕРЫ
-// =====================================================
+  // =========================================================
+  // ЗАГРУЗКА БАЗЫ ИЗ LOCALSTORAGE
+  // =========================================================
 
-function loadScannerLibrary() {
+  function loadDatabaseFromStorage() {
 
-  return new Promise(
-    function(resolve, reject) {
+    try {
 
-      const sources = [
+      const saved =
+        localStorage.getItem(STORAGE_KEY);
+
+      if (!saved) {
+        return null;
+      }
+
+      return JSON.parse(saved);
+
+    } catch (error) {
+
+      console.error(
+        'Ошибка чтения базы:',
+        error
+      );
+
+      return null;
+
+    }
+
+  }
+
+
+  // =========================================================
+  // УСТАНОВКА БАЗЫ
+  // =========================================================
+
+  function setDatabase(data) {
+
+    databaseData = data;
+
+    products =
+      data.products || {};
+
+    updateFooter();
+
+  }
+
+
+  // =========================================================
+  // ОБНОВЛЕНИЕ БАЗЫ
+  // =========================================================
+
+  async function updateDatabase() {
+
+    const button =
+      document.getElementById('updateButton');
+
+    const status =
+      document.getElementById('status');
+
+
+    button.classList.add('loading');
+
+    button.textContent = 'Обновляем базу...';
+
+    status.textContent =
+      'Загружаем актуальную базу';
+
+
+    try {
+
+      const data =
+        await loadDatabaseFromServer();
+
+
+      setDatabase(data);
+
+      saveDatabase(data);
+
+
+      status.textContent =
+        'База успешно обновлена';
+
+
+      setTimeout(() => {
+
+        status.textContent = '';
+
+      }, 2500);
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      status.textContent =
+        'Ошибка обновления базы';
+
+    }
+
+
+    button.classList.remove('loading');
+
+    button.textContent =
+      'Обновить базу';
+
+  }
+
+
+  // =========================================================
+  // FOOTER
+  // =========================================================
+
+  function updateFooter() {
+
+    const footer =
+      document.getElementById('footer');
+
+
+    if (!databaseData) {
+
+      footer.innerHTML = '';
+
+      return;
+
+    }
+
+
+    let updated = '—';
+
+    if (databaseData.updatedAt) {
+
+      try {
+
+        updated =
+          new Date(
+            databaseData.updatedAt
+          ).toLocaleString('ru-RU');
+
+      } catch (error) {
+
+        updated =
+          databaseData.updatedAt;
+
+      }
+
+    }
+
+
+    footer.innerHTML = `
+      Товаров в базе:
+      ${databaseData.count || Object.keys(products).length}
+      <br>
+      База обновлена:
+      ${escapeHtml(updated)}
+    `;
+
+  }
+
+
+  // =========================================================
+  // ЗАГРУЗКА HTML5 QR CODE
+  // =========================================================
+
+  function loadCameraLibrary() {
+
+    return new Promise((resolve, reject) => {
+
+      if (cameraScriptLoaded &&
+          typeof Html5Qrcode !== 'undefined') {
+
+        resolve();
+
+        return;
+
+      }
+
+
+      const urls = [
 
         'https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js',
 
@@ -1242,14 +1037,11 @@ function loadScannerLibrary() {
 
       function tryNext() {
 
-        if (
-          index >=
-          sources.length
-        ) {
+        if (index >= urls.length) {
 
           reject(
             new Error(
-              'Не удалось загрузить библиотеку камеры'
+              'Не удалось загрузить сканер'
             )
           );
 
@@ -1259,615 +1051,315 @@ function loadScannerLibrary() {
 
 
         const script =
-          document.createElement(
-            'script'
-          );
+          document.createElement('script');
 
 
         script.src =
-          sources[index++];
+          urls[index++];
 
 
-        script.onload =
-          function() {
+        script.onload = function() {
 
-            if (
-              typeof Html5Qrcode !==
-              'undefined'
-            ) {
+          if (
+            typeof Html5Qrcode !==
+            'undefined'
+          ) {
 
-              scannerLibraryLoaded =
-                true;
+            cameraScriptLoaded = true;
 
-              resolve();
+            resolve();
 
-            }
-            else {
-
-              tryNext();
-
-            }
-
-          };
-
-
-        script.onerror =
-          function() {
+          } else {
 
             tryNext();
 
-          };
+          }
+
+        };
 
 
-        document.head.appendChild(
-          script
-        );
+        script.onerror = function() {
+
+          tryNext();
+
+        };
+
+
+        document.head.appendChild(script);
 
       }
 
 
       tryNext();
 
-    }
-  );
+    });
 
-}
-
-
-// =====================================================
-// ОТКРЫТЬ КАМЕРУ
-// =====================================================
-
-async function openCamera() {
-
-  hideError();
-
-
-  if (scannerRunning) {
-    return;
   }
 
 
-  try {
+  // =========================================================
+  // ОТКРЫТЬ КАМЕРУ
+  // =========================================================
 
-    if (
-      !scannerLibraryLoaded
-    ) {
+  async function openCamera() {
 
-      statusElement.textContent =
+    if (cameraOpen) {
+      return;
+    }
+
+
+    const status =
+      document.getElementById('status');
+
+
+    try {
+
+      status.textContent =
         'Запускаем камеру...';
 
 
-      await loadScannerLibrary();
-
-    }
+      await loadCameraLibrary();
 
 
-    if (!scanner) {
-
-      scanner =
-        new Html5Qrcode(
-          'reader'
-        );
-
-    }
+      document.getElementById(
+        'cameraWrapper'
+      ).style.display = 'block';
 
 
-    cameraBlock.style.display =
-      'block';
+      document.getElementById(
+        'cameraButton'
+      ).textContent = '📷 Камера открыта';
 
 
-    await scanner.start(
+      html5QrCode =
+        new Html5Qrcode('reader');
 
-      {
-        facingMode:
-          'environment'
-      },
 
-      {
-        fps: 10,
+      cameraOpen = true;
 
-        qrbox: {
-          width: 280,
-          height: 140
+
+      await html5QrCode.start(
+
+        {
+          facingMode: 'environment'
         },
 
-        aspectRatio:
-          1.7777778
+        {
+          fps: 10,
 
-      },
+          qrbox: {
+            width: 280,
+            height: 160
+          },
 
-      onScanSuccess,
+          aspectRatio: 1.777778
 
-      function(error) {
+        },
 
-        // Камера ищет штрихкод.
-        // Ошибка здесь является нормальной.
+        function(decodedText) {
 
-      }
+          if (!decodedText) {
+            return;
+          }
 
-    );
 
+          closeCamera();
 
-    scannerRunning =
-      true;
 
+          const input =
+            document.getElementById(
+              'searchInput'
+            );
 
-    cameraButton.style.display =
-      'none';
 
+          input.value = decodedText;
 
-    statusElement.textContent =
-      'Наведите камеру на штрихкод';
 
+          searchProducts(decodedText);
 
-  }
-  catch (error) {
+        },
 
-    console.error(error);
+        function(errorMessage) {
 
-    showError(
-      'Не удалось запустить камеру: ' +
-      error.message
-    );
+          // Ошибки отсутствия штрихкода
+          // здесь намеренно игнорируем.
 
-  }
+        }
 
-}
-
-
-// =====================================================
-// ЗАКРЫТЬ КАМЕРУ
-// =====================================================
-
-async function closeCamera() {
-
-  if (
-    !scanner ||
-    !scannerRunning
-  ) {
-
-    cameraBlock.style.display =
-      'none';
-
-    return;
-
-  }
-
-
-  try {
-
-    await scanner.stop();
-
-  }
-  catch (error) {
-
-    console.log(error);
-
-  }
-
-
-  scannerRunning =
-    false;
-
-
-  cameraBlock.style.display =
-    'none';
-
-
-  cameraButton.style.display =
-    'block';
-
-
-  statusElement.textContent =
-    'Камера выключена.';
-
-}
-
-
-// =====================================================
-// УСПЕШНОЕ СКАНИРОВАНИЕ
-// =====================================================
-
-async function onScanSuccess(
-  decodedText
-) {
-
-  if (!scannerRunning) {
-    return;
-  }
-
-
-  const barcode =
-    String(
-      decodedText
-    ).trim();
-
-
-  console.log(
-    'Штрихкод:',
-    barcode
-  );
-
-
-  await closeCamera();
-
-
-  searchInput.value =
-    barcode;
-
-
-  clearButton.style.display =
-    'block';
-
-
-  searchProducts(
-    barcode
-  );
-
-
-  statusElement.textContent =
-    'Товар найден.';
-
-}
-
-
-// =====================================================
-// ЗАГРУЗКА БАЗЫ
-// =====================================================
-
-function loadDatabaseFromServer() {
-
-  return new Promise(
-    function(resolve, reject) {
-
-      const callbackName =
-        'receiveScanInkDatabase_' +
-        Date.now();
-
-
-      const script =
-        document.createElement(
-          'script'
-        );
-
-
-      window[callbackName] =
-        function(data) {
-
-          delete window[
-            callbackName
-          ];
-
-          script.remove();
-
-          resolve(data);
-
-        };
-
-
-      script.src =
-        API_URL +
-        '?mode=database' +
-        '&callback=' +
-        callbackName +
-        '&v=' +
-        Date.now();
-
-
-      script.onerror =
-        function() {
-
-          delete window[
-            callbackName
-          ];
-
-          script.remove();
-
-          reject(
-            new Error(
-              'Не удалось загрузить базу'
-            )
-          );
-
-        };
-
-
-      document.body.appendChild(
-        script
       );
 
+
+      status.textContent = '';
+
+    } catch (error) {
+
+      console.error(error);
+
+      status.textContent =
+        'Не удалось открыть камеру';
+
+      document.getElementById(
+        'cameraWrapper'
+      ).style.display = 'none';
+
+      cameraOpen = false;
+
     }
-  );
 
-}
-
-
-// =====================================================
-// ОБНОВЛЕНИЕ БАЗЫ
-// =====================================================
-
-async function updateDatabase() {
-
-  try {
-
-    refreshButton.disabled =
-      true;
+  }
 
 
-    refreshButton.textContent =
-      'Обновляем...';
+  // =========================================================
+  // ЗАКРЫТЬ КАМЕРУ
+  // =========================================================
 
-
-    const data =
-      await loadDatabaseFromServer();
-
+  async function closeCamera() {
 
     if (
-      !data ||
-      !data.products
+      html5QrCode &&
+      cameraOpen
     ) {
-
-      throw new Error(
-        'Сервер вернул некорректную базу'
-      );
-
-    }
-
-
-    databaseData =
-      data;
-
-
-    products =
-      data.products;
-
-
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(data)
-    );
-
-
-    showDatabaseInfo(
-      data
-    );
-
-
-    clearSearch();
-
-
-    statusElement.textContent =
-      'База обновлена.';
-
-
-  }
-  catch (error) {
-
-    console.error(error);
-
-    showError(
-      'Не удалось обновить базу: ' +
-      error.message
-    );
-
-  }
-  finally {
-
-    refreshButton.disabled =
-      false;
-
-    refreshButton.textContent =
-      'Обновить базу';
-
-  }
-
-}
-
-
-// =====================================================
-// ИНФОРМАЦИЯ О БАЗЕ
-// =====================================================
-
-function showDatabaseInfo(
-  data
-) {
-
-  const count =
-    data.count ||
-    Object.keys(
-      data.products || {}
-    ).length;
-
-
-  let dateText =
-    'неизвестно';
-
-
-  if (
-    data.updatedAt
-  ) {
-
-    const date =
-      new Date(
-        data.updatedAt
-      );
-
-
-    if (
-      !isNaN(
-        date.getTime()
-      )
-    ) {
-
-      dateText =
-        date.toLocaleString(
-          'ru-RU'
-        );
-
-    }
-
-  }
-
-
-  databaseInfoElement.innerHTML =
-    'Товаров: ' +
-    count +
-    '<br>' +
-    'База обновлена: ' +
-    dateText;
-
-}
-
-
-// =====================================================
-// ОШИБКА
-// =====================================================
-
-function showError(
-  message
-) {
-
-  errorElement.textContent =
-    message;
-
-  errorElement.style.display =
-    'block';
-
-}
-
-
-function hideError() {
-
-  errorElement.style.display =
-    'none';
-
-}
-
-
-// =====================================================
-// ИНИЦИАЛИЗАЦИЯ
-// =====================================================
-
-async function init() {
-
-  try {
-
-    const saved =
-      localStorage.getItem(
-        STORAGE_KEY
-      );
-
-
-    if (saved) {
 
       try {
 
-        databaseData =
-          JSON.parse(
-            saved
-          );
+        await html5QrCode.stop();
 
+      } catch (error) {
 
-        products =
-          databaseData.products ||
-          {};
-
-
-        showDatabaseInfo(
-          databaseData
-        );
-
-
-        statusElement.textContent =
-          'База загружена. Можно искать.';
-
-
-        loading.style.display =
-          'none';
-
-
-        return;
+        console.log(error);
 
       }
-      catch (error) {
 
-        localStorage.removeItem(
-          STORAGE_KEY
-        );
+
+      try {
+
+        html5QrCode.clear();
+
+      } catch (error) {
+
+        console.log(error);
 
       }
 
     }
 
 
-    loadingText.textContent =
-      'Первичная загрузка базы...';
+    html5QrCode = null;
+
+    cameraOpen = false;
 
 
-    const data =
-      await loadDatabaseFromServer();
+    document.getElementById(
+      'cameraWrapper'
+    ).style.display = 'none';
 
 
-    if (
-      !data ||
-      !data.products
-    ) {
+    document.getElementById(
+      'cameraButton'
+    ).textContent =
+      '📷 Сканировать штрихкод';
 
-      throw new Error(
-        'Сервер вернул некорректную базу'
-      );
+  }
+
+
+  // =========================================================
+  // ПОИСК ПРИ ВВОДЕ
+  // =========================================================
+
+  document
+    .getElementById('searchInput')
+    .addEventListener(
+      'input',
+      function() {
+
+        searchProducts(this.value);
+
+      }
+    );
+
+
+  // =========================================================
+  // ENTER
+  // =========================================================
+
+  document
+    .getElementById('searchInput')
+    .addEventListener(
+      'keydown',
+      function(event) {
+
+        if (event.key === 'Enter') {
+
+          event.preventDefault();
+
+          searchProducts(this.value);
+
+        }
+
+      }
+    );
+
+
+  // =========================================================
+  // ИНИЦИАЛИЗАЦИЯ
+  // =========================================================
+
+  async function init() {
+
+    const saved =
+      loadDatabaseFromStorage();
+
+
+    if (saved && saved.products) {
+
+      setDatabase(saved);
+
+      document.getElementById(
+        'status'
+      ).textContent = '';
+
+      return;
 
     }
 
 
-    databaseData =
-      data;
+    document.getElementById(
+      'status'
+    ).textContent =
+      'Загружаем актуальную базу...';
 
 
-    products =
-      data.products;
+    try {
+
+      const data =
+        await loadDatabaseFromServer();
 
 
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(data)
-    );
+      setDatabase(data);
+
+      saveDatabase(data);
 
 
-    showDatabaseInfo(
-      data
-    );
+      document.getElementById(
+        'status'
+      ).textContent = '';
 
 
-    statusElement.textContent =
-      'База загружена. Можно искать.';
+    } catch (error) {
 
+      console.error(error);
 
-    loading.style.display =
-      'none';
+      document.getElementById(
+        'status'
+      ).textContent =
+        'Не удалось загрузить базу';
 
-
-  }
-  catch (error) {
-
-    console.error(error);
-
-    loading.style.display =
-      'none';
-
-
-    showError(
-      'Не удалось загрузить базу: ' +
-      error.message
-    );
+    }
 
   }
 
-}
 
-
-init();
+  init();
 
 </script>
 
