@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+>
 
 <title>Сканер товара</title>
 
 <style>
+
 * {
   box-sizing: border-box;
 }
@@ -41,6 +45,7 @@ h1 {
   width: 100%;
   overflow: hidden;
   border-radius: 12px;
+  margin-top: 15px;
 }
 
 .result {
@@ -66,6 +71,10 @@ h1 {
   border-bottom: 1px solid #292929;
 }
 
+.row:last-child {
+  border-bottom: none;
+}
+
 .label {
   color: #999;
 }
@@ -85,11 +94,26 @@ button {
   font-weight: bold;
   background: #fff;
   color: #000;
+  cursor: pointer;
+}
+
+button:active {
+  opacity: 0.7;
+}
+
+button:disabled {
+  opacity: 0.5;
 }
 
 .secondary {
   background: #222;
   color: #fff;
+  border: 1px solid #444;
+}
+
+.danger {
+  background: #222;
+  color: #aaa;
   border: 1px solid #444;
 }
 
@@ -108,9 +132,17 @@ button {
   background: #1c1c1c;
   color: #aaa;
   display: none;
+  white-space: pre-line;
 }
+
+.cameraButtons {
+  display: none;
+}
+
 </style>
+
 </head>
+
 
 <body>
 
@@ -119,42 +151,95 @@ button {
 <h1>📦 Сканер товара</h1>
 
 <div id="status" class="status">
-Загружаем базу...
+Проверяем локальную базу...
 </div>
+
 
 <div id="reader"></div>
 
+
+<div id="cameraButtons" class="cameraButtons">
+
+<button
+  id="startCameraButton"
+  onclick="startCamera()"
+>
+📷 Включить камеру
+</button>
+
+<button
+  id="stopCameraButton"
+  class="danger"
+  onclick="stopCamera()"
+  style="display:none;"
+>
+⏹ Выключить камеру
+</button>
+
+</div>
+
+
 <div id="error" class="error"></div>
+
 
 <div id="result" class="result">
 
 <div id="productName" class="name"></div>
 
+
 <div class="row">
-<div class="label">Штрихкод</div>
+
+<div class="label">
+Штрихкод
+</div>
+
 <div id="productBarcode" class="value"></div>
+
 </div>
 
+
 <div class="row">
-<div class="label">Доступный остаток</div>
+
+<div class="label">
+Доступный остаток
+</div>
+
 <div id="productAvailable" class="value"></div>
+
 </div>
 
+
 <div class="row">
-<div class="label">Остаток</div>
+
+<div class="label">
+Остаток
+</div>
+
 <div id="productStock" class="value"></div>
+
 </div>
+
 
 <div class="row">
-<div class="label">Цена</div>
-<div id="productPrice" class="value"></div>
+
+<div class="label">
+Цена
 </div>
 
-<button onclick="scanNext()">
+<div id="productPrice" class="value"></div>
+
+</div>
+
+
+<button
+onclick="scanNext()"
+>
 📷 Сканировать следующий
 </button>
 
+
 </div>
+
 
 <button
 id="refreshButton"
@@ -165,27 +250,34 @@ style="display:none;"
 Обновить базу
 </button>
 
-<div id="databaseInfo" class="database"></div>
+
+<div
+id="databaseInfo"
+class="database"
+>
+</div>
+
 
 </div>
 
 
 <script>
 
+
+// =====================================================
+// НАСТРОЙКИ
+// =====================================================
+
 const API_URL =
 'https://script.google.com/macros/s/AKfycbwLJNTns2VnOebnan30cDWpad1tZaTtjI2g8B44HP6oj0M806NbzsZLcgn_9XkO-pwL/exec';
 
-
-// =====================================================
-// LOCAL STORAGE
-// =====================================================
 
 const STORAGE_KEY =
 'SCANINK_DATABASE_V3';
 
 
 // =====================================================
-// VARIABLES
+// ПЕРЕМЕННЫЕ
 // =====================================================
 
 let products = {};
@@ -195,6 +287,8 @@ let databaseData = null;
 let scanner = null;
 
 let scannerRunning = false;
+
+let scannerLibraryLoaded = false;
 
 
 // =====================================================
@@ -216,24 +310,122 @@ document.getElementById('databaseInfo');
 const refreshButton =
 document.getElementById('refreshButton');
 
+const cameraButtons =
+document.getElementById('cameraButtons');
+
+const startCameraButton =
+document.getElementById('startCameraButton');
+
+const stopCameraButton =
+document.getElementById('stopCameraButton');
+
 
 // =====================================================
-// ЗАПУСК
+// ЗАГРУЗКА БИБЛИОТЕКИ КАМЕРЫ
+// =====================================================
+
+function loadScannerLibrary() {
+
+return new Promise((resolve, reject) => {
+
+const sources = [
+
+'https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js',
+
+'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js'
+
+];
+
+
+let index = 0;
+
+
+function tryNext() {
+
+if (index >= sources.length) {
+
+reject(
+new Error(
+'Не удалось загрузить библиотеку камеры'
+)
+);
+
+return;
+
+}
+
+
+const script =
+document.createElement('script');
+
+
+script.src =
+sources[index++];
+
+
+script.onload =
+function() {
+
+if (
+typeof Html5Qrcode !==
+'undefined'
+) {
+
+scannerLibraryLoaded =
+true;
+
+resolve();
+
+}
+else {
+
+tryNext();
+
+}
+
+};
+
+
+script.onerror =
+function() {
+
+tryNext();
+
+};
+
+
+document.head.appendChild(
+script
+);
+
+}
+
+
+tryNext();
+
+});
+
+}
+
+
+// =====================================================
+// ЗАПУСК ПРИЛОЖЕНИЯ
 // =====================================================
 
 async function init() {
 
 try {
 
+
+// -----------------------------------------------------
+// Сначала пытаемся взять локальную базу
+// -----------------------------------------------------
+
 const saved =
 localStorage.getItem(
 STORAGE_KEY
 );
 
-
-// -----------------------------------------------
-// Есть локальная база
-// -----------------------------------------------
 
 if (saved) {
 
@@ -245,24 +437,31 @@ JSON.parse(saved);
 products =
 databaseData.products || {};
 
+
 showDatabaseInfo(
 databaseData
 );
 
+
 statusElement.textContent =
 'База загружена. Можно сканировать.';
+
 
 refreshButton.style.display =
 'block';
 
-await startScanner();
+
+cameraButtons.style.display =
+'block';
+
 
 return;
 
-} catch (error) {
+}
+catch (error) {
 
 console.log(
-'Локальная база повреждена. Загружаем заново.'
+'Локальная база повреждена.'
 );
 
 localStorage.removeItem(
@@ -274,11 +473,16 @@ STORAGE_KEY
 }
 
 
-// -----------------------------------------------
-// Локальной базы нет
-// -----------------------------------------------
+// -----------------------------------------------------
+// Если базы нет — загружаем
+// -----------------------------------------------------
+
+statusElement.textContent =
+'Загружаем актуальную базу...';
+
 
 await updateDatabase();
+
 
 }
 catch (error) {
@@ -296,7 +500,7 @@ error.message
 
 
 // =====================================================
-// ЗАГРУЗКА JSON С СЕРВЕРА
+// ЗАГРУЗКА БАЗЫ С СЕРВЕРА
 // =====================================================
 
 function loadDatabaseFromServer() {
@@ -309,9 +513,7 @@ Date.now();
 
 
 const script =
-document.createElement(
-'script'
-);
+document.createElement('script');
 
 
 window[callbackName] =
@@ -371,10 +573,13 @@ try {
 refreshButton.disabled =
 true;
 
+
 statusElement.textContent =
 'Загружаем актуальную базу...';
 
+
 hideError();
+
 
 const data =
 await loadDatabaseFromServer();
@@ -395,13 +600,14 @@ throw new Error(
 databaseData =
 data;
 
+
 products =
 data.products;
 
 
-// -----------------------------------------------
-// СОХРАНЯЕМ ЛОКАЛЬНО
-// -----------------------------------------------
+// -----------------------------------------------------
+// Сохраняем локально
+// -----------------------------------------------------
 
 localStorage.setItem(
 STORAGE_KEY,
@@ -413,18 +619,18 @@ showDatabaseInfo(
 data
 );
 
+
 statusElement.textContent =
-'База актуальна. Можно сканировать.';
+'База загружена. Можно сканировать.';
+
 
 refreshButton.style.display =
 'block';
 
 
-if (!scannerRunning) {
+cameraButtons.style.display =
+'block';
 
-await startScanner();
-
-}
 
 }
 catch (error) {
@@ -436,8 +642,10 @@ showError(
 error.message
 );
 
+
 statusElement.textContent =
-'Не удалось загрузить базу.';
+'База не обновилась.';
+
 
 }
 finally {
@@ -474,6 +682,7 @@ new Date(
 data.updatedAt
 );
 
+
 if (!isNaN(date.getTime())) {
 
 dateText =
@@ -497,23 +706,54 @@ dateText;
 
 
 // =====================================================
-// СКАНЕР
+// ВКЛЮЧЕНИЕ КАМЕРЫ
 // =====================================================
 
-async function startScanner() {
+async function startCamera() {
+
+hideError();
+
 
 if (scannerRunning) {
 return;
 }
 
 
+try {
+
+
+// -----------------------------------------------------
+// Загружаем библиотеку только сейчас
+// -----------------------------------------------------
+
+if (!scannerLibraryLoaded) {
+
+statusElement.textContent =
+'Запускаем камеру...';
+
+
+await loadScannerLibrary();
+
+}
+
+
+// -----------------------------------------------------
+// Создаём сканер
+// -----------------------------------------------------
+
+if (!scanner) {
+
 scanner =
 new Html5Qrcode(
 'reader'
 );
 
+}
 
-try {
+
+// -----------------------------------------------------
+// Запускаем камеру
+// -----------------------------------------------------
 
 await scanner.start(
 
@@ -536,13 +776,31 @@ aspectRatio: 1.7777778
 
 onScanSuccess,
 
-onScanFailure
+function(error) {
+
+// Ничего не делаем.
+// Пока штрихкод не найден — это нормально.
+
+}
 
 );
 
 
 scannerRunning =
 true;
+
+
+startCameraButton.style.display =
+'none';
+
+
+stopCameraButton.style.display =
+'block';
+
+
+statusElement.textContent =
+'Наведите камеру на штрихкод';
+
 
 }
 catch (error) {
@@ -553,6 +811,50 @@ showError(
 'Не удалось запустить камеру: ' +
 error.message
 );
+
+}
+
+}
+
+
+// =====================================================
+// ВЫКЛЮЧЕНИЕ КАМЕРЫ
+// =====================================================
+
+async function stopCamera() {
+
+if (
+!scanner ||
+!scannerRunning
+) {
+return;
+}
+
+
+try {
+
+await scanner.stop();
+
+scannerRunning =
+false;
+
+
+startCameraButton.style.display =
+'block';
+
+
+stopCameraButton.style.display =
+'none';
+
+
+statusElement.textContent =
+'Камера выключена.';
+
+
+}
+catch (error) {
+
+console.error(error);
 
 }
 
@@ -584,13 +886,13 @@ barcode
 );
 
 
-// -----------------------------------------------
-// Останавливаем сканирование
-// -----------------------------------------------
+// -----------------------------------------------------
+// Останавливаем камеру
+// -----------------------------------------------------
 
 try {
 
-await scanner.pause(true);
+await scanner.stop();
 
 }
 catch (error) {
@@ -599,13 +901,22 @@ console.log(error);
 
 }
 
+
 scannerRunning =
 false;
 
 
-// -----------------------------------------------
-// ПОИСК ТОЛЬКО В ПАМЯТИ
-// -----------------------------------------------
+startCameraButton.style.display =
+'none';
+
+
+stopCameraButton.style.display =
+'none';
+
+
+// -----------------------------------------------------
+// Ищем товар в памяти
+// -----------------------------------------------------
 
 const product =
 products[barcode];
@@ -616,6 +927,9 @@ if (product) {
 showProduct(
 product
 );
+
+statusElement.textContent =
+'Товар найден.';
 
 }
 else {
@@ -628,6 +942,9 @@ barcode
 
 resultElement.style.display =
 'none';
+
+statusElement.textContent =
+'Товар не найден.';
 
 }
 
@@ -682,60 +999,25 @@ resultElement.style.display =
 
 
 // =====================================================
-// СЛЕДУЮЩИЙ ТОВАР
+// СКАНИРОВАТЬ СЛЕДУЮЩИЙ
 // =====================================================
 
 async function scanNext() {
 
 hideError();
 
+
 resultElement.style.display =
 'none';
 
-statusElement.textContent =
-'Наведите камеру на штрихкод';
 
-
-if (
-scanner &&
-!scannerRunning
-) {
-
-try {
-
-await scanner.resume();
-
-scannerRunning =
-true;
-
-}
-catch (error) {
-
-console.log(error);
-
-try {
-await scanner.clear();
-} catch(e) {}
-
-scanner =
-null;
-
-await startScanner();
-
-}
-
-}
-else if (!scanner) {
-
-await startScanner();
-
-}
+await startCamera();
 
 }
 
 
 // =====================================================
-// ОШИБКА
+// ОШИБКИ
 // =====================================================
 
 function showError(message) {
@@ -758,112 +1040,10 @@ errorElement.style.display =
 
 
 // =====================================================
-// ЗАГРУЗКА БИБЛИОТЕКИ СКАНЕРА
+// СТАРТ
 // =====================================================
 
-function loadScannerLibrary() {
-
-  return new Promise((resolve, reject) => {
-
-    const sources = [
-
-      'https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js',
-
-      'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js'
-
-    ];
-
-    let index = 0;
-
-
-    function tryNext() {
-
-      if (index >= sources.length) {
-
-        reject(
-          new Error(
-            'Не удалось загрузить библиотеку камеры'
-          )
-        );
-
-        return;
-      }
-
-
-      const script =
-        document.createElement('script');
-
-
-      script.src =
-        sources[index++];
-
-
-      script.onload =
-        function() {
-
-          if (
-            typeof Html5Qrcode !==
-            'undefined'
-          ) {
-
-            resolve();
-
-          } else {
-
-            tryNext();
-
-          }
-
-        };
-
-
-      script.onerror =
-        function() {
-
-          tryNext();
-
-        };
-
-
-      document.head.appendChild(
-        script
-      );
-
-    }
-
-
-    tryNext();
-
-  });
-
-}
-
-
-// =====================================================
-// START
-// =====================================================
-
-loadScannerLibrary()
-
-  .then(function() {
-
-    init();
-
-  })
-
-  .catch(function(error) {
-
-    console.error(error);
-
-    showError(
-      'Не удалось загрузить камеру: ' +
-      error.message
-    );
-
-    statusElement.textContent =
-      'База загружена, но камера недоступна.';
-
-  });
+init();
 
 </script>
 
