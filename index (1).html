@@ -1,0 +1,2669 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+>
+
+<title>Стройцентр Инком — Проверка товара</title>
+
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+
+  margin: 0;
+  padding: 0;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+
+  background: #f5f5f7;
+  color: #111;
+
+}
+
+body {
+
+  min-height: 100vh;
+
+}
+
+
+.container {
+
+  max-width: 650px;
+
+  margin: 0 auto;
+
+  padding:
+    20px
+    16px
+    30px;
+
+}
+
+
+.header {
+
+  margin-bottom: 18px;
+
+}
+
+
+.company {
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  opacity: .65;
+
+}
+
+
+.title {
+
+  font-size: 28px;
+
+  font-weight: 700;
+
+  margin-top: 3px;
+
+}
+
+
+.search-row {
+
+  display: flex;
+
+  gap: 8px;
+
+  margin-bottom: 10px;
+
+}
+
+
+.stock-filter {
+
+  background: white;
+
+  border-radius: 14px;
+
+  padding: 12px 14px;
+
+  margin-bottom: 10px;
+
+}
+
+.stock-filter-row {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  flex-wrap: wrap;
+
+}
+
+.stock-filter-label {
+
+  font-size: 15px;
+
+}
+
+.stock-filter input[type="checkbox"] {
+
+  width: 19px;
+  height: 19px;
+  margin: 0;
+
+}
+
+.stock-filter input[type="number"] {
+
+  width: 82px;
+  height: 38px;
+  padding: 0 10px;
+  border: 1px solid #d2d2d7;
+  border-radius: 10px;
+  background: white;
+  font-size: 16px;
+}
+
+.stock-filter select {
+
+  height: 38px;
+  padding: 0 30px 0 10px;
+  border: 1px solid #d2d2d7;
+  border-radius: 10px;
+  background: white;
+  font-size: 16px;
+}
+
+.stock-filter-hint {
+
+  margin-top: 7px;
+  font-size: 12px;
+  color: #777;
+
+}
+
+
+.search-input {
+
+  flex: 1;
+
+  min-width: 0;
+
+  height: 52px;
+
+  padding:
+    0
+    16px;
+
+  border:
+    1px solid
+    #d2d2d7;
+
+  border-radius: 14px;
+
+  background: white;
+
+  font-size: 17px;
+
+  outline: none;
+
+}
+
+
+.search-input:focus {
+
+  border-color: #888;
+
+}
+
+
+.button {
+
+  border: 0;
+
+  border-radius: 14px;
+
+  padding:
+    0
+    16px;
+
+  height: 52px;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+}
+
+
+.camera-button {
+
+  background: #111;
+
+  color: white;
+
+}
+
+
+.update-button {
+
+  width: 100%;
+
+  margin-top: 10px;
+
+  background: #e9e9ed;
+
+  color: #111;
+
+}
+
+
+.update-button.loading {
+
+  opacity: .6;
+
+}
+
+
+#reader {
+
+  display: none;
+
+  width: 100%;
+
+  margin-top: 12px;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  background: #000;
+
+}
+
+
+.camera-controls {
+
+  display: none;
+
+  margin-top: 8px;
+
+  gap: 8px;
+
+}
+
+
+.camera-controls button {
+
+  flex: 1;
+
+}
+
+
+.status {
+
+  min-height: 22px;
+
+  margin:
+    8px
+    2px;
+
+  font-size: 14px;
+
+  color: #666;
+
+}
+
+
+.results {
+
+  margin-top: 12px;
+
+}
+
+
+.card {
+
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 18px;
+
+  margin-bottom: 12px;
+
+  box-shadow:
+    0 2px 8px
+    rgba(0,0,0,.06);
+
+}
+
+
+.product-name {
+
+  font-size: 19px;
+
+  font-weight: 700;
+
+  line-height: 1.3;
+
+  margin-bottom: 14px;
+
+}
+
+
+.meta {
+
+  font-size: 14px;
+
+  color: #666;
+
+  margin-top: 5px;
+
+}
+
+
+.stock-main {
+
+  margin-top: 18px;
+
+  font-size: 38px;
+
+  line-height: 1;
+
+  font-weight: 800;
+
+}
+
+
+.stock-label {
+
+  font-size: 13px;
+
+  color: #777;
+
+  margin-top: 4px;
+
+}
+
+
+.stock-total {
+
+  margin-top: 10px;
+
+  font-size: 15px;
+
+  color: #555;
+
+}
+
+
+.price {
+
+  margin-top: 16px;
+
+  font-size: 28px;
+
+  font-weight: 750;
+
+}
+
+
+.next-button {
+
+  width: 100%;
+
+  margin-top: 16px;
+
+  background: #111;
+
+  color: white;
+
+}
+
+
+.no-results {
+
+  text-align: center;
+
+  color: #777;
+
+  padding: 30px 10px;
+
+}
+
+
+.footer {
+
+  margin-top: 22px;
+
+  font-size: 12px;
+
+  color: #888;
+
+  text-align: center;
+
+  line-height: 1.5;
+
+}
+
+
+.db-info {
+
+  margin-top: 8px;
+
+}
+
+
+@media (prefers-color-scheme: dark) {
+
+  html,
+  body {
+
+    background: #111;
+
+    color: #f5f5f7;
+
+  }
+
+
+  .search-input {
+
+    background: #1c1c1e;
+
+    border-color: #38383a;
+
+    color: white;
+
+  }
+
+
+  .update-button {
+
+    background: #2c2c2e;
+
+    color: white;
+
+  }
+
+
+  .stock-filter {
+
+    background: #1c1c1e;
+
+  }
+
+  .stock-filter input[type="number"],
+  .stock-filter select {
+
+    background: #2c2c2e;
+    border-color: #38383a;
+    color: white;
+
+  }
+
+
+  .card {
+
+    background: #1c1c1e;
+
+  }
+
+
+  .meta,
+  .status,
+  .stock-label,
+  .stock-total,
+  .footer {
+
+    color: #98989f;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+  <div class="header">
+
+    <div class="company">
+      СТРОЙЦЕНТР ИНКОМ
+    </div>
+
+    <div class="title">
+      Проверка товара
+    </div>
+
+  </div>
+
+
+  <div class="search-row">
+
+
+    <input
+
+      id="searchInput"
+
+      class="search-input"
+
+      type="text"
+
+      autocomplete="off"
+
+      autocorrect="off"
+
+      autocapitalize="off"
+
+      spellcheck="false"
+
+      placeholder="Штрихкод, код 1С или название"
+
+    >
+
+
+    <button
+
+      id="cameraButton"
+
+      class="button camera-button"
+
+    >
+      📷
+    </button>
+
+
+  </div>
+
+
+  <div class="stock-filter">
+
+    <div class="stock-filter-row">
+
+      <input
+        id="stockFilterEnabled"
+        type="checkbox"
+      >
+
+      <label
+        class="stock-filter-label"
+        for="stockFilterEnabled"
+      >
+        Показывать только товары с остатком
+      </label>
+
+    </div>
+
+
+    <div
+      class="stock-filter-row"
+      style="margin-top: 8px;"
+    >
+
+      <span class="stock-filter-label">
+        Кол-во от
+      </span>
+
+      <input
+        id="stockFilterQuantity"
+        type="number"
+        min="0"
+        step="any"
+        inputmode="decimal"
+        placeholder=""
+      >
+
+      <select id="stockFilterUnit">
+        <option value="pcs">шт.</option>
+        <option value="m2">м²</option>
+      </select>
+
+    </div>
+
+
+    <div
+      id="stockFilterHint"
+      class="stock-filter-hint"
+    ></div>
+
+  </div>
+
+
+  <div id="reader"></div>
+
+
+  <div
+    id="cameraControls"
+    class="camera-controls"
+  >
+
+    <button
+
+      id="closeCameraButton"
+
+      class="button update-button"
+
+    >
+      Закрыть камеру
+    </button>
+
+  </div>
+
+
+  <div
+    id="status"
+    class="status"
+  ></div>
+
+
+  <div
+    id="results"
+    class="results"
+  ></div>
+
+
+  <button
+
+    id="updateButton"
+
+    class="button update-button"
+
+  >
+    Обновить базу
+
+  </button>
+
+
+  <div class="footer">
+
+    <div id="dbCount"></div>
+
+    <div
+      id="dbInfo"
+      class="db-info"
+    ></div>
+
+  </div>
+
+
+</div>
+
+
+<script>
+
+
+/*
+==================================================
+НАСТРОЙКИ
+==================================================
+*/
+
+
+const API_URL =
+  'https://script.google.com/macros/s/AKfycbwLJNTns2VnOebnan30cDWpad1tZaTtjI2g8B44HP6oj0M806NbzsZLcgn_9XkO-pwL/exec';
+
+
+/*
+Новая локальная база.
+
+Старая база V1 полностью игнорируется.
+*/
+
+const DB_NAME =
+  'ScanInkDatabaseV2';
+
+
+const DB_VERSION =
+  1;
+
+
+const STORE_NAME =
+  'database';
+
+
+const DB_KEY =
+  'current';
+
+
+let databaseData =
+  null;
+
+
+let products =
+  {};
+
+
+let html5QrCode =
+  null;
+
+
+let cameraRunning =
+  false;
+
+
+let stockFilterEnabled =
+  false;
+
+let stockFilterQuantity =
+  '';
+
+let stockFilterUnit =
+  'pcs';
+
+
+/*
+==================================================
+INDEXED DB
+==================================================
+*/
+
+
+function openDatabase() {
+
+  return new Promise(
+    (resolve, reject) => {
+
+
+      if (!window.indexedDB) {
+
+        reject(
+          new Error(
+            'IndexedDB не поддерживается'
+          )
+        );
+
+        return;
+
+      }
+
+
+      const request =
+        indexedDB.open(
+          DB_NAME,
+          DB_VERSION
+        );
+
+
+      request.onupgradeneeded =
+        function(event) {
+
+          const db =
+            event.target.result;
+
+
+          if (
+            !db.objectStoreNames
+              .contains(STORE_NAME)
+          ) {
+
+            db.createObjectStore(
+              STORE_NAME
+            );
+
+          }
+
+        };
+
+
+      request.onsuccess =
+        function(event) {
+
+          resolve(
+            event.target.result
+          );
+
+        };
+
+
+      request.onerror =
+        function(event) {
+
+          reject(
+            event.target.error ||
+            new Error(
+              'Ошибка открытия IndexedDB'
+            )
+          );
+
+        };
+
+    }
+  );
+
+}
+
+
+/*
+==================================================
+СОХРАНЕНИЕ БАЗЫ
+==================================================
+*/
+
+
+async function saveDatabase(data) {
+
+  const db =
+    await openDatabase();
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+
+      const transaction =
+        db.transaction(
+          STORE_NAME,
+          'readwrite'
+        );
+
+
+      const store =
+        transaction.objectStore(
+          STORE_NAME
+        );
+
+
+      const request =
+        store.put(
+          data,
+          DB_KEY
+        );
+
+
+      request.onerror =
+        function(event) {
+
+          db.close();
+
+          reject(
+            event.target.error ||
+            new Error(
+              'Не удалось сохранить базу'
+            )
+          );
+
+        };
+
+
+      transaction.oncomplete =
+        function() {
+
+          db.close();
+
+          resolve();
+
+        };
+
+
+      transaction.onerror =
+        function(event) {
+
+          db.close();
+
+          reject(
+            event.target.error ||
+            new Error(
+              'Ошибка записи IndexedDB'
+            )
+          );
+
+        };
+
+    }
+  );
+
+}
+
+
+/*
+==================================================
+ЗАГРУЗКА ЛОКАЛЬНОЙ БАЗЫ
+==================================================
+*/
+
+
+async function loadDatabaseFromStorage() {
+
+  const db =
+    await openDatabase();
+
+
+  return new Promise(
+    (resolve, reject) => {
+
+
+      const transaction =
+        db.transaction(
+          STORE_NAME,
+          'readonly'
+        );
+
+
+      const store =
+        transaction.objectStore(
+          STORE_NAME
+        );
+
+
+      const request =
+        store.get(DB_KEY);
+
+
+      request.onsuccess =
+        function(event) {
+
+          const data =
+            event.target.result ||
+            null;
+
+
+          db.close();
+
+
+          resolve(data);
+
+        };
+
+
+      request.onerror =
+        function(event) {
+
+          db.close();
+
+
+          reject(
+            event.target.error ||
+            new Error(
+              'Не удалось прочитать базу'
+            )
+          );
+
+        };
+
+    }
+  );
+
+}
+
+
+/*
+==================================================
+JSONP
+==================================================
+
+Используем JSONP ТОЛЬКО для
+маленького запроса версии.
+
+Большую базу через JSONP больше
+не качаем.
+==================================================
+*/
+
+
+function jsonp(url) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+
+      const callbackName =
+        'scanInkCallback_' +
+        Date.now() +
+        '_' +
+        Math.random()
+          .toString(36)
+          .substring(2);
+
+
+      const script =
+        document.createElement(
+          'script'
+        );
+
+
+      let finished =
+        false;
+
+
+      const timeout =
+        setTimeout(
+          function() {
+
+            if (finished) {
+              return;
+            }
+
+
+            finished = true;
+
+
+            cleanup();
+
+
+            reject(
+              new Error(
+                'Истекло время ожидания'
+              )
+            );
+
+          },
+          30000
+        );
+
+
+      function cleanup() {
+
+        clearTimeout(timeout);
+
+
+        script.remove();
+
+
+        try {
+
+          delete window[
+            callbackName
+          ];
+
+        } catch (e) {
+
+          window[
+            callbackName
+          ] = undefined;
+
+        }
+
+      }
+
+
+      window[callbackName] =
+        function(data) {
+
+          if (finished) {
+            return;
+          }
+
+
+          finished = true;
+
+
+          cleanup();
+
+
+          resolve(data);
+
+        };
+
+
+      script.onerror =
+        function() {
+
+          if (finished) {
+            return;
+          }
+
+
+          finished = true;
+
+
+          cleanup();
+
+
+          reject(
+            new Error(
+              'Ошибка JSONP'
+            )
+          );
+
+        };
+
+
+      script.src =
+        url +
+        '&callback=' +
+        encodeURIComponent(
+          callbackName
+        );
+
+
+      document.body.appendChild(
+        script
+      );
+
+    }
+  );
+
+}
+
+
+/*
+==================================================
+ПОЛУЧЕНИЕ ВЕРСИИ СЕРВЕРА
+==================================================
+*/
+
+
+async function getServerVersion() {
+
+  const url =
+    API_URL +
+    '?mode=version&_=' +
+    Date.now();
+
+
+  return await jsonp(url);
+
+}
+
+
+/*
+==================================================
+ПОЛУЧЕНИЕ ПОЛНОЙ БАЗЫ
+==================================================
+
+Здесь используем fetch.
+
+Это ключевое изменение.
+==================================================
+*/
+
+
+async function loadDatabaseFromServer() {
+
+  const url =
+    API_URL +
+    '?mode=database&_=' +
+    Date.now();
+
+
+  const response =
+    await fetch(
+      url,
+      {
+        method: 'GET',
+        cache: 'no-store'
+      }
+    );
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      'Сервер вернул HTTP ' +
+      response.status
+    );
+
+  }
+
+
+  const data =
+    await response.json();
+
+
+  if (
+    !data ||
+    !data.products
+  ) {
+
+    throw new Error(
+      'Сервер вернул некорректную базу'
+    );
+
+  }
+
+
+  return data;
+
+}
+
+
+/*
+==================================================
+УСТАНОВКА БАЗЫ В ПАМЯТЬ
+==================================================
+*/
+
+
+function setDatabase(data) {
+
+  databaseData =
+    data;
+
+
+  products =
+    data.products || {};
+
+
+  document.getElementById(
+    'dbCount'
+  ).textContent =
+    'Товаров в базе: ' +
+    Number(
+      data.count || 0
+    ).toLocaleString(
+      'ru-RU'
+    );
+
+
+  let updatedText =
+    '';
+
+
+  if (data.updatedAt) {
+
+    try {
+
+      const date =
+        new Date(
+          data.updatedAt
+        );
+
+
+      updatedText =
+        date.toLocaleString(
+          'ru-RU',
+          {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          }
+        );
+
+    } catch (e) {
+
+      updatedText =
+        String(
+          data.updatedAt
+        );
+
+    }
+
+  }
+
+
+  document.getElementById(
+    'dbInfo'
+  ).textContent =
+    'Версия: ' +
+    String(
+      data.version || '—'
+    ) +
+    (
+      updatedText
+        ? ' · Обновлено: ' +
+          updatedText
+        : ''
+    );
+
+}
+
+
+/*
+==================================================
+НОРМАЛИЗАЦИЯ КОДА 1С
+==================================================
+*/
+
+
+function normalizeCode(value) {
+
+  const digits =
+    String(
+      value || ''
+    )
+      .replace(
+        /\D/g,
+        ''
+      );
+
+
+  if (!digits) {
+
+    return '';
+
+  }
+
+
+  return (
+    digits.replace(
+      /^0+/,
+      ''
+    ) ||
+    '0'
+  );
+
+}
+
+
+/*
+==================================================
+ПОИСК
+==================================================
+*/
+
+
+function parseQuantity(value) {
+
+  const normalized =
+    String(value || '')
+      .replace(/\u00a0/g, '')
+      .replace(/\s/g, '')
+      .replace(',', '.');
+
+  const number =
+    parseFloat(normalized.replace(/[^0-9.-]/g, ''));
+
+  return Number.isFinite(number)
+    ? number
+    : 0;
+
+}
+
+
+function isM2Product(product) {
+
+  return String(product.m2 || '')
+    .trim()
+    .toLowerCase() === 'да';
+
+}
+
+
+function applyStockFilter(results) {
+
+  if (!stockFilterEnabled) {
+
+    return results;
+
+  }
+
+  const quantityText =
+    String(stockFilterQuantity || '').trim();
+
+  const minimum =
+    quantityText === ''
+      ? 0
+      : parseQuantity(quantityText);
+
+  return results.filter(
+    function(product) {
+
+      const productIsM2 =
+        isM2Product(product);
+
+      if (
+        stockFilterUnit === 'm2' &&
+        !productIsM2
+      ) {
+        return false;
+      }
+
+      const quantity =
+        stockFilterUnit === 'm2'
+          ? parseQuantity(product.stockM2)
+          : parseQuantity(product.stock);
+
+      if (quantityText === '') {
+        return quantity > 0;
+      }
+
+      return quantity >= minimum;
+
+    }
+  );
+
+}
+
+
+function updateStockFilterHint() {
+
+  const hint =
+    document.getElementById('stockFilterHint');
+
+  if (!hint) return;
+
+  if (!stockFilterEnabled) {
+
+    hint.textContent = '';
+    return;
+
+  }
+
+  if (stockFilterUnit === 'm2') {
+
+    hint.textContent =
+      'Ищем только товары с признаком м² = «Да» и проверяем остаток в колонке H — «Остаток в м²».';
+
+  } else {
+
+    hint.textContent =
+      'Ищем по всей таблице и проверяем остаток в колонке G — «Остаток в ед. изм.», в шт.';
+
+  }
+
+}
+
+
+function updateStockFilterFromControls() {
+
+  stockFilterEnabled =
+    document.getElementById(
+      'stockFilterEnabled'
+    ).checked;
+
+  stockFilterQuantity =
+    document.getElementById(
+      'stockFilterQuantity'
+    ).value;
+
+  stockFilterUnit =
+    document.getElementById(
+      'stockFilterUnit'
+    ).value;
+
+  updateStockFilterHint();
+
+  searchProducts(
+    document.getElementById('searchInput').value
+  );
+
+}
+
+
+function searchProducts(query) {
+
+  query =
+    String(query || '').trim();
+
+  if (!query) {
+
+    renderResults([]);
+    return;
+
+  }
+
+  /* Точное совпадение штрихкода. */
+  if (products[query]) {
+
+    renderResults(
+      applyStockFilter([products[query]])
+    );
+    return;
+
+  }
+
+  /* Точное совпадение кода 1С. */
+  const normalizedCode =
+    normalizeCode(query);
+
+  if (normalizedCode) {
+
+    const exactCodeResults = [];
+    const keys = Object.keys(products);
+
+    for (let i = 0; i < keys.length; i++) {
+
+      const product = products[keys[i]];
+
+      if (
+        normalizeCode(product.code1c) ===
+        normalizedCode
+      ) {
+        exactCodeResults.push(product);
+      }
+
+    }
+
+    if (exactCodeResults.length) {
+
+      renderResults(
+        applyStockFilter(exactCodeResults).slice(0, 30)
+      );
+      return;
+
+    }
+
+  }
+
+  /* Поиск по названию. */
+  const words =
+    query
+      .toLowerCase()
+      .split(/\s+/)
+      .filter(Boolean);
+
+  const results = [];
+  const keys = Object.keys(products);
+
+  for (let i = 0; i < keys.length; i++) {
+
+    const product = products[keys[i]];
+    const name =
+      String(product.name || '').toLowerCase();
+
+    let matches = true;
+
+    for (let j = 0; j < words.length; j++) {
+
+      if (!name.includes(words[j])) {
+        matches = false;
+        break;
+      }
+
+    }
+
+    if (matches) {
+      results.push(product);
+    }
+
+  }
+
+  renderResults(
+    applyStockFilter(results).slice(0, 100)
+  );
+
+}
+
+/*
+==================================================
+ОТОБРАЖЕНИЕ РЕЗУЛЬТАТОВ
+==================================================
+*/
+
+
+function renderResults(results) {
+
+  const container =
+    document.getElementById(
+      'results'
+    );
+
+
+  container.innerHTML =
+    '';
+
+
+  if (!results.length) {
+
+    if (
+      document
+        .getElementById(
+          'searchInput'
+        )
+        .value
+        .trim()
+    ) {
+
+      container.innerHTML =
+        '<div class="no-results">' +
+        'Ничего не найдено' +
+        '</div>';
+
+    }
+
+
+    return;
+
+  }
+
+
+  results.forEach(
+    function(product) {
+
+
+      const card =
+        document.createElement(
+          'div'
+        );
+
+
+      card.className =
+        'card';
+
+
+      const name =
+        document.createElement(
+          'div'
+        );
+
+
+      name.className =
+        'product-name';
+
+
+      name.textContent =
+        product.name ||
+        'Без названия';
+
+
+      const barcode =
+        document.createElement(
+          'div'
+        );
+
+
+      barcode.className =
+        'meta';
+
+
+      barcode.textContent =
+        'Штрихкод: ' +
+        (
+          product.barcode ||
+          '—'
+        );
+
+
+      const code =
+        document.createElement(
+          'div'
+        );
+
+
+      code.className =
+        'meta';
+
+
+      code.textContent =
+        'Код 1С: ' +
+        (
+          product.code1c ||
+          '—'
+        );
+
+
+      const stockLabel =
+        document.createElement(
+          'div'
+        );
+
+
+      stockLabel.className =
+        'stock-label';
+
+
+      stockLabel.textContent =
+        'Доступный остаток';
+
+
+      const productIsM2 =
+        isM2Product(product);
+
+
+      const stock =
+        document.createElement(
+          'div'
+        );
+
+
+      stock.className =
+        'stock-main';
+
+
+      if (productIsM2) {
+
+        stock.textContent =
+          (product.available || '0') +
+          ' шт. / ' +
+          (product.availableM2 || '0') +
+          ' м²';
+
+      } else {
+
+        stock.textContent =
+          (product.available || '0') +
+          ' шт.';
+
+      }
+
+
+      const total =
+        document.createElement(
+          'div'
+        );
+
+
+      total.className =
+        'stock-total';
+
+
+      if (productIsM2) {
+
+        total.textContent =
+          'Остаток: ' +
+          (product.stock || '0') +
+          ' шт. / ' +
+          (product.stockM2 || '0') +
+          ' м²';
+
+      } else {
+
+        total.textContent =
+          'Остаток: ' +
+          (product.stock || '0') +
+          ' шт.';
+
+      }
+
+
+      const price =
+        document.createElement(
+          'div'
+        );
+
+
+      price.className =
+        'price';
+
+
+      if (productIsM2) {
+
+        price.textContent =
+          (product.price || '—') +
+          ' ₽/шт.  ·  ' +
+          (product.priceM2 || '—') +
+          ' ₽/м²';
+
+      } else {
+
+        price.textContent =
+          (product.price || '—') +
+          ' ₽/шт.';
+
+      }
+
+
+      const updated =
+        document.createElement(
+          'div'
+        );
+
+
+      updated.className =
+        'meta';
+
+
+      updated.style.marginTop =
+        '10px';
+
+
+      updated.textContent =
+        'Последнее обновление: ' +
+        (
+          product.updatedAt ||
+          '—'
+        );
+
+
+      const nextButton =
+        document.createElement(
+          'button'
+        );
+
+
+      nextButton.className =
+        'button next-button';
+
+
+      nextButton.textContent =
+        'Сканировать следующий';
+
+
+      nextButton.onclick =
+        function() {
+
+          document.getElementById(
+            'searchInput'
+          ).value =
+            '';
+
+
+          container.innerHTML =
+            '';
+
+
+          document.getElementById(
+            'searchInput'
+          ).focus();
+
+        };
+
+
+      card.appendChild(
+        name
+      );
+
+
+      card.appendChild(
+        barcode
+      );
+
+
+      card.appendChild(
+        code
+      );
+
+
+      card.appendChild(
+        stockLabel
+      );
+
+
+      card.appendChild(
+        stock
+      );
+
+
+      card.appendChild(
+        total
+      );
+
+
+      card.appendChild(
+        price
+      );
+
+
+      card.appendChild(
+        updated
+      );
+
+
+      card.appendChild(
+        nextButton
+      );
+
+
+      container.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+/*
+==================================================
+ПРОВЕРКА НОВОЙ ВЕРСИИ
+==================================================
+*/
+
+
+async function checkForNewVersion() {
+
+  if (!databaseData) {
+
+    return;
+
+  }
+
+
+  try {
+
+    const server =
+      await getServerVersion();
+
+
+    if (
+      !server ||
+      !server.ok
+    ) {
+
+      console.log(
+        'Не удалось получить версию сервера'
+      );
+
+      return;
+
+    }
+
+
+    const localVersion =
+      Number(
+        databaseData.version ||
+        0
+      );
+
+
+    const serverVersion =
+      Number(
+        server.version ||
+        0
+      );
+
+
+    console.log(
+      'ScanInk:',
+      'локальная версия =',
+      localVersion,
+      'серверная версия =',
+      serverVersion
+    );
+
+
+    /*
+    База уже актуальна.
+    */
+
+    if (
+      serverVersion <=
+      localVersion
+    ) {
+
+      console.log(
+        'База актуальна'
+      );
+
+      return;
+
+    }
+
+
+    /*
+    Есть новая версия.
+    */
+
+    const status =
+      document.getElementById(
+        'status'
+      );
+
+
+    status.textContent =
+      'Доступна новая база. Обновляем...';
+
+
+    /*
+    Скачиваем полную базу
+    через fetch.
+    */
+
+    const newDatabase =
+      await loadDatabaseFromServer();
+
+
+    const newVersion =
+      Number(
+        newDatabase.version ||
+        0
+      );
+
+
+    /*
+    Проверяем, что действительно
+    получили новую версию.
+    */
+
+    if (
+      newVersion <
+      serverVersion
+    ) {
+
+      throw new Error(
+        'Получена старая версия базы'
+      );
+
+    }
+
+
+    /*
+    Сначала сохраняем.
+    */
+
+    status.textContent =
+      'Сохраняем новую базу...';
+
+
+    await saveDatabase(
+      newDatabase
+    );
+
+
+    /*
+    Только после успешного сохранения
+    переключаем приложение на новую базу.
+    */
+
+    setDatabase(
+      newDatabase
+    );
+
+
+    status.textContent =
+      'База автоматически обновлена';
+
+
+    setTimeout(
+      function() {
+
+        status.textContent =
+          '';
+
+      },
+      3000
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      'Ошибка проверки версии:',
+      error
+    );
+
+
+    /*
+    Очень важно:
+
+    старая база продолжает работать.
+
+    Пользователь ничего не теряет.
+    */
+
+    const status =
+      document.getElementById(
+        'status'
+      );
+
+
+    status.textContent =
+      'Не удалось проверить обновление';
+
+
+    setTimeout(
+      function() {
+
+        status.textContent =
+          '';
+
+      },
+      3000
+    );
+
+  }
+
+}
+
+
+/*
+==================================================
+ПРИНУДИТЕЛЬНОЕ ОБНОВЛЕНИЕ
+==================================================
+*/
+
+
+async function updateDatabase() {
+
+  const button =
+    document.getElementById(
+      'updateButton'
+    );
+
+
+  const status =
+    document.getElementById(
+      'status'
+    );
+
+
+  button.classList.add(
+    'loading'
+  );
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    'Обновляем базу...';
+
+
+  status.textContent =
+    'Загружаем актуальную базу...';
+
+
+  try {
+
+    const data =
+      await loadDatabaseFromServer();
+
+
+    if (
+      !data ||
+      !data.products
+    ) {
+
+      throw new Error(
+        'Сервер вернул некорректную базу'
+      );
+
+    }
+
+
+    status.textContent =
+      'Сохраняем базу на устройстве...';
+
+
+    await saveDatabase(
+      data
+    );
+
+
+    setDatabase(
+      data
+    );
+
+
+    status.textContent =
+      'База успешно обновлена';
+
+
+    setTimeout(
+      function() {
+
+        status.textContent =
+          '';
+
+      },
+      2500
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      'Ошибка обновления:',
+      error
+    );
+
+
+    status.textContent =
+      'Ошибка обновления базы';
+
+
+  } finally {
+
+    button.classList.remove(
+      'loading'
+    );
+
+
+    button.disabled =
+      false;
+
+
+    button.textContent =
+      'Обновить базу';
+
+  }
+
+}
+
+
+/*
+==================================================
+ФИЛЬТР ОСТАТКА
+==================================================
+*/
+
+
+document.getElementById(
+  'stockFilterEnabled'
+).addEventListener(
+  'change',
+  updateStockFilterFromControls
+);
+
+
+document.getElementById(
+  'stockFilterQuantity'
+).addEventListener(
+  'input',
+  updateStockFilterFromControls
+);
+
+
+document.getElementById(
+  'stockFilterUnit'
+).addEventListener(
+  'change',
+  updateStockFilterFromControls
+);
+
+
+/*
+==================================================
+КАМЕРА
+==================================================
+*/
+
+
+function loadScannerLibrary() {
+
+  return new Promise(
+    (resolve, reject) => {
+
+
+      if (
+        window.Html5Qrcode
+      ) {
+
+        resolve();
+
+        return;
+
+      }
+
+
+      const script =
+        document.createElement(
+          'script'
+        );
+
+
+      script.src =
+        'https://unpkg.com/html5-qrcode';
+
+
+      script.onload =
+        function() {
+
+          resolve();
+
+        };
+
+
+      script.onerror =
+        function() {
+
+          reject(
+            new Error(
+              'Не удалось загрузить сканер'
+            )
+          );
+
+        };
+
+
+      document.head.appendChild(
+        script
+      );
+
+    }
+  );
+
+}
+
+
+async function startCamera() {
+
+  try {
+
+    await loadScannerLibrary();
+
+
+    document.getElementById(
+      'reader'
+    ).style.display =
+      'block';
+
+
+    document.getElementById(
+      'cameraControls'
+    ).style.display =
+      'flex';
+
+
+    if (!html5QrCode) {
+
+      html5QrCode =
+        new Html5Qrcode(
+          'reader'
+        );
+
+    }
+
+
+    await html5QrCode.start(
+
+      {
+        facingMode:
+          'environment'
+      },
+
+      {
+        fps: 10,
+
+        qrbox: {
+          width: 280,
+          height: 160
+        },
+
+        aspectRatio:
+          1.777778
+
+      },
+
+      function(decodedText) {
+
+
+        document.getElementById(
+          'searchInput'
+        ).value =
+          decodedText;
+
+
+        searchProducts(
+          decodedText
+        );
+
+
+        stopCamera();
+
+      },
+
+      function(errorMessage) {
+
+        /*
+        Игнорируем ошибки
+        отдельных кадров.
+        */
+
+      }
+
+    );
+
+
+    cameraRunning =
+      true;
+
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    document.getElementById(
+      'status'
+    ).textContent =
+      'Не удалось открыть камеру';
+
+  }
+
+}
+
+
+async function stopCamera() {
+
+  if (
+    html5QrCode &&
+    cameraRunning
+  ) {
+
+    try {
+
+      await html5QrCode.stop();
+
+    } catch (e) {
+
+      console.error(
+        e
+      );
+
+    }
+
+  }
+
+
+  cameraRunning =
+    false;
+
+
+  document.getElementById(
+    'reader'
+  ).style.display =
+    'none';
+
+
+  document.getElementById(
+    'cameraControls'
+  ).style.display =
+    'none';
+
+}
+
+
+/*
+==================================================
+ПОИСК
+==================================================
+*/
+
+
+document.getElementById(
+  'searchInput'
+).addEventListener(
+  'input',
+  function() {
+
+    searchProducts(
+      this.value
+    );
+
+  }
+);
+
+
+/*
+==================================================
+КАМЕРА
+==================================================
+*/
+
+
+document.getElementById(
+  'cameraButton'
+).addEventListener(
+  'click',
+  function() {
+
+    if (
+      cameraRunning
+    ) {
+
+      stopCamera();
+
+    } else {
+
+      startCamera();
+
+    }
+
+  }
+);
+
+
+document.getElementById(
+  'closeCameraButton'
+).addEventListener(
+  'click',
+  function() {
+
+    stopCamera();
+
+  }
+);
+
+
+/*
+==================================================
+ОБНОВЛЕНИЕ
+==================================================
+*/
+
+
+document.getElementById(
+  'updateButton'
+).addEventListener(
+  'click',
+  function() {
+
+    updateDatabase();
+
+  }
+);
+
+
+/*
+==================================================
+ЗАПУСК ПРИЛОЖЕНИЯ
+==================================================
+*/
+
+
+async function init() {
+
+  const status =
+    document.getElementById(
+      'status'
+    );
+
+
+  /*
+  ================================================
+  ПЫТАЕМСЯ ВЗЯТЬ ЛОКАЛЬНУЮ БАЗУ
+  ================================================
+  */
+
+  try {
+
+    status.textContent =
+      'Загружаем базу...';
+
+
+    const saved =
+      await loadDatabaseFromStorage();
+
+
+    /*
+    Локальная база найдена.
+    */
+
+    if (
+      saved &&
+      saved.products
+    ) {
+
+
+      /*
+      Показываем её СРАЗУ.
+
+      Никакого ожидания сервера.
+      */
+
+      setDatabase(
+        saved
+      );
+
+
+      status.textContent =
+        '';
+
+
+      /*
+      Проверку новой версии
+      запускаем в фоне.
+      */
+
+      checkForNewVersion();
+
+
+      return;
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      'Ошибка IndexedDB:',
+      error
+    );
+
+  }
+
+
+  /*
+  ================================================
+  ЛОКАЛЬНОЙ БАЗЫ НЕТ
+  ================================================
+  */
+
+  status.textContent =
+    'Первая загрузка базы...';
+
+
+  try {
+
+    /*
+    Скачиваем полную базу
+    */
+
+    const data =
+      await loadDatabaseFromServer();
+
+
+    /*
+    Сохраняем её локально
+    */
+
+    status.textContent =
+      'Сохраняем базу...';
+
+
+    await saveDatabase(
+      data
+    );
+
+
+    /*
+    Активируем
+    */
+
+    setDatabase(
+      data
+    );
+
+
+    status.textContent =
+      '';
+
+
+  } catch (error) {
+
+    console.error(
+      'Ошибка первой загрузки:',
+      error
+    );
+
+
+    status.textContent =
+      'Не удалось загрузить базу';
+
+  }
+
+}
+
+
+/*
+Запускаем приложение.
+*/
+
+init();
+
+
+</script>
+
+</body>
+
+</html>
